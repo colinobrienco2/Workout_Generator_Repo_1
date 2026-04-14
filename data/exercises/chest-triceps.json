@@ -1,0 +1,1081 @@
+[
+  {
+    "exercise_id": "barbell_flat_bench_press",
+    "name": "Barbell Flat Bench Press",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "chest_slot"
+    ],
+    "movement_type": "horizontal_press",
+    "primary_muscle": "chest",
+    "secondary_muscle": "triceps",
+    "equipment": "barbell",
+    "difficulty": "high_skill",
+    "is_staple": true,
+    "media_key": "barbell_flat_bench_press",
+    "substitution_ids": [
+      "dumbbell_flat_press",
+      "smith_flat_press",
+      "machine_chest_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": true,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Drive feet into the floor and keep shoulder blades tight.",
+      "default_progression_method": "add_weight"
+    }
+  },
+  {
+    "exercise_id": "dumbbell_flat_press",
+    "name": "Dumbbell Flat Press",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "chest_slot"
+    ],
+    "movement_type": "horizontal_press",
+    "primary_muscle": "chest",
+    "secondary_muscle": "triceps",
+    "equipment": "dumbbell",
+    "difficulty": "moderate",
+    "is_staple": true,
+    "media_key": "dumbbell_flat_press",
+    "substitution_ids": [
+      "barbell_flat_bench_press",
+      "machine_chest_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Control the descent and press through mid palm.",
+      "default_progression_method": "add_weight"
+    }
+  },
+  {
+    "exercise_id": "incline_dumbbell_press",
+    "name": "Incline Dumbbell Press",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "chest_slot"
+    ],
+    "movement_type": "incline_press",
+    "primary_muscle": "chest",
+    "secondary_muscle": "triceps",
+    "equipment": "dumbbell",
+    "difficulty": "moderate",
+    "is_staple": true,
+    "media_key": "incline_dumbbell_press",
+    "substitution_ids": [
+      "machine_incline_press",
+      "smith_incline_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Press toward upper chest with elbows slightly tucked.",
+      "default_progression_method": "add_weight"
+    }
+  },
+  {
+    "exercise_id": "barbell_incline_press",
+    "name": "Barbell Incline Press",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "chest_slot"
+    ],
+    "movement_type": "incline_press",
+    "primary_muscle": "chest",
+    "secondary_muscle": "triceps",
+    "equipment": "barbell",
+    "difficulty": "high_skill",
+    "is_staple": true,
+    "media_key": "barbell_incline_press",
+    "substitution_ids": [
+      "incline_dumbbell_press",
+      "smith_incline_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": true,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep bar path slightly toward upper chest.",
+      "default_progression_method": "add_weight"
+    }
+  },
+  {
+    "exercise_id": "smith_flat_press",
+    "name": "Smith Machine Flat Press",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "chest_slot"
+    ],
+    "movement_type": "horizontal_press",
+    "primary_muscle": "chest",
+    "secondary_muscle": "triceps",
+    "equipment": "smith_machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "smith_flat_press",
+    "substitution_ids": [
+      "barbell_flat_bench_press",
+      "machine_chest_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Lower bar under control and keep wrists stacked.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "smith_incline_press",
+    "name": "Smith Machine Incline Press",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "chest_slot"
+    ],
+    "movement_type": "incline_press",
+    "primary_muscle": "chest",
+    "secondary_muscle": "triceps",
+    "equipment": "smith_machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "smith_incline_press",
+    "substitution_ids": [
+      "barbell_incline_press",
+      "machine_incline_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Press in a controlled path, no bouncing.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "machine_chest_press",
+    "name": "Machine Chest Press",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "chest_slot"
+    ],
+    "movement_type": "horizontal_press",
+    "primary_muscle": "chest",
+    "secondary_muscle": "triceps",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "machine_chest_press",
+    "substitution_ids": [
+      "dumbbell_flat_press",
+      "smith_flat_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Control the eccentric and press smoothly.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "machine_incline_press",
+    "name": "Machine Incline Press",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "chest_slot"
+    ],
+    "movement_type": "incline_press",
+    "primary_muscle": "chest",
+    "secondary_muscle": "triceps",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "machine_incline_press",
+    "substitution_ids": [
+      "incline_dumbbell_press",
+      "smith_incline_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep tension through full range.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "decline_machine_press",
+    "name": "Decline Machine Press",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "chest_slot"
+    ],
+    "movement_type": "horizontal_press",
+    "primary_muscle": "chest",
+    "secondary_muscle": "triceps",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "decline_machine_press",
+    "substitution_ids": [
+      "machine_chest_press",
+      "dumbbell_flat_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Press slightly downward and keep chest engaged.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "cable_fly",
+    "name": "Cable Fly",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "accessory",
+      "chest_slot"
+    ],
+    "movement_type": "fly",
+    "primary_muscle": "chest",
+    "secondary_muscle": "none",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "cable_fly",
+    "substitution_ids": [
+      "pec_deck_fly",
+      "dumbbell_fly"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Squeeze chest at peak contraction.",
+      "default_progression_method": "improve_control"
+    }
+  },
+  {
+    "exercise_id": "pec_deck_fly",
+    "name": "Pec Deck Fly",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "chest_slot"
+    ],
+    "movement_type": "fly",
+    "primary_muscle": "chest",
+    "secondary_muscle": "none",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "pec_deck_fly",
+    "substitution_ids": [
+      "cable_fly",
+      "dumbbell_fly"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Bring handles together in a controlled arc.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "dumbbell_fly",
+    "name": "Dumbbell Fly",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "chest_slot"
+    ],
+    "movement_type": "fly",
+    "primary_muscle": "chest",
+    "secondary_muscle": "none",
+    "equipment": "dumbbell",
+    "difficulty": "moderate",
+    "is_staple": false,
+    "media_key": "dumbbell_fly",
+    "substitution_ids": [
+      "cable_fly",
+      "pec_deck_fly"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Stretch chest at bottom, slight bend in elbows.",
+      "default_progression_method": "improve_control"
+    }
+  },
+  {
+    "exercise_id": "push_up",
+    "name": "Push-Up",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "accessory",
+      "chest_slot"
+    ],
+    "movement_type": "horizontal_press",
+    "primary_muscle": "chest",
+    "secondary_muscle": "triceps",
+    "equipment": "bodyweight",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "push_up",
+    "substitution_ids": [
+      "incline_push_up",
+      "decline_push_up"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "bodyweight"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep body rigid and control full range.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "incline_push_up",
+    "name": "Incline Push-Up",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "accessory",
+      "chest_slot"
+    ],
+    "movement_type": "horizontal_press",
+    "primary_muscle": "chest",
+    "secondary_muscle": "triceps",
+    "equipment": "bodyweight",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "incline_push_up",
+    "substitution_ids": [
+      "push_up"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "bodyweight"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use incline to reduce difficulty while keeping form tight.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "decline_push_up",
+    "name": "Decline Push-Up",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "accessory",
+      "chest_slot"
+    ],
+    "movement_type": "incline_press",
+    "primary_muscle": "chest",
+    "secondary_muscle": "triceps",
+    "equipment": "bodyweight",
+    "difficulty": "moderate",
+    "is_staple": false,
+    "media_key": "decline_push_up",
+    "substitution_ids": [
+      "push_up"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "bodyweight"
+      ],
+      "avoid_when_low_readiness": true,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Elevate feet and control tempo.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "rope_pressdown",
+    "name": "Rope Pressdown",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "triceps_slot"
+    ],
+    "movement_type": "triceps_extension",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "none",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "rope_pressdown",
+    "substitution_ids": [
+      "straight_bar_pressdown",
+      "overhead_rope_extension"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep elbows pinned and fully extend.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "straight_bar_pressdown",
+    "name": "Straight Bar Pressdown",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "triceps_slot"
+    ],
+    "movement_type": "triceps_extension",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "none",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "straight_bar_pressdown",
+    "substitution_ids": [
+      "rope_pressdown"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Control bar path and lock out fully.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "overhead_rope_extension",
+    "name": "Overhead Rope Extension",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "accessory",
+      "triceps_slot"
+    ],
+    "movement_type": "triceps_extension",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "none",
+    "equipment": "cable",
+    "difficulty": "moderate",
+    "is_staple": false,
+    "media_key": "overhead_rope_extension",
+    "substitution_ids": [
+      "rope_pressdown",
+      "dumbbell_overhead_extension"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Stretch triceps fully at top.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "dumbbell_overhead_extension",
+    "name": "Dumbbell Overhead Extension",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "accessory",
+      "triceps_slot"
+    ],
+    "movement_type": "triceps_extension",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "none",
+    "equipment": "dumbbell",
+    "difficulty": "moderate",
+    "is_staple": false,
+    "media_key": "dumbbell_overhead_extension",
+    "substitution_ids": [
+      "overhead_rope_extension"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep elbows stable and extend fully.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "dips",
+    "name": "Dips",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "triceps_slot"
+    ],
+    "movement_type": "dip",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "chest",
+    "equipment": "bodyweight",
+    "difficulty": "high_skill",
+    "is_staple": true,
+    "media_key": "dips",
+    "substitution_ids": [
+      "assisted_dips",
+      "machine_dips"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "bodyweight"
+      ],
+      "avoid_when_low_readiness": true,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Control descent and avoid shoulder collapse.",
+      "default_progression_method": "add_weight"
+    }
+  },
+  {
+    "exercise_id": "assisted_dips",
+    "name": "Assisted Dips",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "triceps_slot"
+    ],
+    "movement_type": "dip",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "chest",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "assisted_dips",
+    "substitution_ids": [
+      "dips"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use assistance to maintain clean reps.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "machine_dips",
+    "name": "Machine Dips",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "triceps_slot"
+    ],
+    "movement_type": "dip",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "chest",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "machine_dips",
+    "substitution_ids": [
+      "dips"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep movement controlled and elbows stable.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "skullcrusher",
+    "name": "Skullcrusher",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "triceps_slot"
+    ],
+    "movement_type": "triceps_extension",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "none",
+    "equipment": "barbell",
+    "difficulty": "moderate",
+    "is_staple": false,
+    "media_key": "skullcrusher",
+    "substitution_ids": [
+      "ez_bar_extension",
+      "dumbbell_skullcrusher"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Lower bar toward forehead with control.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "ez_bar_extension",
+    "name": "EZ Bar Extension",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "triceps_slot"
+    ],
+    "movement_type": "triceps_extension",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "none",
+    "equipment": "barbell",
+    "difficulty": "moderate",
+    "is_staple": false,
+    "media_key": "ez_bar_extension",
+    "substitution_ids": [
+      "skullcrusher"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use EZ bar to reduce wrist strain.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "dumbbell_kickback",
+    "name": "Dumbbell Kickback",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "triceps_slot"
+    ],
+    "movement_type": "triceps_extension",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "none",
+    "equipment": "dumbbell",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "dumbbell_kickback",
+    "substitution_ids": [
+      "cable_kickback"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep upper arm fixed and extend fully.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "cable_kickback",
+    "name": "Cable Kickback",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "triceps_slot"
+    ],
+    "movement_type": "triceps_extension",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "none",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "cable_kickback",
+    "substitution_ids": [
+      "dumbbell_kickback"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Maintain constant tension through extension.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "close_grip_bench_press",
+    "name": "Close Grip Bench Press",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "triceps_slot"
+    ],
+    "movement_type": "horizontal_press",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "chest",
+    "equipment": "barbell",
+    "difficulty": "high_skill",
+    "is_staple": true,
+    "media_key": "close_grip_bench_press",
+    "substitution_ids": [
+      "smith_close_grip_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": true,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep elbows tucked and press vertically.",
+      "default_progression_method": "add_weight"
+    }
+  },
+  {
+    "exercise_id": "smith_close_grip_press",
+    "name": "Smith Close Grip Press",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "triceps_slot"
+    ],
+    "movement_type": "horizontal_press",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "chest",
+    "equipment": "smith_machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "smith_close_grip_press",
+    "substitution_ids": [
+      "close_grip_bench_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Press with close grip under control.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "bench_dips",
+    "name": "Bench Dips",
+    "split_tags": [
+      "chest_triceps"
+    ],
+    "slot_tags": [
+      "accessory",
+      "triceps_slot"
+    ],
+    "movement_type": "dip",
+    "primary_muscle": "triceps",
+    "secondary_muscle": "none",
+    "equipment": "bodyweight",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "bench_dips",
+    "substitution_ids": [
+      "assisted_dips"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "bodyweight"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "short",
+        "medium"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep shoulders safe and avoid excessive depth.",
+      "default_progression_method": "add_reps"
+    }
+  }
+]

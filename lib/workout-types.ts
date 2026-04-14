@@ -1,3 +1,8 @@
+import type { WeeklyStatus } from "@/lib/types/weekly-status"
+import type { ExerciseLibraryItem } from "@/lib/types/exercise"
+import type { RenderedExercise, RenderedWorkout } from "@/lib/types/rendered-workout"
+import type { GuidedHelpCatalog, GuidedHelpCategory, GuidedHelpPrompt } from "@/lib/types/guided-help"
+
 export type TrainingFocus = "chest-triceps" | "legs-shoulders" | "back-biceps"
 export type SessionLength = "short" | "medium" | "long"
 export type Equipment = "full-gym" | "dumbbell-only" | "bodyweight"
@@ -10,48 +15,21 @@ export interface WorkoutSettings {
 }
 
 export interface Readiness {
-  score_band: "green" | "yellow" | "red"
+  score_band: string
   status: string
   reason: string
   volume_mode: string
 }
 
 export interface ProgressionSummary {
-  primary_goal: string
+  progression_focus: string
   week_strategy: string
-  load_bias: string
+  calorie_adjustment: number
+  deload_flag: boolean
 }
 
-export interface Exercise {
-  exercise_id: string
-  name: string
-  category: string
-  movement_type: string
-  primary_muscle: string
-  secondary_muscle: string
-  equipment: string
-  sets: number
-  reps: string
-  rest: string
-  effort_target: string
-  cue: string
-  progression: string
-  media_key: string
-  substitution_ids: string[]
-  is_abs_finisher: boolean
-  tips?: string[]
-}
-
-export interface Workout {
-  session_name: string
-  focus: string
-  estimated_duration: string
-  readiness: Readiness
-  coach_message: string
-  include_abs: boolean
-  progression_summary: ProgressionSummary
-  exercises: Exercise[]
-}
+export type Exercise = RenderedExercise
+export type Workout = RenderedWorkout
 
 export interface ChatMessage {
   id: string
@@ -60,9 +38,4 @@ export interface ChatMessage {
   timestamp: Date
 }
 
-export type CoachAction = 
-  | "swap-exercise"
-  | "explain-movement"
-  | "adjust-intensity"
-  | "shorten-workout"
-  | "equipment-alternative"
+export { type WeeklyStatus, type ExerciseLibraryItem, type RenderedExercise, type RenderedWorkout, type GuidedHelpCatalog, type GuidedHelpCategory, type GuidedHelpPrompt }

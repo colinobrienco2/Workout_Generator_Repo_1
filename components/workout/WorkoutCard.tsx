@@ -47,7 +47,7 @@ export function WorkoutCard({ workout, onSwapExercise }: WorkoutCardProps) {
               </div>
               <div>
                 <p className="text-xs font-medium text-primary mb-1">Coach Note</p>
-                <p className="text-sm text-foreground leading-relaxed">{workout.coach_message}</p>
+                <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">{workout.coach_message}</p>
               </div>
             </div>
           </div>

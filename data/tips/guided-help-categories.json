@@ -1,0 +1,122 @@
+{
+  "version": "2.0",
+  "categories": [
+    {
+      "category_id": "weekly_strategy",
+      "label": "Weekly Strategy",
+      "questions": [
+        {
+          "question_id": "why_this_week",
+          "label": "Why is this my week strategy?",
+          "response_template": "Explain weekly_strategy_label using readiness_status, trigger_reason, and progression_focus."
+        },
+        {
+          "question_id": "why_volume_changed",
+          "label": "Why did volume change?",
+          "response_template": "Explain volume_mode and volume_adjustment_pct in plain language."
+        },
+        {
+          "question_id": "what_low_data_means",
+          "label": "What does low data mean?",
+          "response_template": "Explain data_quality_flag and the minimum logging threshold."
+        }
+      ]
+    },
+    {
+      "category_id": "exercise_help",
+      "label": "Exercise Help",
+      "questions": [
+        {
+          "question_id": "focus_on_this_movement",
+          "label": "What should I focus on for this movement?",
+          "response_template": "Use exercise coaching text + progression_focus."
+        },
+        {
+          "question_id": "why_this_exercise",
+          "label": "Why is this exercise here?",
+          "response_template": "Explain slot role and split logic."
+        }
+      ]
+    },
+    {
+      "category_id": "exercise_swap",
+      "label": "Exercise Swaps",
+      "questions": [
+        {
+          "question_id": "swap_for_dumbbell",
+          "label": "Can I swap this for a dumbbell version?",
+          "response_template": "Check candidate substitutions filtered to dumbbell-compatible options."
+        },
+        {
+          "question_id": "why_no_swap_available",
+          "label": "Why can\u2019t this be swapped?",
+          "response_template": "Explain slot lock, equipment limits, or empty candidate list."
+        }
+      ]
+    },
+    {
+      "category_id": "logging_data",
+      "label": "Logging & Data",
+      "questions": [
+        {
+          "question_id": "how_to_improve_accuracy",
+          "label": "How do I improve coaching accuracy?",
+          "response_template": "Point to logging consistency, days logged, and recovery entries."
+        },
+        {
+          "question_id": "what_counts_as_completed_workout",
+          "label": "What counts as a completed workout?",
+          "response_template": "Explain the workout completed input and its downstream impact."
+        }
+      ]
+    },
+    {
+      "category_id": "nutrition",
+      "label": "Nutrition",
+      "questions": [
+        {
+          "question_id": "why_calories_changed",
+          "label": "Why did calories change?",
+          "response_template": "Use calorie_adjustment and nutrition_note."
+        },
+        {
+          "question_id": "why_calories_stayed_same",
+          "label": "Why did calories stay the same?",
+          "response_template": "Use weekly weight-change band logic."
+        }
+      ]
+    },
+    {
+      "category_id": "recovery",
+      "label": "Recovery",
+      "questions": [
+        {
+          "question_id": "how_recovery_affects_training",
+          "label": "How does recovery affect this workout?",
+          "response_template": "Use readiness_status, trigger_reason, and recovery_note."
+        },
+        {
+          "question_id": "what_to_do_on_deload",
+          "label": "What should I do on a deload week?",
+          "response_template": "Use deload_flag, progression_focus, and recovery_note."
+        }
+      ]
+    },
+    {
+      "category_id": "program_basics",
+      "label": "Program Basics",
+      "questions": [
+        {
+          "question_id": "how_workouts_are_built",
+          "label": "How are workouts built?",
+          "response_template": "Explain deterministic split templates + exercise library + Sheets engine."
+        },
+        {
+          "question_id": "why_this_is_not_random",
+          "label": "Why isn\u2019t this random?",
+          "response_template": "Explain fixed slot structure, filtering, and substitution order."
+        }
+      ]
+    }
+  ]
+}

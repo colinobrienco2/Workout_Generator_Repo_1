@@ -1,0 +1,615 @@
+[
+  {
+    "exercise_id": "hanging_leg_raise",
+    "name": "Hanging Leg Raise",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "hip_flexion_abs",
+    "primary_muscle": "abs",
+    "secondary_muscle": "hip_flexors",
+    "equipment": "bodyweight",
+    "difficulty": "moderate_skill",
+    "is_staple": true,
+    "media_key": "hanging_leg_raise",
+    "substitution_ids": [
+      "captain_s_chair_leg_raise",
+      "lying_leg_raise"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Control the lowering phase and avoid swinging.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "captain_s_chair_leg_raise",
+    "name": "Captain's Chair Leg Raise",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "hip_flexion_abs",
+    "primary_muscle": "abs",
+    "secondary_muscle": "hip_flexors",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "captain_s_chair_leg_raise",
+    "substitution_ids": [
+      "hanging_leg_raise",
+      "lying_leg_raise"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "machine_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Control the lowering phase and avoid swinging.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "lying_leg_raise",
+    "name": "Lying Leg Raise",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "hip_flexion_abs",
+    "primary_muscle": "abs",
+    "secondary_muscle": "",
+    "equipment": "bodyweight",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "lying_leg_raise",
+    "substitution_ids": [
+      "reverse_crunch"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Control the lowering phase and avoid swinging.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "reverse_crunch",
+    "name": "Reverse Crunch",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "flexion",
+    "primary_muscle": "abs",
+    "secondary_muscle": "",
+    "equipment": "bodyweight",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "reverse_crunch",
+    "substitution_ids": [
+      "lying_leg_raise"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "cable_crunch",
+    "name": "Cable Crunch",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "flexion",
+    "primary_muscle": "abs",
+    "secondary_muscle": "",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "cable_crunch",
+    "substitution_ids": [
+      "machine_crunch"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "machine_crunch",
+    "name": "Machine Crunch",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "flexion",
+    "primary_muscle": "abs",
+    "secondary_muscle": "",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "machine_crunch",
+    "substitution_ids": [
+      "cable_crunch"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "machine_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "ab_wheel_rollout",
+    "name": "Ab Wheel Rollout",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "anti_extension",
+    "primary_muscle": "abs",
+    "secondary_muscle": "shoulders",
+    "equipment": "ab_wheel",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "ab_wheel_rollout",
+    "substitution_ids": [
+      "barbell_rollout",
+      "plank"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Stay braced and keep your ribs down the whole set.",
+      "default_progression_method": "add_time_or_reps"
+    }
+  },
+  {
+    "exercise_id": "barbell_rollout",
+    "name": "Barbell Rollout",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "anti_extension",
+    "primary_muscle": "abs",
+    "secondary_muscle": "shoulders",
+    "equipment": "barbell",
+    "difficulty": "high_skill",
+    "is_staple": false,
+    "media_key": "barbell_rollout",
+    "substitution_ids": [
+      "ab_wheel_rollout"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Stay braced and keep your ribs down the whole set.",
+      "default_progression_method": "add_time_or_reps"
+    }
+  },
+  {
+    "exercise_id": "plank",
+    "name": "Plank",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "isometric",
+    "primary_muscle": "core",
+    "secondary_muscle": "",
+    "equipment": "bodyweight",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "plank",
+    "substitution_ids": [
+      "weighted_plank"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "weighted_plank",
+    "name": "Weighted Plank",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "isometric",
+    "primary_muscle": "core",
+    "secondary_muscle": "",
+    "equipment": "plate",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "weighted_plank",
+    "substitution_ids": [
+      "plank"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "russian_twist",
+    "name": "Russian Twist",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "rotation",
+    "primary_muscle": "obliques",
+    "secondary_muscle": "",
+    "equipment": "bodyweight",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "russian_twist",
+    "substitution_ids": [
+      "cable_woodchopper"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Move through the trunk with control and avoid rushing the twist.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "cable_woodchopper",
+    "name": "Cable Woodchopper",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "rotation",
+    "primary_muscle": "obliques",
+    "secondary_muscle": "",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "cable_woodchopper",
+    "substitution_ids": [
+      "russian_twist"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Move through the trunk with control and avoid rushing the twist.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "toe_touch_crunch",
+    "name": "Toe Touch Crunch",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "flexion",
+    "primary_muscle": "abs",
+    "secondary_muscle": "",
+    "equipment": "bodyweight",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "toe_touch_crunch",
+    "substitution_ids": [
+      "crunch"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "crunch",
+    "name": "Crunch",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "flexion",
+    "primary_muscle": "abs",
+    "secondary_muscle": "",
+    "equipment": "bodyweight",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "crunch",
+    "substitution_ids": [
+      "toe_touch_crunch"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "decline_sit_up",
+    "name": "Decline Sit-Up",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "flexion",
+    "primary_muscle": "abs",
+    "secondary_muscle": "hip_flexors",
+    "equipment": "bench",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "decline_sit_up",
+    "substitution_ids": [
+      "sit_up"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "sit_up",
+    "name": "Sit-Up",
+    "split_tags": [
+      "abs_core"
+    ],
+    "slot_tags": [
+      "abs_finisher",
+      "core_slot"
+    ],
+    "movement_type": "flexion",
+    "primary_muscle": "abs",
+    "secondary_muscle": "hip_flexors",
+    "equipment": "bodyweight",
+    "difficulty": "moderate_skill",
+    "is_staple": false,
+    "media_key": "sit_up",
+    "substitution_ids": [
+      "decline_sit_up"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  }
+]

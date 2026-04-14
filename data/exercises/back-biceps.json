@@ -1,0 +1,747 @@
+[
+  {
+    "exercise_id": "lat_pulldown",
+    "name": "Lat Pulldown",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "back_slot"
+    ],
+    "movement_type": "vertical_pull",
+    "primary_muscle": "lats",
+    "secondary_muscle": "biceps",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "lat_pulldown",
+    "substitution_ids": [
+      "assisted_pull_up",
+      "neutral_grip_pulldown"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Drive elbows down toward hips without leaning back.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "pull_up",
+    "name": "Pull-Up",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "back_slot"
+    ],
+    "movement_type": "vertical_pull",
+    "primary_muscle": "lats",
+    "secondary_muscle": "biceps",
+    "equipment": "bodyweight",
+    "difficulty": "high_skill",
+    "is_staple": true,
+    "media_key": "pull_up",
+    "substitution_ids": [
+      "assisted_pull_up",
+      "lat_pulldown"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "bodyweight"
+      ],
+      "avoid_when_low_readiness": true,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Pull chest to bar and control the descent.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "assisted_pull_up",
+    "name": "Assisted Pull-Up",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "back_slot"
+    ],
+    "movement_type": "vertical_pull",
+    "primary_muscle": "lats",
+    "secondary_muscle": "biceps",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "assisted_pull_up",
+    "substitution_ids": [
+      "pull_up",
+      "lat_pulldown"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use assistance to maintain full range reps.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "barbell_row",
+    "name": "Barbell Row",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "back_slot"
+    ],
+    "movement_type": "horizontal_pull",
+    "primary_muscle": "lats",
+    "secondary_muscle": "upper_back",
+    "equipment": "barbell",
+    "difficulty": "high_skill",
+    "is_staple": true,
+    "media_key": "barbell_row",
+    "substitution_ids": [
+      "dumbbell_row",
+      "machine_row"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": true,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep torso stable and pull bar to lower ribs.",
+      "default_progression_method": "add_weight"
+    }
+  },
+  {
+    "exercise_id": "dumbbell_row",
+    "name": "Dumbbell Row",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "back_slot"
+    ],
+    "movement_type": "horizontal_pull",
+    "primary_muscle": "lats",
+    "secondary_muscle": "upper_back",
+    "equipment": "dumbbell",
+    "difficulty": "moderate",
+    "is_staple": true,
+    "media_key": "dumbbell_row",
+    "substitution_ids": [
+      "barbell_row",
+      "machine_row"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Pull elbow toward hip and avoid torso rotation.",
+      "default_progression_method": "add_weight"
+    }
+  },
+  {
+    "exercise_id": "machine_row",
+    "name": "Machine Row",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "back_slot"
+    ],
+    "movement_type": "horizontal_pull",
+    "primary_muscle": "lats",
+    "secondary_muscle": "upper_back",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "machine_row",
+    "substitution_ids": [
+      "dumbbell_row",
+      "barbell_row"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Control the pull and squeeze shoulder blades.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "seated_cable_row",
+    "name": "Seated Cable Row",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "back_slot"
+    ],
+    "movement_type": "horizontal_pull",
+    "primary_muscle": "lats",
+    "secondary_muscle": "upper_back",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "seated_cable_row",
+    "substitution_ids": [
+      "machine_row",
+      "dumbbell_row"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep torso upright and pull to mid torso.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "single_arm_cable_row",
+    "name": "Single Arm Cable Row",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "accessory",
+      "back_slot"
+    ],
+    "movement_type": "horizontal_pull",
+    "primary_muscle": "lats",
+    "secondary_muscle": "upper_back",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "single_arm_cable_row",
+    "substitution_ids": [
+      "dumbbell_row"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Pull elbow back with control.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "straight_arm_pulldown",
+    "name": "Straight Arm Pulldown",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "back_slot"
+    ],
+    "movement_type": "vertical_pull",
+    "primary_muscle": "lats",
+    "secondary_muscle": "none",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "straight_arm_pulldown",
+    "substitution_ids": [
+      "lat_pulldown"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep arms straight and pull with lats.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "face_pull",
+    "name": "Face Pull",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "accessory",
+      "back_slot"
+    ],
+    "movement_type": "rear_delt",
+    "primary_muscle": "upper_back",
+    "secondary_muscle": "shoulders",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "face_pull",
+    "substitution_ids": [
+      "rear_delt_fly"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Pull toward face with elbows high.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "rear_delt_fly",
+    "name": "Rear Delt Fly",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "back_slot"
+    ],
+    "movement_type": "rear_delt",
+    "primary_muscle": "upper_back",
+    "secondary_muscle": "shoulders",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "rear_delt_fly",
+    "substitution_ids": [
+      "face_pull"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Move through shoulders not arms.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "barbell_curl",
+    "name": "Barbell Curl",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "biceps_slot"
+    ],
+    "movement_type": "curl",
+    "primary_muscle": "biceps",
+    "secondary_muscle": "none",
+    "equipment": "barbell",
+    "difficulty": "moderate",
+    "is_staple": true,
+    "media_key": "barbell_curl",
+    "substitution_ids": [
+      "ez_bar_curl",
+      "dumbbell_curl"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep elbows fixed and avoid swinging.",
+      "default_progression_method": "add_weight"
+    }
+  },
+  {
+    "exercise_id": "ez_bar_curl",
+    "name": "EZ Bar Curl",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "biceps_slot"
+    ],
+    "movement_type": "curl",
+    "primary_muscle": "biceps",
+    "secondary_muscle": "none",
+    "equipment": "barbell",
+    "difficulty": "moderate",
+    "is_staple": true,
+    "media_key": "ez_bar_curl",
+    "substitution_ids": [
+      "barbell_curl",
+      "dumbbell_curl"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use EZ bar to reduce wrist strain.",
+      "default_progression_method": "add_weight"
+    }
+  },
+  {
+    "exercise_id": "dumbbell_curl",
+    "name": "Dumbbell Curl",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "biceps_slot"
+    ],
+    "movement_type": "curl",
+    "primary_muscle": "biceps",
+    "secondary_muscle": "none",
+    "equipment": "dumbbell",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "dumbbell_curl",
+    "substitution_ids": [
+      "barbell_curl"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Supinate wrist at top of curl.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "incline_dumbbell_curl",
+    "name": "Incline Dumbbell Curl",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "biceps_slot"
+    ],
+    "movement_type": "curl",
+    "primary_muscle": "biceps",
+    "secondary_muscle": "none",
+    "equipment": "dumbbell",
+    "difficulty": "moderate",
+    "is_staple": false,
+    "media_key": "incline_dumbbell_curl",
+    "substitution_ids": [
+      "dumbbell_curl"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep shoulders back and stretch fully.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "hammer_curl",
+    "name": "Hammer Curl",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "biceps_slot"
+    ],
+    "movement_type": "curl",
+    "primary_muscle": "biceps",
+    "secondary_muscle": "none",
+    "equipment": "dumbbell",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "hammer_curl",
+    "substitution_ids": [
+      "rope_hammer_curl"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep neutral grip and control reps.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "rope_hammer_curl",
+    "name": "Rope Hammer Curl",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "accessory",
+      "biceps_slot"
+    ],
+    "movement_type": "curl",
+    "primary_muscle": "biceps",
+    "secondary_muscle": "none",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "rope_hammer_curl",
+    "substitution_ids": [
+      "hammer_curl"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep tension through full movement.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "preacher_curl",
+    "name": "Preacher Curl",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "biceps_slot"
+    ],
+    "movement_type": "curl",
+    "primary_muscle": "biceps",
+    "secondary_muscle": "none",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "preacher_curl",
+    "substitution_ids": [
+      "ez_bar_curl"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep upper arm fixed against pad.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "cable_curl",
+    "name": "Cable Curl",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "accessory",
+      "biceps_slot"
+    ],
+    "movement_type": "curl",
+    "primary_muscle": "biceps",
+    "secondary_muscle": "none",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "cable_curl",
+    "substitution_ids": [
+      "dumbbell_curl"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Maintain constant tension throughout.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "concentration_curl",
+    "name": "Concentration Curl",
+    "split_tags": [
+      "back_biceps"
+    ],
+    "slot_tags": [
+      "isolation",
+      "biceps_slot"
+    ],
+    "movement_type": "curl",
+    "primary_muscle": "biceps",
+    "secondary_muscle": "none",
+    "equipment": "dumbbell",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "concentration_curl",
+    "substitution_ids": [
+      "dumbbell_curl"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Squeeze at top and control descent.",
+      "default_progression_method": "add_reps"
+    }
+  }
+]

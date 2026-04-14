@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Exercise Substitution Engine Schema v2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request",
+    "result"
+  ],
+  "properties": {
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "session_id",
+        "card_id",
+        "exercise_id",
+        "slot_id",
+        "training_focus",
+        "equipment_mode"
+      ],
+      "properties": {
+        "session_id": {
+          "type": "string"
+        },
+        "card_id": {
+          "type": "string"
+        },
+        "exercise_id": {
+          "type": "string"
+        },
+        "slot_id": {
+          "type": "string"
+        },
+        "training_focus": {
+          "type": "string"
+        },
+        "equipment_mode": {
+          "type": "string"
+        },
+        "avoid_exercise_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "prefer_dumbbell": {
+          "type": "boolean"
+        },
+        "respect_current_volume_mode": {
+          "type": "boolean"
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "replacement_found",
+        "selected_exercise_id",
+        "candidate_rankings",
+        "message"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "success",
+            "no_match",
+            "locked"
+          ]
+        },
+        "replacement_found": {
+          "type": "boolean"
+        },
+        "selected_exercise_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "candidate_rankings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "exercise_id",
+              "rank",
+              "match_reason"
+            ],
+            "properties": {
+              "exercise_id": {
+                "type": "string"
+              },
+              "rank": {
+                "type": "integer"
+              },
+              "match_reason": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

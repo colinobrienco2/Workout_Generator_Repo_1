@@ -33,3 +33,24 @@ To learn more, take a look at the following resources:
 - [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
 
 <a href="https://v0.app/chat/api/kiro/clone/colinobrienco2/Workout_Generator_Repo_1" alt="Open in Kiro"><img src="https://pdgvvgmkdvyeydso.public.blob.vercel-storage.com/open%20in%20kiro.svg?sanitize=true" /></a>
+
+
+## Deterministic Integration Layer
+
+This repo now includes a schema-first deterministic integration layer:
+
+- `data/` for exercise libraries, substitutions, tips, and example payloads
+- `engine/` for specs, rules, setup notes, and Sheets formulas backup
+- `lib/api/` for Apps Script fetch helpers
+- `lib/adapters/` for deterministic workout building and swap filtering
+- `lib/types/` for backend and rendered workout contracts
+
+### Environment variable
+
+Create a local `.env.local` file with:
+
+```bash
+GOOGLE_SHEETS_API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
+```
+
+The app proxies weekly status through `/api/weekly-latest`. If the env var is missing, the UI falls back to the bundled sample weekly status payload so the scaffold still renders.
