@@ -1,113 +1,87 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useMemo, useState, type ReactNode } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { 
-  RefreshCw, 
-  HelpCircle, 
-  Gauge, 
-  Timer, 
-  Wrench, 
-  Send, 
-  Bot,
-  User
-} from "lucide-react"
-import type { ChatMessage, CoachAction } from "@/lib/workout-types"
-import { quickPrompts, coachResponses } from "@/lib/mock-data"
+import { Bot, User, RefreshCw, HelpCircle, Timer, Wrench, BarChart3, HeartPulse, Apple } from "lucide-react"
+import guidedHelpCatalog from "@/data/tips/guided-help-categories.json"
+import type { ChatMessage, WeeklyStatus } from "@/lib/workout-types"
+import type { GuidedHelpCategory, GuidedHelpPrompt } from "@/lib/types/guided-help"
 
 interface CoachPanelProps {
-  onAction?: (action: string) => void
+  weeklyStatus?: WeeklyStatus | null
 }
 
-const actionIcons: Record<string, React.ReactNode> = {
-  "swap-exercise": <RefreshCw className="h-3.5 w-3.5" />,
-  "explain-movement": <HelpCircle className="h-3.5 w-3.5" />,
-  "adjust-intensity": <Gauge className="h-3.5 w-3.5" />,
-  "shorten-workout": <Timer className="h-3.5 w-3.5" />,
-  "equipment-alternative": <Wrench className="h-3.5 w-3.5" />
+function buildDeterministicResponse(prompt: GuidedHelpPrompt, weeklyStatus?: WeeklyStatus | null) {
+  if (!weeklyStatus) {
+    return "Generate a workout first to load your weekly strategy, recovery context, and guided coaching details."
+  }
+
+  switch (prompt.question_id) {
+    case "why_this_week":
+      return `${weeklyStatus.readiness_status} week: ${weeklyStatus.trigger_reason} ${weeklyStatus.progression_focus}`
+    case "why_volume_changed":
+      return `${weeklyStatus.volume_mode} mode is active this week. Volume adjustment: ${weeklyStatus.volume_adjustment_pct}% based on your current readiness.`
+    case "what_low_data_means":
+      return `Data quality is currently marked as ${weeklyStatus.data_quality_flag}. Log more days to improve weekly coaching precision.`
+    case "focus_on_this_movement":
+      return weeklyStatus.training_note
+    case "why_this_exercise":
+      return "This movement was selected to fill a fixed split slot inside your deterministic template while matching your current equipment and weekly strategy."
+    case "swap_for_dumbbell":
+      return "Available swaps are filtered deterministically by slot fit, equipment mode, duplicate prevention, and safe replacement rules."
+    case "why_no_swap_available":
+      return "Some exercises stay locked when there is no valid same-slot substitute that matches your equipment mode and session structure."
+    default:
+      return weeklyStatus.coach_notes.replace(/\n/g, " ")
+  }
 }
 
-export function CoachPanel({ onAction }: CoachPanelProps) {
+const categoryIcons: Record<string, ReactNode> = {
+  weekly_strategy: <BarChart3 className="h-3.5 w-3.5" />,
+  exercise_help: <HelpCircle className="h-3.5 w-3.5" />,
+  exercise_swap: <RefreshCw className="h-3.5 w-3.5" />,
+  logging_data: <BarChart3 className="h-3.5 w-3.5" />,
+  nutrition: <Apple className="h-3.5 w-3.5" />,
+  recovery: <HeartPulse className="h-3.5 w-3.5" />,
+  program_basics: <Timer className="h-3.5 w-3.5" />,
+}
+
+export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
+  const categories = guidedHelpCatalog.categories as GuidedHelpCategory[]
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>(categories[0]?.category_id ?? "")
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "welcome",
       role: "assistant",
-      content: "I'm here to help you customize your workout. Use the quick actions below or type your question.",
-      timestamp: new Date()
-    }
+      content: "Choose a guided coach request below. This panel is deterministic — no free typing.",
+      timestamp: new Date(),
+    },
   ])
-  const [inputValue, setInputValue] = useState("")
-  const [selectedAction, setSelectedAction] = useState<CoachAction | null>(null)
-  const scrollRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
-    }
-  }, [messages])
+  const selectedCategory = useMemo(
+    () => categories.find((category) => category.category_id === selectedCategoryId) ?? categories[0],
+    [categories, selectedCategoryId],
+  )
 
-  const addMessage = (role: "user" | "assistant", content: string) => {
-    const newMessage: ChatMessage = {
-      id: `msg-${Date.now()}`,
-      role,
-      content,
-      timestamp: new Date()
-    }
-    setMessages(prev => [...prev, newMessage])
-  }
-
-  const getCoachResponse = (userMessage: string): string => {
-    const lowerMessage = userMessage.toLowerCase()
-    
-    if (lowerMessage.includes("dumbbell")) {
-      return coachResponses["swap-dumbbell"][Math.floor(Math.random() * coachResponses["swap-dumbbell"].length)]
-    }
-    if (lowerMessage.includes("bodyweight")) {
-      return coachResponses["swap-bodyweight"][Math.floor(Math.random() * coachResponses["swap-bodyweight"].length)]
-    }
-    if (lowerMessage.includes("explain") || lowerMessage.includes("cue") || lowerMessage.includes("why")) {
-      return coachResponses["explain-cue"][Math.floor(Math.random() * coachResponses["explain-cue"].length)]
-    }
-    if (lowerMessage.includes("reduce") || lowerMessage.includes("shorter") || lowerMessage.includes("less")) {
-      return coachResponses["reduce-volume"][Math.floor(Math.random() * coachResponses["reduce-volume"].length)]
-    }
-    if (lowerMessage.includes("harder") || lowerMessage.includes("increase") || lowerMessage.includes("more intense")) {
-      return coachResponses["increase-intensity"][Math.floor(Math.random() * coachResponses["increase-intensity"].length)]
-    }
-    if (lowerMessage.includes("easier") || lowerMessage.includes("decrease") || lowerMessage.includes("less intense")) {
-      return coachResponses["decrease-intensity"][Math.floor(Math.random() * coachResponses["decrease-intensity"].length)]
-    }
-    
-    return coachResponses["default"][Math.floor(Math.random() * coachResponses["default"].length)]
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!inputValue.trim()) return
-
-    addMessage("user", inputValue)
-    
-    // Simulate typing delay
-    setTimeout(() => {
-      const response = getCoachResponse(inputValue)
-      addMessage("assistant", response)
-      onAction?.(inputValue)
-    }, 500)
-    
-    setInputValue("")
-    setSelectedAction(null)
-  }
-
-  const handleQuickPrompt = (prompt: string) => {
-    setInputValue(prompt)
-    setSelectedAction(null)
-  }
-
-  const handleActionClick = (action: CoachAction) => {
-    setSelectedAction(selectedAction === action ? null : action)
+  const handlePromptClick = (prompt: GuidedHelpPrompt) => {
+    const now = Date.now()
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `user-${now}`,
+        role: "user",
+        content: prompt.label,
+        timestamp: new Date(now),
+      },
+      {
+        id: `assistant-${now}`,
+        role: "assistant",
+        content: buildDeterministicResponse(prompt, weeklyStatus),
+        timestamp: new Date(now + 1),
+      },
+    ])
   }
 
   return (
@@ -118,10 +92,9 @@ export function CoachPanel({ onAction }: CoachPanelProps) {
           Coach Panel
         </CardTitle>
       </CardHeader>
-      
+
       <CardContent className="flex-1 flex flex-col p-0 min-h-0">
-        {/* Messages area */}
-        <ScrollArea className="flex-1 p-4" ref={scrollRef}>
+        <ScrollArea className="flex-1 p-4">
           <div className="space-y-4">
             {messages.map((message) => (
               <div
@@ -134,13 +107,13 @@ export function CoachPanel({ onAction }: CoachPanelProps) {
                   </div>
                 )}
                 <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
+                  className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
                     message.role === "user"
                       ? "bg-primary text-primary-foreground rounded-br-md"
                       : "bg-muted text-foreground rounded-bl-md"
                   }`}
                 >
-                  <p className="text-sm leading-relaxed">{message.content}</p>
+                  <p className="text-sm leading-relaxed whitespace-pre-line">{message.content}</p>
                 </div>
                 {message.role === "user" && (
                   <div className="shrink-0 h-8 w-8 rounded-full bg-foreground/10 flex items-center justify-center">
@@ -152,57 +125,40 @@ export function CoachPanel({ onAction }: CoachPanelProps) {
           </div>
         </ScrollArea>
 
-        {/* Quick action prompts */}
-        {selectedAction && quickPrompts[selectedAction] && (
-          <div className="px-4 py-3 border-t border-border/50 bg-muted/30">
-            <p className="text-xs text-muted-foreground mb-2">Select a prompt:</p>
-            <div className="flex flex-wrap gap-2">
-              {quickPrompts[selectedAction].prompts.map((prompt, i) => (
-                <button
-                  key={i}
-                  onClick={() => handleQuickPrompt(prompt)}
-                  className="text-xs px-3 py-1.5 rounded-full border border-border bg-background hover:bg-muted transition-colors"
-                >
-                  {prompt}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Action buttons */}
-        <div className="px-4 py-3 border-t border-border/50 shrink-0">
+        <div className="px-4 py-3 border-t border-border/50 bg-muted/20 shrink-0">
+          <p className="text-xs text-muted-foreground mb-2">Categories</p>
           <div className="flex flex-wrap gap-2">
-            {(Object.keys(quickPrompts) as CoachAction[]).map((action) => (
+            {categories.map((category) => (
               <Button
-                key={action}
-                variant={selectedAction === action ? "default" : "outline"}
+                key={category.category_id}
+                variant={selectedCategoryId === category.category_id ? "default" : "outline"}
                 size="sm"
-                onClick={() => handleActionClick(action)}
+                onClick={() => setSelectedCategoryId(category.category_id)}
                 className="gap-1.5 text-xs"
               >
-                {actionIcons[action]}
-                {quickPrompts[action].label}
+                {categoryIcons[category.category_id] ?? <Wrench className="h-3.5 w-3.5" />}
+                {category.label}
               </Button>
             ))}
           </div>
         </div>
 
-        {/* Input area */}
-        <form onSubmit={handleSubmit} className="p-4 border-t border-border/50 shrink-0">
-          <div className="flex gap-2">
-            <Input
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask your coach..."
-              className="flex-1"
-            />
-            <Button type="submit" size="icon" disabled={!inputValue.trim()}>
-              <Send className="h-4 w-4" />
-              <span className="sr-only">Send message</span>
-            </Button>
+        <div className="p-4 border-t border-border/50 shrink-0">
+          <div className="rounded-xl border border-border/60 bg-background px-3 py-3">
+            <div className="text-xs font-medium text-foreground mb-2">Choose a coach request…</div>
+            <div className="flex flex-wrap gap-2">
+              {selectedCategory?.questions.map((prompt) => (
+                <button
+                  key={prompt.question_id}
+                  onClick={() => handlePromptClick(prompt)}
+                  className="text-xs px-3 py-1.5 rounded-full border border-border bg-muted/40 hover:bg-muted transition-colors"
+                >
+                  {prompt.label}
+                </button>
+              ))}
+            </div>
           </div>
-        </form>
+        </div>
       </CardContent>
     </Card>
   )

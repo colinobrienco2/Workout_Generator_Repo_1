@@ -1,0 +1,122 @@
+{
+  "version": "2.0",
+  "source_of_truth": "google_sheets_rule_engine_v2",
+  "weekly_strategy_map": {
+    "High": {
+      "readiness_score_band": "high",
+      "volume_mode": "Push",
+      "strategy": "push_week"
+    },
+    "Moderate": {
+      "readiness_score_band": "moderate",
+      "volume_mode": "Maintain",
+      "strategy": "maintain_week"
+    },
+    "Low": {
+      "readiness_score_band": "low",
+      "volume_mode": "Pullback",
+      "strategy": "pullback_week"
+    },
+    "Deload": {
+      "readiness_score_band": "deload",
+      "volume_mode": "Deload",
+      "strategy": "deload_week"
+    },
+    "Low Data": {
+      "readiness_score_band": "low_data",
+      "volume_mode": "Maintain",
+      "strategy": "low_data_week"
+    }
+  },
+  "split_templates": {
+    "chest_triceps": {
+      "short": [
+        "chest_primary",
+        "chest_secondary",
+        "triceps_main",
+        "triceps_iso"
+      ],
+      "medium": [
+        "chest_primary",
+        "chest_secondary",
+        "chest_accessory",
+        "triceps_main",
+        "triceps_secondary",
+        "triceps_iso"
+      ],
+      "long": [
+        "chest_primary",
+        "chest_secondary",
+        "chest_accessory",
+        "triceps_main",
+        "triceps_secondary",
+        "triceps_iso"
+      ]
+    },
+    "back_biceps": {
+      "short": [
+        "back_vertical",
+        "back_row",
+        "biceps_main",
+        "biceps_secondary"
+      ],
+      "medium": [
+        "back_vertical",
+        "back_row",
+        "back_accessory",
+        "biceps_main",
+        "biceps_secondary",
+        "biceps_accessory"
+      ],
+      "long": [
+        "back_vertical",
+        "back_row",
+        "back_accessory",
+        "biceps_main",
+        "biceps_secondary",
+        "biceps_accessory"
+      ]
+    },
+    "legs_shoulders": {
+      "short": [
+        "legs_primary",
+        "legs_secondary",
+        "shoulders_primary",
+        "shoulders_lateral"
+      ],
+      "medium": [
+        "legs_primary",
+        "legs_secondary",
+        "legs_accessory",
+        "shoulders_primary",
+        "shoulders_lateral",
+        "shoulders_secondary"
+      ],
+      "long": [
+        "legs_primary",
+        "legs_secondary",
+        "legs_accessory",
+        "shoulders_primary",
+        "shoulders_lateral",
+        "shoulders_secondary"
+      ]
+    }
+  },
+  "swap_priority": [
+    "same_slot_id",
+    "same_movement_type",
+    "same_primary_muscle",
+    "same_equipment_mode",
+    "not_already_used",
+    "readiness_safe"
+  ],
+  "guided_help_categories": [
+    "weekly_strategy",
+    "exercise_help",
+    "exercise_swap",
+    "logging_data",
+    "nutrition",
+    "recovery",
+    "program_basics"
+  ]
+}

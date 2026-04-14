@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Guided Help Response v2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "category_id",
+    "question_id",
+    "response_type",
+    "title",
+    "message",
+    "actions"
+  ],
+  "properties": {
+    "category_id": {
+      "type": "string",
+      "enum": [
+        "weekly_strategy",
+        "exercise_help",
+        "exercise_swap",
+        "logging_data",
+        "nutrition",
+        "recovery",
+        "program_basics"
+      ]
+    },
+    "question_id": {
+      "type": "string"
+    },
+    "response_type": {
+      "type": "string",
+      "enum": [
+        "info",
+        "explanation",
+        "instruction",
+        "fallback"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "source_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "action_type",
+          "label"
+        ],
+        "properties": {
+          "action_type": {
+            "type": "string",
+            "enum": [
+              "open_swap",
+              "show_alternatives",
+              "open_logging_tip",
+              "dismiss",
+              "show_followups"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "payload": {
+            "type": [
+              "object",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "followup_question_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

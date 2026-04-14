@@ -1,0 +1,161 @@
+WEEKLY SUMMARY FORMULAS BACKUP — UPDATED
+
+Notes:
+- This backup reflects the current Google Sheets version, not Excel-converted formulas.
+- Use semicolon separators in your sheet if your locale requires them. This backup preserves the exact formula logic in comma format for safekeeping and readability.
+- Replace only row 2 formulas. ARRAYFORMULA / MAP formulas will spill downward automatically.
+
+WEEKLY SUMMARY
+
+A2 — Program Week Start
+(Already working in your sheet; keep current formula if stable)
+
+B2 — Program Week #
+=MAP(A2:A500,LAMBDA(wk,IF(wk="","",IFERROR(INDEX(FILTER('Daily Log'!K2:K500,'Daily Log'!L2:L500=wk,'Daily Log'!N2:N500=FALSE),1),""))))
+
+C2 — Program Week Key
+=MAP(A2:A500,LAMBDA(wk,IF(wk="","",IFERROR(INDEX(FILTER('Daily Log'!M2:M500,'Daily Log'!L2:L500=wk,'Daily Log'!N2:N500=FALSE),1),""))))
+
+D2 — Avg Recovery
+=MAP(A2:A500,LAMBDA(wk,IF(wk="","",IFERROR(ROUND(AVERAGE(FILTER('Daily Log'!J2:J500,'Daily Log'!L2:L500=wk,'Daily Log'!N2:N500=FALSE,'Daily Log'!J2:J500<>"")),2),""))))
+
+E2 — Avg Weight
+=MAP(A2:A500,LAMBDA(wk,IF(wk="","",IFERROR(ROUND(AVERAGE(FILTER('Daily Log'!B2:B500,'Daily Log'!L2:L500=wk,'Daily Log'!N2:N500=FALSE,'Daily Log'!B2:B500<>"")),2),""))))
+
+F2 — W/W Weight Change
+=ARRAYFORMULA(IF(E2:E500="","",IF(ROW(E2:E500)=2,"",E2:E500-INDEX(E:E,ROW(E2:E500)-1))))
+
+G2 — Days Logged
+=MAP(A2:A500,LAMBDA(wk,IF(wk="","",COUNTA(FILTER('Daily Log'!A2:A500,'Daily Log'!L2:L500=wk,'Daily Log'!N2:N500=FALSE,'Daily Log'!A2:A500<>"")))))
+
+H2 — Workouts Completed
+=MAP(A2:A500,LAMBDA(wk,IF(wk="","",COUNTA(FILTER('Daily Log'!H2:H500,'Daily Log'!L2:L500=wk,'Daily Log'!N2:N500=FALSE,LOWER(TRIM('Daily Log'!H2:H500))="yes")))))
+
+I2 — Readiness Status
+(Current threshold updated so only weeks with fewer than 2 logged days are Low Data)
+=ARRAYFORMULA(IF(A2:A500="","",IF(G2:G500<2,"Low Data",IF((D2:D500<2.5)*(H2:H500>=4),"Deload",IF(D2:D500>=4.25,"High",IF(D2:D500>=3.25,"Moderate","Low"))))))
+
+J2 — Readiness Score Band
+=ARRAYFORMULA(IF(I2:I500="","",LOWER(SUBSTITUTE(I2:I500," ","_"))))
+
+K2 — Volume Mode
+=ARRAYFORMULA(IF(J2:J500="","",IF(J2:J500="high","Push",IF(J2:J500="moderate","Maintain",IF(J2:J500="low","Pullback",IF(J2:J500="deload","Deload","Maintain"))))))
+
+L2 — Volume Adjustment %
+=ARRAYFORMULA(IF(J2:J500="","",IF(J2:J500="high",5%,IF(J2:J500="moderate",0%,IF(J2:J500="low",-5%,IF(J2:J500="deload",-10%,0%))))))
+
+M2 — Calorie Adjustment
+=ARRAYFORMULA(IF(A2:A500="","",IF(F2:F500="","",IF(F2:F500<=0.25,150,IF(F2:F500<=0.75,0,-100)))))
+
+N2 — Deload Flag
+=ARRAYFORMULA(IF(I2:I500="","",I2:I500="Deload"))
+
+O2 — Progression Focus
+=MAP(I2:I500,N2:N500,LAMBDA(status,deload,IF(status="","",IFS(
+deload=TRUE,"Recover and resensitize",
+status="High","Push load or reps on main lifts",
+status="Moderate","Maintain quality and progress conservatively",
+status="Low","Reduce fatigue and keep execution sharp",
+status="Low Data","Improve logging consistency before changing training",
+TRUE,"Maintain execution quality"
+))))
+
+P2 — Weekly Strategy Label
+=MAP(I2:I500,K2:K500,LAMBDA(status,volmode,IF(status="","",IFS(
+status="Deload","deload_week",
+status="Low Data","low_data_week",
+status="High","push_week",
+status="Moderate","maintain_week",
+status="Low","pullback_week",
+TRUE,"maintain_week"
+))))
+
+Q2 — Data Quality Flag
+=MAP(G2:G500,LAMBDA(days,IF(days="","",IFS(
+days>=3,"good_data",
+days=2,"moderate_data",
+days=1,"low_data",
+TRUE,"low_data"
+))))
+
+R2 — Trigger Reason
+=MAP(D2:D500,G2:G500,H2:H500,I2:I500,LAMBDA(avgrec,days,workouts,status,IF(status="","",IFS(
+status="Low Data","Days logged below minimum data threshold",
+status="Deload","Average recovery is below deload threshold with enough completed workouts",
+status="High","Average recovery is at or above the high readiness threshold",
+status="Moderate","Average recovery is in the moderate readiness range",
+status="Low","Average recovery is below the moderate readiness range",
+TRUE,"Rule-based weekly decision"
+))))
+
+S2 — Training Note
+=MAP(I2:I500,LAMBDA(status,IF(status="","",IFS(
+status="High","Readiness is high, so push load or reps on your main lifts while technique stays sharp.",
+status="Moderate","Hold current volume and focus on crisp execution with small week-to-week progress.",
+status="Low","Keep progression conservative and re-establish consistent training rhythm this week.",
+status="Deload","Strip volume back this week and use the deload to set up the next productive build phase.",
+status="Low Data","Log more days this week before making bigger training changes.",
+TRUE,"Train with control and prioritize quality work."
+))))
+
+T2 — Recovery Note
+=MAP(I2:I500,LAMBDA(status,IF(status="","",IFS(
+status="High","Recovery markers look strong. Keep sleep, stress control, and routine stable so readiness stays high.",
+status="Moderate","Recovery is acceptable but not exceptional. Protect sleep and keep non-training fatigue under control.",
+status="Low","Recovery is trending down. Reduce unnecessary fatigue, prioritize sleep, and keep effort disciplined.",
+status="Deload","This is a recovery-first week. Let fatigue come down so performance can rebound.",
+status="Low Data","More daily recovery entries will improve weekly coaching accuracy.",
+TRUE,"Keep recovery habits consistent this week."
+))))
+
+U2 — Nutrition Note
+=MAP(M2:M500,LAMBDA(caladj,IF(caladj="","",IFS(
+caladj=150,"Rate of gain is below target. Increase intake by about 150 calories per day this week.",
+caladj=0,"Bodyweight is moving at the right pace. Keep calories steady this week.",
+caladj=-100,"Weight is rising faster than target. Pull calories back slightly to keep the bulk cleaner.",
+TRUE,"Keep nutrition consistent with the current goal."
+))))
+
+V2 — Coach Notes
+=MAP(S2:S500,T2:T500,U2:U500,LAMBDA(train,recover,nutri,IF(train="","",train&CHAR(10)&CHAR(10)&recover&CHAR(10)&CHAR(10)&nutri)))
+
+W2 — System Version
+=ARRAYFORMULA(IF(A2:A500="","","rule_engine_v2"))
+
+
+DAILY LOG HELPER COLUMNS
+
+J2 — Recovery Score
+=ARRAYFORMULA(IF(A2:A500="","",IF((D2:D500="")+(E2:E500="")+(F2:F500="")+(G2:G500=""),"",ROUND((D2:D500+F2:F500+(6-E2:E500)+(6-G2:G500))/4,2))))
+
+K2 — Program Week #
+=ARRAYFORMULA(IF(L2:L500="","",MATCH(L2:L500,SORT(UNIQUE(FILTER(L2:L500,L2:L500<>""))),0)))
+
+L2 — Program Week Start
+=ARRAYFORMULA(IF(A2:A500="","",A2:A500-MOD(WEEKDAY(A2:A500,2)-4,7)))
+
+M2 — Program Week Key
+=ARRAYFORMULA(IF(K2:K500="","","P1-W"&TEXT(K2:K500,"00")))
+
+N2:N500 — Ignore Row
+(Checkbox column; no formula)
+
+
+RULE SUMMARY
+
+- Low Data when Days Logged < 2
+- Deload when Avg Recovery < 2.5 AND Workouts Completed >= 4
+- High when Avg Recovery >= 4.25
+- Moderate when Avg Recovery >= 3.25
+- Low otherwise
+
+- High -> Push -> +5%
+- Moderate -> Maintain -> 0%
+- Low -> Pullback -> -5%
+- Deload -> Deload -> -10%
+- Low Data -> Maintain -> 0%
+
+- Calorie Adjustment:
+  <= 0.25 lb/week change -> +150
+  0.26 to 0.75 -> 0
+  > 0.75 -> -100

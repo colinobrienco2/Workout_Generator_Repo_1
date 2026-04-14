@@ -1,0 +1,1074 @@
+[
+  {
+    "exercise_id": "barbell_back_squat",
+    "name": "Barbell Back Squat",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "legs_slot"
+    ],
+    "movement_type": "squat",
+    "primary_muscle": "quads",
+    "secondary_muscle": "glutes",
+    "equipment": "barbell",
+    "difficulty": "high_skill",
+    "is_staple": true,
+    "media_key": "barbell_back_squat",
+    "substitution_ids": [
+      "goblet_squat",
+      "hack_squat",
+      "leg_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Brace first and control the bottom before driving up.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "front_squat",
+    "name": "Front Squat",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "legs_slot"
+    ],
+    "movement_type": "squat",
+    "primary_muscle": "quads",
+    "secondary_muscle": "core",
+    "equipment": "barbell",
+    "difficulty": "high_skill",
+    "is_staple": true,
+    "media_key": "front_squat",
+    "substitution_ids": [
+      "goblet_squat",
+      "hack_squat"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Brace first and control the bottom before driving up.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "goblet_squat",
+    "name": "Goblet Squat",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "legs_slot"
+    ],
+    "movement_type": "squat",
+    "primary_muscle": "quads",
+    "secondary_muscle": "glutes",
+    "equipment": "dumbbell",
+    "difficulty": "moderate_skill",
+    "is_staple": false,
+    "media_key": "goblet_squat",
+    "substitution_ids": [
+      "front_squat",
+      "leg_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Brace first and control the bottom before driving up.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "leg_press",
+    "name": "Leg Press",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "legs_slot"
+    ],
+    "movement_type": "squat",
+    "primary_muscle": "quads",
+    "secondary_muscle": "glutes",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "leg_press",
+    "substitution_ids": [
+      "hack_squat",
+      "goblet_squat"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "machine_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Brace first and control the bottom before driving up.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "hack_squat",
+    "name": "Hack Squat",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "legs_slot"
+    ],
+    "movement_type": "squat",
+    "primary_muscle": "quads",
+    "secondary_muscle": "glutes",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "hack_squat",
+    "substitution_ids": [
+      "leg_press",
+      "front_squat"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "machine_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Brace first and control the bottom before driving up.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "bulgarian_split_squat",
+    "name": "Bulgarian Split Squat",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "legs_slot"
+    ],
+    "movement_type": "unilateral_knee_dominant",
+    "primary_muscle": "quads",
+    "secondary_muscle": "glutes",
+    "equipment": "dumbbell",
+    "difficulty": "moderate_skill",
+    "is_staple": false,
+    "media_key": "bulgarian_split_squat",
+    "substitution_ids": [
+      "walking_lunges",
+      "step_ups"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Stay balanced and let the front leg do the work.",
+      "default_progression_method": "add_reps_then_load"
+    }
+  },
+  {
+    "exercise_id": "walking_lunges",
+    "name": "Walking Lunges",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "legs_slot"
+    ],
+    "movement_type": "unilateral_knee_dominant",
+    "primary_muscle": "quads",
+    "secondary_muscle": "glutes",
+    "equipment": "dumbbell",
+    "difficulty": "moderate_skill",
+    "is_staple": false,
+    "media_key": "walking_lunges",
+    "substitution_ids": [
+      "bulgarian_split_squat",
+      "step_ups"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Stay balanced and let the front leg do the work.",
+      "default_progression_method": "add_reps_then_load"
+    }
+  },
+  {
+    "exercise_id": "step_ups",
+    "name": "Step-Ups",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "legs_slot"
+    ],
+    "movement_type": "unilateral_knee_dominant",
+    "primary_muscle": "quads",
+    "secondary_muscle": "glutes",
+    "equipment": "dumbbell",
+    "difficulty": "moderate_skill",
+    "is_staple": false,
+    "media_key": "step_ups",
+    "substitution_ids": [
+      "bulgarian_split_squat",
+      "walking_lunges"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Stay balanced and let the front leg do the work.",
+      "default_progression_method": "add_reps_then_load"
+    }
+  },
+  {
+    "exercise_id": "romanian_deadlift",
+    "name": "Romanian Deadlift",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "legs_slot"
+    ],
+    "movement_type": "hinge",
+    "primary_muscle": "hamstrings",
+    "secondary_muscle": "glutes",
+    "equipment": "barbell",
+    "difficulty": "high_skill",
+    "is_staple": true,
+    "media_key": "romanian_deadlift",
+    "substitution_ids": [
+      "dumbbell_rdl"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep the hinge controlled and maintain tension through the hamstrings.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "dumbbell_rdl",
+    "name": "Dumbbell RDL",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "legs_slot"
+    ],
+    "movement_type": "hinge",
+    "primary_muscle": "hamstrings",
+    "secondary_muscle": "glutes",
+    "equipment": "dumbbell",
+    "difficulty": "moderate_skill",
+    "is_staple": false,
+    "media_key": "dumbbell_rdl",
+    "substitution_ids": [
+      "romanian_deadlift"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep the hinge controlled and maintain tension through the hamstrings.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "hip_thrust",
+    "name": "Hip Thrust",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "legs_slot"
+    ],
+    "movement_type": "hinge",
+    "primary_muscle": "glutes",
+    "secondary_muscle": "hamstrings",
+    "equipment": "barbell",
+    "difficulty": "high_skill",
+    "is_staple": false,
+    "media_key": "hip_thrust",
+    "substitution_ids": [
+      "glute_bridge",
+      "cable_kickback"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep the hinge controlled and maintain tension through the hamstrings.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "glute_bridge",
+    "name": "Glute Bridge",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "legs_slot"
+    ],
+    "movement_type": "hinge",
+    "primary_muscle": "glutes",
+    "secondary_muscle": "",
+    "equipment": "bodyweight",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "glute_bridge",
+    "substitution_ids": [
+      "hip_thrust"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep the hinge controlled and maintain tension through the hamstrings.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "leg_curl_seated",
+    "name": "Leg Curl (Seated)",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "isolation",
+      "legs_slot"
+    ],
+    "movement_type": "leg_curl",
+    "primary_muscle": "hamstrings",
+    "secondary_muscle": "",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "leg_curl_seated",
+    "substitution_ids": [
+      "leg_curl_lying"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "machine_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Control the eccentric and keep your hips stable.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "leg_curl_lying",
+    "name": "Leg Curl (Lying)",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "isolation",
+      "legs_slot"
+    ],
+    "movement_type": "leg_curl",
+    "primary_muscle": "hamstrings",
+    "secondary_muscle": "",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "leg_curl_lying",
+    "substitution_ids": [
+      "leg_curl_seated"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "machine_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Control the eccentric and keep your hips stable.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "leg_extension",
+    "name": "Leg Extension",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "isolation",
+      "legs_slot"
+    ],
+    "movement_type": "knee_extension",
+    "primary_muscle": "quads",
+    "secondary_muscle": "",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "leg_extension",
+    "substitution_ids": [],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "machine_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use a smooth squeeze at the top without swinging.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "standing_calf_raise",
+    "name": "Standing Calf Raise",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "isolation",
+      "legs_slot"
+    ],
+    "movement_type": "calf_raise",
+    "primary_muscle": "calves",
+    "secondary_muscle": "",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "standing_calf_raise",
+    "substitution_ids": [
+      "seated_calf_raise"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "machine_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use full range and a hard peak contraction at the top.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "seated_calf_raise",
+    "name": "Seated Calf Raise",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "isolation",
+      "legs_slot"
+    ],
+    "movement_type": "calf_raise",
+    "primary_muscle": "calves",
+    "secondary_muscle": "",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "seated_calf_raise",
+    "substitution_ids": [
+      "standing_calf_raise"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "machine_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use full range and a hard peak contraction at the top.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "barbell_overhead_press",
+    "name": "Barbell Overhead Press",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "shoulders_slot"
+    ],
+    "movement_type": "vertical_press",
+    "primary_muscle": "front_delts",
+    "secondary_muscle": "triceps",
+    "equipment": "barbell",
+    "difficulty": "high_skill",
+    "is_staple": true,
+    "media_key": "barbell_overhead_press",
+    "substitution_ids": [
+      "dumbbell_shoulder_press",
+      "machine_shoulder_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": true,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep your ribcage stacked and press in a controlled path.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "dumbbell_shoulder_press",
+    "name": "Dumbbell Shoulder Press",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "shoulders_slot"
+    ],
+    "movement_type": "vertical_press",
+    "primary_muscle": "front_delts",
+    "secondary_muscle": "triceps",
+    "equipment": "dumbbell",
+    "difficulty": "moderate_skill",
+    "is_staple": true,
+    "media_key": "dumbbell_shoulder_press",
+    "substitution_ids": [
+      "barbell_overhead_press",
+      "machine_shoulder_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep your ribcage stacked and press in a controlled path.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "machine_shoulder_press",
+    "name": "Machine Shoulder Press",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "primary_compound",
+      "shoulders_slot"
+    ],
+    "movement_type": "vertical_press",
+    "primary_muscle": "front_delts",
+    "secondary_muscle": "triceps",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "machine_shoulder_press",
+    "substitution_ids": [
+      "dumbbell_shoulder_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "machine_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep your ribcage stacked and press in a controlled path.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "arnold_press",
+    "name": "Arnold Press",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "secondary_compound",
+      "shoulders_slot"
+    ],
+    "movement_type": "vertical_press",
+    "primary_muscle": "front_delts",
+    "secondary_muscle": "lateral_delts",
+    "equipment": "dumbbell",
+    "difficulty": "moderate_skill",
+    "is_staple": false,
+    "media_key": "arnold_press",
+    "substitution_ids": [
+      "dumbbell_shoulder_press"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Keep your ribcage stacked and press in a controlled path.",
+      "default_progression_method": "add_load_or_reps"
+    }
+  },
+  {
+    "exercise_id": "lateral_raise_dumbbell",
+    "name": "Lateral Raise (Dumbbell)",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "accessory",
+      "shoulders_slot"
+    ],
+    "movement_type": "raise",
+    "primary_muscle": "lateral_delts",
+    "secondary_muscle": "",
+    "equipment": "dumbbell",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "lateral_raise_dumbbell",
+    "substitution_ids": [
+      "cable_lateral_raise",
+      "machine_lateral_raise"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "cable_lateral_raise",
+    "name": "Cable Lateral Raise",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "accessory",
+      "shoulders_slot"
+    ],
+    "movement_type": "raise",
+    "primary_muscle": "lateral_delts",
+    "secondary_muscle": "",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "cable_lateral_raise",
+    "substitution_ids": [],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "machine_lateral_raise",
+    "name": "Machine Lateral Raise",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "accessory",
+      "shoulders_slot"
+    ],
+    "movement_type": "raise",
+    "primary_muscle": "lateral_delts",
+    "secondary_muscle": "",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "machine_lateral_raise",
+    "substitution_ids": [],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "machine_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "rear_delt_fly_dumbbell",
+    "name": "Rear Delt Fly (Dumbbell)",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "accessory",
+      "shoulders_slot"
+    ],
+    "movement_type": "fly",
+    "primary_muscle": "rear_delts",
+    "secondary_muscle": "",
+    "equipment": "dumbbell",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "rear_delt_fly_dumbbell",
+    "substitution_ids": [
+      "reverse_pec_deck",
+      "face_pull"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "reverse_pec_deck",
+    "name": "Reverse Pec Deck",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "accessory",
+      "shoulders_slot"
+    ],
+    "movement_type": "fly",
+    "primary_muscle": "rear_delts",
+    "secondary_muscle": "",
+    "equipment": "machine",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "reverse_pec_deck",
+    "substitution_ids": [
+      "rear_delt_fly",
+      "face_pull"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "machine_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "face_pull",
+    "name": "Face Pull",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "accessory",
+      "shoulders_slot"
+    ],
+    "movement_type": "pull",
+    "primary_muscle": "rear_delts",
+    "secondary_muscle": "upper_back",
+    "equipment": "cable",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": true,
+    "media_key": "face_pull",
+    "substitution_ids": [
+      "reverse_pec_deck"
+    ],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  },
+  {
+    "exercise_id": "front_raise",
+    "name": "Front Raise",
+    "split_tags": [
+      "legs_shoulders"
+    ],
+    "slot_tags": [
+      "accessory",
+      "shoulders_slot"
+    ],
+    "movement_type": "raise",
+    "primary_muscle": "front_delts",
+    "secondary_muscle": "",
+    "equipment": "dumbbell",
+    "difficulty": "easy_to_stabilize",
+    "is_staple": false,
+    "media_key": "front_raise",
+    "substitution_ids": [],
+    "constraints": {
+      "allowed_equipment_modes": [
+        "full_gym",
+        "hotel_gym",
+        "dumbbell_only"
+      ],
+      "avoid_when_low_readiness": false,
+      "avoid_on_deload": false,
+      "preferred_session_lengths": [
+        "short",
+        "medium",
+        "long"
+      ]
+    },
+    "coaching": {
+      "default_cue": "Use controlled form and full range of motion.",
+      "default_progression_method": "add_reps"
+    }
+  }
+]

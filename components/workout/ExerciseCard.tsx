@@ -5,8 +5,9 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { ChevronDown, RefreshCw, Play, Dumbbell } from "lucide-react"
+import { ChevronDown, RefreshCw, Play, Dumbbell, Gauge } from "lucide-react"
 import type { Exercise } from "@/lib/workout-types"
+import { formatEffortLabel } from "@/lib/formatters/effort-label"
 
 interface ExerciseCardProps {
   exercise: Exercise
@@ -23,12 +24,10 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
         <div className="p-4">
           <div className="flex items-start justify-between gap-4">
             <div className="flex gap-3 flex-1 min-w-0">
-              {/* Exercise number */}
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold text-sm">
                 {index}
               </div>
-              
-              {/* Exercise info */}
+
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <h4 className="font-semibold text-foreground">{exercise.name}</h4>
@@ -40,14 +39,11 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
                   <Badge variant="outline" className="text-xs font-normal">
                     {exercise.category}
                   </Badge>
-                  <span className="text-xs text-muted-foreground">
-                    {exercise.primary_muscle}
-                  </span>
+                  <span className="text-xs text-muted-foreground">{exercise.primary_muscle}</span>
                 </div>
               </div>
             </div>
 
-            {/* Sets x Reps prominently displayed */}
             <div className="text-right shrink-0">
               <div className="text-lg font-bold text-foreground">
                 {exercise.sets} x {exercise.reps}
@@ -56,28 +52,25 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
             </div>
           </div>
 
-          {/* Equipment and effort */}
-          <div className="mt-3 flex items-center gap-4 text-sm">
+          <div className="mt-3 flex items-center gap-4 text-sm flex-wrap">
             <div className="flex items-center gap-1.5 text-muted-foreground">
               <Dumbbell className="h-3.5 w-3.5" />
               <span className="text-xs">{exercise.equipment}</span>
             </div>
-            <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-0 text-xs">
-              {exercise.effort_target}
+            <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-0 text-xs gap-1">
+              <Gauge className="h-3 w-3" />
+              Effort: {formatEffortLabel(exercise.effort_target)}
             </Badge>
           </div>
 
-          {/* Cue */}
           <div className="mt-3 rounded-md bg-muted/50 p-3">
             <p className="text-sm text-muted-foreground italic">&ldquo;{exercise.cue}&rdquo;</p>
           </div>
 
-          {/* Progression */}
           <p className="mt-2 text-xs text-muted-foreground">
             <span className="font-medium text-foreground">Progression:</span> {exercise.progression}
           </p>
 
-          {/* Media placeholder and actions */}
           <div className="mt-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="flex h-12 w-20 items-center justify-center rounded-md bg-muted">
@@ -92,6 +85,7 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
               size="sm"
               onClick={() => onSwap(exercise.exercise_id)}
               className="gap-1.5"
+              disabled={!exercise.allowed_swap_ids?.length}
             >
               <RefreshCw className="h-3.5 w-3.5" />
               Swap
@@ -99,7 +93,6 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
           </div>
         </div>
 
-        {/* Expandable tips */}
         {exercise.tips && exercise.tips.length > 0 && (
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger asChild>

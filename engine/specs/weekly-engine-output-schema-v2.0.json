@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Weekly Engine Output v2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "program_week_number",
+    "program_week_key",
+    "readiness_status",
+    "readiness_score_band",
+    "volume_mode",
+    "volume_adjustment_pct",
+    "calorie_adjustment",
+    "deload_flag",
+    "progression_focus",
+    "weekly_strategy_label",
+    "data_quality_flag",
+    "trigger_reason",
+    "training_note",
+    "recovery_note",
+    "nutrition_note",
+    "coach_notes",
+    "system_version"
+  ],
+  "properties": {
+    "program_week_number": {
+      "type": [
+        "integer",
+        "string"
+      ]
+    },
+    "program_week_key": {
+      "type": "string"
+    },
+    "readiness_status": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Moderate",
+        "Low",
+        "Deload",
+        "Low Data"
+      ]
+    },
+    "readiness_score_band": {
+      "type": "string",
+      "enum": [
+        "high",
+        "moderate",
+        "low",
+        "deload",
+        "low_data"
+      ]
+    },
+    "volume_mode": {
+      "type": "string",
+      "enum": [
+        "Push",
+        "Maintain",
+        "Pullback",
+        "Deload"
+      ]
+    },
+    "volume_adjustment_pct": {
+      "type": "number",
+      "enum": [
+        0.05,
+        0,
+        -0.05,
+        -0.1
+      ]
+    },
+    "calorie_adjustment": {
+      "type": "integer",
+      "enum": [
+        150,
+        0,
+        -100
+      ]
+    },
+    "deload_flag": {
+      "type": "boolean"
+    },
+    "progression_focus": {
+      "type": "string"
+    },
+    "weekly_strategy_label": {
+      "type": "string",
+      "enum": [
+        "push_week",
+        "maintain_week",
+        "pullback_week",
+        "deload_week",
+        "low_data_week"
+      ]
+    },
+    "data_quality_flag": {
+      "type": "string",
+      "enum": [
+        "good_data",
+        "moderate_data",
+        "low_data"
+      ]
+    },
+    "trigger_reason": {
+      "type": "string"
+    },
+    "training_note": {
+      "type": "string"
+    },
+    "recovery_note": {
+      "type": "string"
+    },
+    "nutrition_note": {
+      "type": "string"
+    },
+    "coach_notes": {
+      "type": "string"
+    },
+    "system_version": {
+      "type": "string",
+      "const": "rule_engine_v2"
+    }
+  }
+}
