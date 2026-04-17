@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 import ConnectSheet from "@/components/connect-sheet"
 import { WorkoutSettingsForm } from "@/components/workout/WorkoutSettingsForm"
 import { WorkoutCard } from "@/components/workout/WorkoutCard"
+import { CoachPanel } from "@/components/workout/CoachPanel"
 import { EmptyState } from "@/components/workout/EmptyState"
 import { LoadingState } from "@/components/workout/LoadingState"
 import { ErrorState } from "@/components/workout/ErrorState"
@@ -20,7 +21,13 @@ function mapScoreBand(scoreBand: string): "green" | "yellow" | "red" {
   const normalized = scoreBand.toLowerCase()
 
   if (normalized.includes("high") || normalized === "green") return "green"
-  if (normalized.includes("moderate") || normalized.includes("medium") || normalized === "yellow") {
+  if (
+    normalized.includes("moderate") ||
+    normalized.includes("medium") ||
+    normalized.includes("low_data") ||
+    normalized.includes("low data") ||
+    normalized === "yellow"
+  ) {
     return "yellow"
   }
   return "red"
@@ -64,14 +71,13 @@ function mapRenderedWorkoutToLegacy(rendered: RenderedWorkout): Workout {
     progression_summary: {
       primary_goal: rendered.progression_summary.progression_focus,
       week_strategy: rendered.progression_summary.week_strategy,
-      load_bias:
-        rendered.progression_summary.deload_flag
-          ? "Deload / reduced fatigue"
-          : rendered.progression_summary.calorie_adjustment > 0
-            ? "Support recovery and growth"
-            : rendered.progression_summary.calorie_adjustment < 0
-              ? "Slight nutritional pullback"
-              : "Maintain current course",
+      load_bias: rendered.progression_summary.deload_flag
+        ? "Deload / reduced fatigue"
+        : rendered.progression_summary.calorie_adjustment > 0
+          ? "Support recovery and growth"
+          : rendered.progression_summary.calorie_adjustment < 0
+            ? "Slight nutritional pullback"
+            : "Maintain current course",
     },
     exercises: rendered.exercises.map(mapRenderedExerciseToLegacy),
   }
@@ -237,9 +243,7 @@ export default function WorkoutGeneratorPage() {
           </section>
 
           <aside className="lg:sticky lg:top-8 lg:self-start">
-            <div className="rounded-xl border border-border/50 bg-card p-4 text-sm text-muted-foreground">
-              Connected to your personal Google Sheets training engine.
-            </div>
+            <CoachPanel />
           </aside>
         </div>
       </main>
