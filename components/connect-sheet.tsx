@@ -77,8 +77,13 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
             <p className="font-medium text-foreground mb-2">Quick setup</p>
             <ol className="space-y-1 list-decimal pl-5">
               <li>Make a copy of the workout tracker sheet.</li>
-              <li>Open Extensions → Apps Script.</li>
-              <li>Deploy the script as a Web App with access set to Anyone.</li>
+              <li>In Sheets:
+                <ul className="list-disc pl-5 mt-1">
+                  <li>Open Extensions → Apps Script → Code.gs</li>
+                  <li>Create a new deployment → Select type: Web App (name it whatever) → Give access to anyone</li>
+                  <li>Deploy → Authorize access</li>
+                </ul>
+              </li>
               <li>Copy the deployment URL and paste it here.</li>
             </ol>
           </div>
