@@ -1,24 +1,59 @@
 {
-  "version": "2.0",
+  "version": "3.0",
   "categories": [
     {
       "category_id": "weekly_strategy",
       "label": "Weekly Strategy",
       "questions": [
         {
-          "question_id": "why_this_week",
+          "question_id": "why_this_week_strategy",
           "label": "Why is this my week strategy?",
-          "response_template": "Explain weekly_strategy_label using readiness_status, trigger_reason, and progression_focus."
+          "response_template": "Explain the current weekly strategy using readiness_status, trigger_reason, and coach_notes."
         },
         {
           "question_id": "why_volume_changed",
           "label": "Why did volume change?",
-          "response_template": "Explain volume_mode and volume_adjustment_pct in plain language."
+          "response_template": "Explain volume adjustments using volume_mode, volume_adjustment_pct, trigger_reason, and readiness context."
         },
         {
-          "question_id": "what_low_data_means",
-          "label": "What does low data mean?",
-          "response_template": "Explain data_quality_flag and the minimum logging threshold."
+          "question_id": "why_volume_stayed_same",
+          "label": "Why did volume stay the same?",
+          "response_template": "Explain why no major adjustment was needed and connect it to stable readiness or data."
+        },
+        {
+          "question_id": "what_is_progression_focus",
+          "label": "What is my progression focus this week?",
+          "response_template": "Explain progression_focus and how the user should approach the training week."
+        },
+        {
+          "question_id": "why_am_i_in_deload",
+          "label": "Why am I in a deload week?",
+          "response_template": "Use deload_flag, readiness_status, and recovery context to explain why a deload was triggered."
+        },
+        {
+          "question_id": "what_if_i_feel_better_than_plan",
+          "label": "What if I feel better than this plan suggests?",
+          "response_template": "Explain why the plan still follows logged data and encourage consistency over impulsive changes."
+        },
+        {
+          "question_id": "what_if_i_feel_worse_than_plan",
+          "label": "What if I feel worse than this plan suggests?",
+          "response_template": "Explain how the user should use judgment while still respecting the program structure and logging accuracy."
+        },
+        {
+          "question_id": "how_readiness_changes_week",
+          "label": "How does readiness change the week?",
+          "response_template": "Explain how readiness_status affects intensity, volume, and coaching recommendations."
+        },
+        {
+          "question_id": "what_drives_weekly_adjustments",
+          "label": "What drives weekly adjustments?",
+          "response_template": "Explain which weekly signals influence changes, such as recovery, completion, and logged data."
+        },
+        {
+          "question_id": "how_should_i_approach_this_week",
+          "label": "How should I approach this week overall?",
+          "response_template": "Give a practical summary of the week's training mindset using coach_notes, training_note, and readiness context."
         }
       ]
     },
@@ -27,30 +62,54 @@
       "label": "Exercise Help",
       "questions": [
         {
-          "question_id": "focus_on_this_movement",
-          "label": "What should I focus on for this movement?",
-          "response_template": "Use exercise coaching text + progression_focus."
-        },
-        {
-          "question_id": "why_this_exercise",
+          "question_id": "why_is_this_exercise_here",
           "label": "Why is this exercise here?",
-          "response_template": "Explain slot role and split logic."
-        }
-      ]
-    },
-    {
-      "category_id": "exercise_swap",
-      "label": "Exercise Swaps",
-      "questions": [
-        {
-          "question_id": "swap_for_dumbbell",
-          "label": "Can I swap this for a dumbbell version?",
-          "response_template": "Check candidate substitutions filtered to dumbbell-compatible options."
+          "response_template": "Explain the likely role of the selected movement in the workout structure."
         },
         {
-          "question_id": "why_no_swap_available",
-          "label": "Why can\u2019t this be swapped?",
-          "response_template": "Explain slot lock, equipment limits, or empty candidate list."
+          "question_id": "what_should_i_focus_on",
+          "label": "What should I focus on for this movement?",
+          "response_template": "Give execution intent such as control, stretch, stability, tension, or output."
+        },
+        {
+          "question_id": "what_is_the_goal_of_this_exercise",
+          "label": "What is the goal of this exercise?",
+          "response_template": "Explain whether the movement is for main stimulus, accessory work, skill, or fatigue-efficient volume."
+        },
+        {
+          "question_id": "why_this_order_in_workout",
+          "label": "Why is this placed here in the workout?",
+          "response_template": "Explain why an exercise may appear earlier or later based on fatigue, stability, and priority."
+        },
+        {
+          "question_id": "should_i_push_or_control_reps",
+          "label": "Should I push hard or control the reps here?",
+          "response_template": "Explain whether the emphasis should be on effort, control, or clean execution."
+        },
+        {
+          "question_id": "what_makes_this_different",
+          "label": "What makes this different from similar movements?",
+          "response_template": "Explain how the movement may provide a slightly different training effect than another common exercise."
+        },
+        {
+          "question_id": "how_should_this_feel",
+          "label": "How should this exercise feel when done right?",
+          "response_template": "Describe the intended muscle feel and execution quality in general terms."
+        },
+        {
+          "question_id": "is_this_main_or_accessory",
+          "label": "Is this a main lift or accessory movement?",
+          "response_template": "Classify the movement's role in the session structure."
+        },
+        {
+          "question_id": "what_common_mistake_should_i_avoid",
+          "label": "What common mistake should I avoid here?",
+          "response_template": "Give a simple deterministic coaching caution focused on control and intent."
+        },
+        {
+          "question_id": "how_does_this_help_the_workout",
+          "label": "How does this help the rest of the workout?",
+          "response_template": "Explain how the movement supports the full session and broader training goal."
         }
       ]
     },
@@ -59,14 +118,54 @@
       "label": "Logging & Data",
       "questions": [
         {
-          "question_id": "how_to_improve_accuracy",
+          "question_id": "how_improve_coaching_accuracy",
           "label": "How do I improve coaching accuracy?",
-          "response_template": "Point to logging consistency, days logged, and recovery entries."
+          "response_template": "Explain that complete and consistent logging improves deterministic recommendations."
         },
         {
           "question_id": "what_counts_as_completed_workout",
           "label": "What counts as a completed workout?",
-          "response_template": "Explain the workout completed input and its downstream impact."
+          "response_template": "Explain what should qualify as completed in a practical product sense."
+        },
+        {
+          "question_id": "what_does_low_data_mean",
+          "label": "What does low data mean?",
+          "response_template": "Explain data_quality_flag and why missing or inconsistent data weakens guidance."
+        },
+        {
+          "question_id": "why_logging_consistency_matters",
+          "label": "Why does logging consistency matter?",
+          "response_template": "Explain why trend quality matters more than one-off entries."
+        },
+        {
+          "question_id": "what_should_i_log_every_time",
+          "label": "What should I log every time?",
+          "response_template": "Explain which fields matter most for stable recommendations."
+        },
+        {
+          "question_id": "what_happens_if_i_skip_logs",
+          "label": "What happens if I skip logs?",
+          "response_template": "Explain how incomplete data reduces confidence and can flatten the coaching quality."
+        },
+        {
+          "question_id": "does_one_bad_entry_matter",
+          "label": "Does one bad entry matter?",
+          "response_template": "Explain that one bad entry usually matters less than repeated inconsistency."
+        },
+        {
+          "question_id": "how_often_should_i_log",
+          "label": "How often should I log for best results?",
+          "response_template": "Give practical guidance on frequency and consistency."
+        },
+        {
+          "question_id": "why_system_needs_my_inputs",
+          "label": "Why does the system need my inputs?",
+          "response_template": "Explain how deterministic logic relies on user-reported data."
+        },
+        {
+          "question_id": "how_do_i_get_better_recommendations",
+          "label": "How do I get better recommendations?",
+          "response_template": "Explain that better recommendations come from better logs, workout completion, and consistent behavior."
         }
       ]
     },
@@ -75,14 +174,54 @@
       "label": "Nutrition",
       "questions": [
         {
-          "question_id": "why_calories_changed",
+          "question_id": "why_did_calories_change",
           "label": "Why did calories change?",
-          "response_template": "Use calorie_adjustment and nutrition_note."
+          "response_template": "Explain calorie_adjustment and connect it to weekly performance or trend context."
         },
         {
-          "question_id": "why_calories_stayed_same",
+          "question_id": "why_did_calories_stay_same",
           "label": "Why did calories stay the same?",
-          "response_template": "Use weekly weight-change band logic."
+          "response_template": "Explain why current intake may still be aligned with the weekly trend."
+        },
+        {
+          "question_id": "how_does_nutrition_support_week",
+          "label": "How does nutrition support this week?",
+          "response_template": "Explain how nutrition supports recovery, performance, and the current weekly goal."
+        },
+        {
+          "question_id": "should_i_change_food_quality",
+          "label": "Should I change food quality or just calories?",
+          "response_template": "Explain the difference between total intake and food quality in a practical way."
+        },
+        {
+          "question_id": "what_if_hunger_is_high",
+          "label": "What if my hunger is high this week?",
+          "response_template": "Give practical guidance while keeping the user aligned with the current plan."
+        },
+        {
+          "question_id": "what_if_appetite_is_low",
+          "label": "What if my appetite is low this week?",
+          "response_template": "Explain how to stay consistent with the plan despite reduced appetite."
+        },
+        {
+          "question_id": "do_calories_affect_recovery",
+          "label": "Do calories affect recovery?",
+          "response_template": "Explain the relationship between intake and recovery quality."
+        },
+        {
+          "question_id": "how_should_i_think_about_adjustments",
+          "label": "How should I think about calorie adjustments?",
+          "response_template": "Explain that calorie changes are strategic nudges, not random fluctuations."
+        },
+        {
+          "question_id": "what_if_scale_is_not_moving",
+          "label": "What if the scale is not moving how I expected?",
+          "response_template": "Explain how the system interprets trend data and why patience matters."
+        },
+        {
+          "question_id": "what_should_i_do_nutrition_this_week",
+          "label": "What should I do nutrition-wise this week?",
+          "response_template": "Give a simple practical weekly nutrition summary based on adjustment and coaching context."
         }
       ]
     },
@@ -91,14 +230,54 @@
       "label": "Recovery",
       "questions": [
         {
-          "question_id": "how_recovery_affects_training",
+          "question_id": "how_does_recovery_affect_workout",
           "label": "How does recovery affect this workout?",
-          "response_template": "Use readiness_status, trigger_reason, and recovery_note."
+          "response_template": "Explain how recovery state changes training recommendations and session feel."
         },
         {
-          "question_id": "what_to_do_on_deload",
+          "question_id": "what_should_i_do_on_deload_week",
           "label": "What should I do on a deload week?",
-          "response_template": "Use deload_flag, progression_focus, and recovery_note."
+          "response_template": "Explain how to train during a deload and what the week is meant to accomplish."
+        },
+        {
+          "question_id": "what_does_low_recovery_change",
+          "label": "What does low recovery change?",
+          "response_template": "Explain how low recovery influences volume, intensity, and expectations."
+        },
+        {
+          "question_id": "why_recovery_matters_so_much",
+          "label": "Why does recovery matter so much?",
+          "response_template": "Explain why recovery is central to good progression."
+        },
+        {
+          "question_id": "what_if_i_am_sore_but_can_train",
+          "label": "What if I am sore but still can train?",
+          "response_template": "Explain how to distinguish manageable fatigue from a real need to pull back."
+        },
+        {
+          "question_id": "what_if_sleep_has_been_bad",
+          "label": "What if my sleep has been bad lately?",
+          "response_template": "Explain how poor sleep impacts readiness and why it matters in the system."
+        },
+        {
+          "question_id": "can_i_push_through_low_recovery",
+          "label": "Can I push through low recovery?",
+          "response_template": "Give a practical but cautious response about respecting the plan."
+        },
+        {
+          "question_id": "how_should_i_adjust_when_tired",
+          "label": "How should I adjust when I feel run down?",
+          "response_template": "Explain how to stay within the session while managing effort intelligently."
+        },
+        {
+          "question_id": "what_is_the_goal_of_recovery_week",
+          "label": "What is the goal of a lower-recovery week?",
+          "response_template": "Explain the purpose of reducing strain to preserve long-term progress."
+        },
+        {
+          "question_id": "how_can_i_support_recovery_better",
+          "label": "How can I support recovery better?",
+          "response_template": "Give practical recovery priorities like sleep, food, consistency, and not overshooting effort."
         }
       ]
     },
@@ -107,14 +286,54 @@
       "label": "Program Basics",
       "questions": [
         {
-          "question_id": "how_workouts_are_built",
+          "question_id": "how_are_workouts_built",
           "label": "How are workouts built?",
-          "response_template": "Explain deterministic split templates + exercise library + Sheets engine."
+          "response_template": "Explain the deterministic workout-building logic at a high level."
         },
         {
-          "question_id": "why_this_is_not_random",
-          "label": "Why isn\u2019t this random?",
-          "response_template": "Explain fixed slot structure, filtering, and substitution order."
+          "question_id": "why_isnt_this_random",
+          "label": "Why isn't this random?",
+          "response_template": "Explain why structure beats randomness and why the app is intentionally rule-based."
+        },
+        {
+          "question_id": "how_does_system_choose_exercises",
+          "label": "How does the system choose exercises?",
+          "response_template": "Explain that exercise selection follows structured rules, split logic, and progression intent."
+        },
+        {
+          "question_id": "why_is_structure_important",
+          "label": "Why is workout structure important?",
+          "response_template": "Explain why ordering and role assignment matter in a good session."
+        },
+        {
+          "question_id": "how_does_program_stay_consistent",
+          "label": "How does the program stay consistent?",
+          "response_template": "Explain how repeatable rules create dependable training."
+        },
+        {
+          "question_id": "what_makes_this_deterministic",
+          "label": "What makes this system deterministic?",
+          "response_template": "Explain that outputs are driven by fixed rules and logged inputs rather than AI generation."
+        },
+        {
+          "question_id": "why_not_just_generate_anything",
+          "label": "Why not just generate anything?",
+          "response_template": "Explain why controlled logic is better than novelty for training outcomes."
+        },
+        {
+          "question_id": "how_does_program_progress_over_time",
+          "label": "How does the program progress over time?",
+          "response_template": "Explain how trends and weekly context shape progression."
+        },
+        {
+          "question_id": "what_should_i_expect_from_system",
+          "label": "What should I expect from this system?",
+          "response_template": "Explain what the user should expect from the app over repeated use."
+        },
+        {
+          "question_id": "why_does_the_app_ask_for_data",
+          "label": "Why does the app ask for my weekly data?",
+          "response_template": "Explain why the system needs weekly inputs to tailor deterministic guidance."
         }
       ]
     }
