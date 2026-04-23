@@ -94,6 +94,7 @@ export default function WorkoutGeneratorPage() {
     includeAbs: true,
   })
   const [workout, setWorkout] = useState<Workout | null>(null)
+  const [weeklyStatus, setWeeklyStatus] = useState<WeeklyStatus | null>(null)
 
   useEffect(() => {
     const storedUrl = getStoredApiUrl()
@@ -105,6 +106,7 @@ export default function WorkoutGeneratorPage() {
     setApiUrl(storedUrl)
     setState("idle")
     setWorkout(null)
+    setWeeklyStatus(null)
     setErrorMessage("")
   }, [])
 
@@ -113,6 +115,7 @@ export default function WorkoutGeneratorPage() {
     setApiUrl(null)
     setState("idle")
     setWorkout(null)
+    setWeeklyStatus(null)
     setErrorMessage("")
   }, [])
 
@@ -146,9 +149,11 @@ export default function WorkoutGeneratorPage() {
       const legacyWorkout = mapRenderedWorkoutToLegacy(renderedWorkout)
 
       setWorkout(legacyWorkout)
+      setWeeklyStatus(weeklyStatus)
       setState("success")
     } catch (error) {
       setState("error")
+      setWeeklyStatus(null)
       setErrorMessage(
         error instanceof Error
           ? error.message
@@ -243,7 +248,7 @@ export default function WorkoutGeneratorPage() {
           </section>
 
           <aside className="lg:sticky lg:top-8 lg:self-start">
-            <CoachPanel />
+            <CoachPanel weeklyStatus={weeklyStatus} />
           </aside>
         </div>
       </main>
