@@ -1,9 +1,8 @@
 "use client"
 
-import { useMemo, useState, type ReactNode } from "react"
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Bot, User, HelpCircle, Timer, Wrench, BarChart3, HeartPulse, Apple } from "lucide-react"
 import guidedHelpCatalog from "@/data/tips/guided-help-categories.json"
 import type { ChatMessage, WeeklyStatus } from "@/lib/workout-types"
@@ -232,11 +231,16 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
       timestamp: new Date(),
     },
   ])
+  const messagesEndRef = useRef<HTMLDivElement | null>(null)
 
   const selectedCategory = useMemo(
     () => categories.find((category) => category.category_id === selectedCategoryId) ?? categories[0],
     [categories, selectedCategoryId],
   )
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
+  }, [messages])
 
   const handlePromptClick = (prompt: GuidedHelpPrompt) => {
     const now = Date.now()
@@ -258,16 +262,16 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
   }
 
   return (
-    <Card className="border-border/50 shadow-sm flex flex-col h-[600px]">
-      <CardHeader className="pb-3 border-b border-border/50 shrink-0">
+    <Card className="border-border/50 shadow-sm flex flex-col h-[820px] overflow-hidden">
+      <CardHeader className="pb-2 border-b border-border/50 shrink-0">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Bot className="h-5 w-5 text-primary" />
           Coach Panel
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="flex-1 flex flex-col p-0 min-h-0">
-        <ScrollArea className="flex-1 p-4">
+      <CardContent className="flex-1 flex flex-col p-0 min-h-0 overflow-hidden">
+        <div className="flex-[1.7] min-h-[360px] overflow-y-auto overscroll-contain px-4 py-3">
           <div className="space-y-4">
             {messages.map((message) => (
               <div
@@ -295,10 +299,11 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
                 )}
               </div>
             ))}
+            <div ref={messagesEndRef} />
           </div>
-        </ScrollArea>
+        </div>
 
-        <div className="px-4 py-3 border-t border-border/50 bg-muted/20 shrink-0">
+        <div className="px-4 py-2 border-t border-border/50 bg-muted/20 shrink-0">
           <p className="text-xs text-muted-foreground mb-2">Categories</p>
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
@@ -319,16 +324,18 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
         <div className="p-4 border-t border-border/50 shrink-0">
           <div className="rounded-xl border border-border/60 bg-background px-3 py-3">
             <div className="text-xs font-medium text-foreground mb-2">Choose a coach request...</div>
-            <div className="flex flex-wrap gap-2">
-              {selectedCategory?.questions.map((prompt) => (
-                <button
-                  key={prompt.question_id}
-                  onClick={() => handlePromptClick(prompt)}
-                  className="text-xs px-3 py-1.5 rounded-full border border-border bg-muted/40 hover:bg-muted transition-colors"
-                >
-                  {prompt.label}
-                </button>
-              ))}
+            <div className="h-[280px] overflow-y-auto overscroll-contain pr-1">
+              <div className="flex flex-wrap gap-2">
+                {selectedCategory?.questions.map((prompt) => (
+                  <button
+                    key={prompt.question_id}
+                    onClick={() => handlePromptClick(prompt)}
+                    className="text-xs px-3 py-1.5 rounded-full border border-border bg-muted/40 hover:bg-muted transition-colors"
+                  >
+                    {prompt.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>

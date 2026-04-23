@@ -220,7 +220,7 @@ export default function WorkoutGeneratorPage() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="grid gap-8 lg:grid-cols-[340px_1fr_380px]">
+        <div className="grid gap-8 lg:grid-cols-[340px_1fr_440px]">
           <aside className="lg:sticky lg:top-8 lg:self-start">
             <WorkoutSettingsForm
               settings={settings}
