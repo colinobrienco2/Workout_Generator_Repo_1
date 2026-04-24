@@ -262,8 +262,8 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
   }
 
   return (
-    <Card className="border-border/50 shadow-sm flex flex-col h-[820px] overflow-hidden">
-      <CardHeader className="pb-2 border-b border-border/50 shrink-0">
+    <Card className="flex h-[680px] w-full max-w-sm flex-col overflow-hidden border-border/50 shadow-sm sm:h-[720px]">
+      <CardHeader className="shrink-0 border-b border-border/50 px-4 py-4">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Bot className="h-5 w-5 text-primary" />
           Coach Panel
@@ -271,7 +271,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
       </CardHeader>
 
       <CardContent className="flex-1 flex flex-col p-0 min-h-0 overflow-hidden">
-        <div className="flex-[1.7] min-h-[360px] overflow-y-auto overscroll-contain px-4 py-3">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-3">
           <div className="space-y-4">
             {messages.map((message) => (
               <div
@@ -303,7 +303,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
           </div>
         </div>
 
-        <div className="px-4 py-2 border-t border-border/50 bg-muted/20 shrink-0">
+        <div className="shrink-0 border-t border-border/50 bg-muted/20 px-4 py-2.5">
           <p className="text-xs text-muted-foreground mb-2">Categories</p>
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
@@ -321,10 +321,10 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
           </div>
         </div>
 
-        <div className="p-4 border-t border-border/50 shrink-0">
-          <div className="rounded-xl border border-border/60 bg-background px-3 py-3">
-            <div className="text-xs font-medium text-foreground mb-2">Choose a coach request...</div>
-            <div className="h-[280px] overflow-y-auto overscroll-contain pr-1">
+        <div className="shrink-0 border-t border-border/50 p-4 pt-3">
+          <div className="overflow-hidden rounded-[22px] border border-border/60 bg-muted/35 px-3 py-3">
+            <div className="mb-2 text-xs font-medium text-foreground">Choose a coach request...</div>
+            <div className="max-h-[176px] overflow-y-auto overscroll-contain pr-1 pb-1">
               <div className="flex flex-wrap gap-2">
                 {selectedCategory?.questions.map((prompt) => (
                   <button
