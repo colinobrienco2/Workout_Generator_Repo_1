@@ -188,10 +188,11 @@ function chooseExercise(
   equipmentMode: Equipment,
   usedIds: Set<string>,
   sessionLength: SessionLength,
+  variantIndex: number,
 ): ExerciseLibraryItem | undefined {
   const allowedModes = equipmentModeMap[equipmentMode]
 
-  return library
+  const candidates = library
     .filter((exercise) => matchesSlot(exercise, slotId))
     .filter((exercise) => !usedIds.has(exercise.exercise_id))
     .filter((exercise) => {
@@ -204,7 +205,11 @@ function chooseExercise(
     })
     .filter((exercise) => !(weeklyStatus.readiness_status === "Low" && exercise.constraints?.avoid_when_low_readiness))
     .filter((exercise) => !(weeklyStatus.deload_flag && exercise.constraints?.avoid_on_deload))
-    .sort((a, b) => Number(Boolean(b.is_staple)) - Number(Boolean(a.is_staple)) || a.name.localeCompare(b.name))[0]
+    .sort((a, b) => Number(Boolean(b.is_staple)) - Number(Boolean(a.is_staple)) || a.name.localeCompare(b.name))
+
+  if (candidates.length === 0) return undefined
+
+  return candidates[variantIndex % candidates.length]
 }
 
 export function buildWorkoutFromStatus(
@@ -214,15 +219,25 @@ export function buildWorkoutFromStatus(
     sessionLength: SessionLength
     equipment: Equipment
     includeAbs: boolean
+    variantIndex?: number
   },
 ): RenderedWorkout {
   const library = getLibraryForFocus(options.trainingFocus)
   const slotIds = splitTemplates[options.trainingFocus][options.sessionLength]
   const usedIds = new Set<string>()
+  const variantIndex = options.variantIndex ?? 0
 
   const exercises: RenderedExercise[] = slotIds
-    .map((slotId) => {
-      const selected = chooseExercise(library, slotId, weeklyStatus, options.equipment, usedIds, options.sessionLength)
+    .map((slotId, slotIndex) => {
+      const selected = chooseExercise(
+        library,
+        slotId,
+        weeklyStatus,
+        options.equipment,
+        usedIds,
+        options.sessionLength,
+        variantIndex + slotIndex,
+      )
       if (!selected) return null
       usedIds.add(selected.exercise_id)
       const prescription = getPrescription(slotId, weeklyStatus.volume_mode, weeklyStatus.deload_flag)
@@ -254,10 +269,15 @@ export function buildWorkoutFromStatus(
 
   if (options.includeAbs) {
     const allowedModes = equipmentModeMap[options.equipment]
-    const absExercise = (absCoreExercises as ExerciseLibraryItem[])
+    const absCandidates = (absCoreExercises as ExerciseLibraryItem[])
       .filter((exercise) => (exercise.constraints?.allowed_equipment_modes ?? []).some((mode) => allowedModes.includes(mode)))
       .filter((exercise) => !(weeklyStatus.deload_flag && exercise.constraints?.avoid_on_deload))
-      .sort((a, b) => Number(Boolean(b.is_staple)) - Number(Boolean(a.is_staple)) || a.name.localeCompare(b.name))[0]
+      .sort((a, b) => Number(Boolean(b.is_staple)) - Number(Boolean(a.is_staple)) || a.name.localeCompare(b.name))
+
+    const absExercise =
+      absCandidates.length > 0
+        ? absCandidates[variantIndex % absCandidates.length]
+        : undefined
 
     if (absExercise) {
       const prescription = getPrescription("abs_finisher", weeklyStatus.volume_mode, weeklyStatus.deload_flag)
