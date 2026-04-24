@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
+import Image from "next/image"
 import ConnectSheet from "@/components/connect-sheet"
 import { WorkoutSettingsForm } from "@/components/workout/WorkoutSettingsForm"
 import { WorkoutCard } from "@/components/workout/WorkoutCard"
@@ -13,7 +14,6 @@ import type { WorkoutSettings, Workout, Exercise } from "@/lib/workout-types"
 import type { WeeklyStatus } from "@/lib/types/weekly-status"
 import type { RenderedWorkout, RenderedExercise } from "@/lib/types/rendered-workout"
 import { buildWorkoutFromStatus } from "@/lib/adapters/build-workout-from-status"
-import { Dumbbell } from "lucide-react"
 
 type AppState = "idle" | "loading" | "success" | "error"
 
@@ -196,9 +196,14 @@ export default function WorkoutGeneratorPage() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="rounded-lg bg-primary p-2">
-                <Dumbbell className="h-6 w-6 text-primary-foreground" />
-              </div>
+              <Image
+                src="/co2-logo.png"
+                alt="CO2 logo"
+                width={144}
+                height={144}
+                className="h-16 w-auto shrink-0"
+                priority
+              />
               <div>
                 <h1 className="text-2xl font-bold text-foreground">
                   Workout Generator
