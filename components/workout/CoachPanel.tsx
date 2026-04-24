@@ -262,7 +262,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
   }
 
   return (
-    <Card className="flex h-[680px] w-full max-w-sm flex-col overflow-hidden border-border/50 shadow-sm sm:h-[720px]">
+    <Card className="flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px]">
       <CardHeader className="shrink-0 border-b border-border/50 px-4 py-4">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Bot className="h-5 w-5 text-primary" />
@@ -271,30 +271,30 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
       </CardHeader>
 
       <CardContent className="flex-1 flex flex-col p-0 min-h-0 overflow-hidden">
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-3">
-          <div className="space-y-4">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-1.5">
+          <div className="space-y-2">
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex gap-2 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex gap-1.5 ${message.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 {message.role === "assistant" && (
-                  <div className="shrink-0 h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Bot className="h-4 w-4 text-primary" />
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                    <Bot className="h-3.5 w-3.5 text-primary" />
                   </div>
                 )}
                 <div
-                  className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
+                  className={`rounded-2xl ${
                     message.role === "user"
-                      ? "bg-primary text-primary-foreground rounded-br-md"
-                      : "bg-muted text-foreground rounded-bl-md"
+                      ? "max-w-[84%] rounded-br-md bg-primary px-3 py-1.5 text-primary-foreground"
+                      : "max-w-[92%] rounded-bl-md bg-muted px-3 py-1.5 text-foreground"
                   }`}
                 >
-                  <p className="text-sm leading-relaxed whitespace-pre-line">{message.content}</p>
+                  <p className="break-words whitespace-pre-line text-[13px] leading-[1.35]">{message.content}</p>
                 </div>
                 {message.role === "user" && (
-                  <div className="shrink-0 h-8 w-8 rounded-full bg-foreground/10 flex items-center justify-center">
-                    <User className="h-4 w-4 text-foreground" />
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-foreground/10">
+                    <User className="h-3.5 w-3.5 text-foreground" />
                   </div>
                 )}
               </div>
