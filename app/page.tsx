@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import ConnectSheet from "@/components/connect-sheet"
 import { WorkoutSettingsForm } from "@/components/workout/WorkoutSettingsForm"
@@ -13,7 +13,15 @@ import { clearStoredApiUrl, getStoredApiUrl } from "@/lib/api-url"
 import type { WorkoutSettings, Workout, Exercise } from "@/lib/workout-types"
 import type { WeeklyStatus } from "@/lib/types/weekly-status"
 import type { RenderedWorkout, RenderedExercise } from "@/lib/types/rendered-workout"
+import type { ExerciseLibraryItem } from "@/lib/types/exercise"
 import { buildWorkoutFromStatus } from "@/lib/adapters/build-workout-from-status"
+import {
+  buildProgressionNote,
+  getTips,
+  normalizeEquipment,
+  titleCase,
+} from "@/lib/adapters/build-workout-from-status"
+import { getExerciseSwapOptions } from "@/lib/adapters/get-exercise-swap-options"
 
 type AppState = "idle" | "loading" | "success" | "error"
 
@@ -50,8 +58,41 @@ function mapRenderedExerciseToLegacy(exercise: RenderedExercise): Exercise {
     progression: exercise.progression ?? "",
     media_key: exercise.media_key ?? "",
     substitution_ids: exercise.substitution_ids ?? [],
+    allowed_swap_ids: exercise.allowed_swap_ids ?? [],
+    slot_id: exercise.slot_id,
     is_abs_finisher: exercise.is_abs_finisher ?? false,
     tips: exercise.tips ?? [],
+  }
+}
+
+function formatSecondaryMuscle(secondaryMuscle?: string | string[]): string {
+  if (Array.isArray(secondaryMuscle)) {
+    return secondaryMuscle.map(titleCase).join(", ")
+  }
+
+  return secondaryMuscle ? titleCase(secondaryMuscle) : ""
+}
+
+function mapSwapCandidateToLegacy(
+  currentExercise: Exercise,
+  replacement: ExerciseLibraryItem,
+  weeklyStatus: WeeklyStatus,
+): Exercise {
+  return {
+    ...currentExercise,
+    exercise_id: replacement.exercise_id,
+    name: replacement.name,
+    movement_type: titleCase(replacement.movement_type),
+    primary_muscle: titleCase(replacement.primary_muscle),
+    secondary_muscle: formatSecondaryMuscle(replacement.secondary_muscle),
+    equipment: normalizeEquipment(replacement.equipment),
+    cue: replacement.coaching?.default_cue ?? weeklyStatus.training_note,
+    progression: buildProgressionNote(replacement, weeklyStatus),
+    media_key: replacement.media_key ?? "",
+    substitution_ids: replacement.substitution_ids ?? [],
+    allowed_swap_ids: replacement.substitution_ids ?? [],
+    last_swapped_from_id: currentExercise.exercise_id,
+    tips: getTips(replacement, weeklyStatus),
   }
 }
 
@@ -95,6 +136,8 @@ export default function WorkoutGeneratorPage() {
   })
   const [workout, setWorkout] = useState<Workout | null>(null)
   const [weeklyStatus, setWeeklyStatus] = useState<WeeklyStatus | null>(null)
+  const [lastGeneratedSettings, setLastGeneratedSettings] = useState<WorkoutSettings | null>(null)
+  const generationVariantRef = useRef(0)
 
   useEffect(() => {
     const storedUrl = getStoredApiUrl()
@@ -107,7 +150,9 @@ export default function WorkoutGeneratorPage() {
     setState("idle")
     setWorkout(null)
     setWeeklyStatus(null)
+    setLastGeneratedSettings(null)
     setErrorMessage("")
+    generationVariantRef.current = 0
   }, [])
 
   const handleDisconnect = useCallback(() => {
@@ -116,11 +161,17 @@ export default function WorkoutGeneratorPage() {
     setState("idle")
     setWorkout(null)
     setWeeklyStatus(null)
+    setLastGeneratedSettings(null)
     setErrorMessage("")
+    generationVariantRef.current = 0
   }, [])
 
   const handleGenerate = useCallback(async () => {
     if (!apiUrl) return
+
+    const currentSettings = { ...settings }
+    const variantIndex = generationVariantRef.current
+    generationVariantRef.current += 1
 
     setState("loading")
     setErrorMessage("")
@@ -140,16 +191,18 @@ export default function WorkoutGeneratorPage() {
       const weeklyStatus = (await response.json()) as WeeklyStatus
 
       const renderedWorkout = buildWorkoutFromStatus(weeklyStatus, {
-        trainingFocus: settings.trainingFocus,
-        sessionLength: settings.sessionLength,
-        equipment: settings.equipment,
-        includeAbs: settings.includeAbs,
+        trainingFocus: currentSettings.trainingFocus,
+        sessionLength: currentSettings.sessionLength,
+        equipment: currentSettings.equipment,
+        includeAbs: currentSettings.includeAbs,
+        variantIndex,
       })
 
       const legacyWorkout = mapRenderedWorkoutToLegacy(renderedWorkout)
 
       setWorkout(legacyWorkout)
       setWeeklyStatus(weeklyStatus)
+      setLastGeneratedSettings(currentSettings)
       setState("success")
     } catch (error) {
       setState("error")
@@ -167,24 +220,44 @@ export default function WorkoutGeneratorPage() {
   }, [handleGenerate])
 
   const handleSwapExercise = useCallback((exerciseId: string) => {
-    if (!workout) return
+    if (!weeklyStatus || !lastGeneratedSettings) return
 
     setWorkout((prev) => {
       if (!prev) return prev
+
+      const currentExercise = prev.exercises.find((exercise) => exercise.exercise_id === exerciseId)
+      if (!currentExercise) return prev
+
+      const usedExerciseIds = prev.exercises
+        .filter((exercise) => exercise.exercise_id !== exerciseId)
+        .map((exercise) => exercise.exercise_id)
+
+      const swapOptions = getExerciseSwapOptions(
+        currentExercise.exercise_id,
+        usedExerciseIds,
+        lastGeneratedSettings.equipment,
+      )
+
+      const preferredOptions = swapOptions.filter(
+        (candidate) => candidate.exercise_id !== currentExercise.last_swapped_from_id,
+      )
+
+      const replacement = preferredOptions[0]
+
+      if (!replacement) {
+        return prev
+      }
 
       return {
         ...prev,
         exercises: prev.exercises.map((exercise) =>
           exercise.exercise_id === exerciseId
-            ? {
-                ...exercise,
-                name: `${exercise.name} (Swapped)`,
-              }
-            : exercise
+            ? mapSwapCandidateToLegacy(currentExercise, replacement, weeklyStatus)
+            : exercise,
         ),
       }
     })
-  }, [workout])
+  }, [lastGeneratedSettings, weeklyStatus])
 
   if (!apiUrl) {
     return <ConnectSheet onConnect={handleConnect} />

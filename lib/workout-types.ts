@@ -38,7 +38,10 @@ export interface Exercise {
   progression: string
   media_key: string
   substitution_ids: string[]
+  allowed_swap_ids?: string[]
+  slot_id: string
   is_abs_finisher: boolean
+  last_swapped_from_id?: string
   tips?: string[]
 }
 

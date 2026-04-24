@@ -76,7 +76,13 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
               <div className="flex h-12 w-20 items-center justify-center rounded-md bg-muted">
                 <Play className="h-5 w-5 text-muted-foreground" />
               </div>
-              <button className="text-xs text-primary hover:underline">
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                title="Demo unavailable: no media manifest or demo URL is configured for this exercise."
+                className="text-xs text-muted-foreground opacity-70 cursor-not-allowed"
+              >
                 See demo
               </button>
             </div>
