@@ -8,6 +8,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { ChevronDown, RefreshCw, Play, Dumbbell, Gauge } from "lucide-react"
 import type { Exercise } from "@/lib/workout-types"
 import { formatEffortLabel } from "@/lib/formatters/effort-label"
+import { getExerciseMedia } from "@/lib/media/get-exercise-media"
 
 interface ExerciseCardProps {
   exercise: Exercise
@@ -17,6 +18,9 @@ interface ExerciseCardProps {
 
 export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [thumbnailFailed, setThumbnailFailed] = useState(false)
+  const media = getExerciseMedia(exercise)
+  const thumbnailUrl = thumbnailFailed ? null : media.thumbnailUrl
 
   return (
     <Card className={`border-border/50 shadow-sm overflow-hidden ${exercise.is_abs_finisher ? "border-l-4 border-l-primary" : ""}`}>
@@ -73,18 +77,39 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
 
           <div className="mt-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="flex h-12 w-20 items-center justify-center rounded-md bg-muted">
-                <Play className="h-5 w-5 text-muted-foreground" />
+              <div className="flex h-12 w-20 items-center justify-center overflow-hidden rounded-md bg-muted">
+                {thumbnailUrl ? (
+                  <img
+                    src={thumbnailUrl}
+                    alt={`${exercise.name} demo thumbnail`}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    onError={() => setThumbnailFailed(true)}
+                  />
+                ) : (
+                  <Play className="h-5 w-5 text-muted-foreground" />
+                )}
               </div>
-              <button
-                type="button"
-                disabled
-                aria-disabled="true"
-                title="Demo unavailable: no media manifest or demo URL is configured for this exercise."
-                className="text-xs text-muted-foreground opacity-70 cursor-not-allowed"
-              >
-                See demo
-              </button>
+              {media.tutorialUrl ? (
+                <a
+                  href={media.tutorialUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-xs text-primary underline underline-offset-4 hover:text-primary/80"
+                >
+                  See Demo
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  aria-disabled="true"
+                  title="Demo unavailable: no media manifest or tutorial URL is configured for this exercise."
+                  className="text-xs text-muted-foreground opacity-70 cursor-not-allowed"
+                >
+                  See Demo
+                </button>
+              )}
             </div>
             <Button
               variant="outline"
