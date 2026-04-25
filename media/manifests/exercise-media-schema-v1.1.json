@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Exercise Media Manifest Schema v1.1",
+  "description": "Manifest for deterministic workout app exercise images and tutorial links. Supports curated YouTube tutorial media plus legacy image/gif/video fields.",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "media_key",
+      "exercise_id",
+      "display_name",
+      "status"
+    ],
+    "properties": {
+      "media_key": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 120
+      },
+      "exercise_id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 120
+      },
+      "display_name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 160
+      },
+      "youtube_video_id": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Preferred. The 11-character YouTube video ID when known."
+      },
+      "youtube_url": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Curated YouTube tutorial URL. Helper extracts the video ID when possible."
+      },
+      "thumbnail_url": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "image_url": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "gif_url": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "video_url": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "tutorial_url": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "source": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "enum": [
+          "youtube",
+          "wger",
+          "manual",
+          "generated",
+          "other",
+          null
+        ]
+      },
+      "license": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "local_path": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "mapped",
+          "missing",
+          "needs_review",
+          "local_only"
+        ]
+      },
+      "notes": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "source_file": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    }
+  }
+}
