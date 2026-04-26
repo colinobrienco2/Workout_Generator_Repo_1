@@ -242,7 +242,7 @@ export default function WorkoutGeneratorPage() {
         (candidate) => candidate.exercise_id !== currentExercise.last_swapped_from_id,
       )
 
-      const replacement = preferredOptions[0]
+      const replacement = preferredOptions[0] ?? swapOptions[0]
 
       if (!replacement) {
         return prev
