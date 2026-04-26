@@ -75,8 +75,9 @@
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-sans: var(--font-geist-sans), 'Geist', 'Geist Fallback', sans-serif;
+  --font-mono: var(--font-geist-mono), 'Geist Mono', 'Geist Mono Fallback', monospace;
+  --font-display: var(--font-barlow-condensed), var(--font-geist-sans), 'Geist', 'Geist Fallback', sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -119,7 +120,120 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    text-rendering: optimizeLegibility;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
+    letter-spacing: -0.01em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  [data-slot='card-title'] {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  h3,
+  h4,
+  [data-slot='card-title'] {
+    line-height: 1.04;
+  }
+
+  header h1.text-2xl {
+    font-size: clamp(2.55rem, 2.35vw + 1.7rem, 3.35rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  label,
+  [data-slot='label'] {
+    font-size: 0.93rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  [data-slot='card-description'],
+  .text-muted-foreground {
+    letter-spacing: -0.012em;
+    line-height: 1.55;
+  }
+
+  button,
+  [data-slot='button'] {
+    letter-spacing: -0.015em;
+  }
+
+  [data-slot='button'] {
+    font-weight: 600;
+  }
+
+  [data-slot='card-title'].text-2xl,
+  [data-slot='card-title'].text-xl,
+  h3.font-semibold.text-foreground,
+  h4.font-semibold.text-foreground,
+  .text-lg.font-bold.text-foreground {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  [data-slot='card-title'].text-2xl,
+  [data-slot='card-title'].text-xl,
+  h3.font-semibold.text-foreground {
+    text-transform: uppercase;
+  }
+
+  .text-lg.font-bold.text-foreground {
+    font-size: 1.55rem;
+    letter-spacing: -0.045em;
+  }
+
+  h4.font-semibold.text-foreground {
+    font-size: 1.6rem;
+    letter-spacing: -0.042em;
+    line-height: 0.98;
+  }
+}
+
+@layer utilities {
+  .app-heading {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  .section-heading {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .muted-copy {
+    color: var(--muted-foreground);
+    letter-spacing: -0.012em;
+    line-height: 1.55;
   }
 }
