@@ -279,21 +279,21 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
                 className={`flex gap-1.5 ${message.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 {message.role === "assistant" && (
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/12 bg-primary/10">
                     <Bot className="h-3.5 w-3.5 text-primary" />
                   </div>
                 )}
                 <div
                   className={`rounded-2xl ${
                     message.role === "user"
-                      ? "max-w-[84%] rounded-br-md bg-primary px-3 py-1.5 text-primary-foreground"
-                      : "max-w-[92%] rounded-bl-md bg-muted px-3 py-1.5 text-foreground"
+                      ? "max-w-[84%] rounded-br-md border border-primary/75 bg-primary px-3.5 py-2 text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_16px_24px_-22px_rgba(58,119,255,0.55)]"
+                      : "detail-panel max-w-[92%] rounded-bl-md px-3.5 py-2 text-foreground"
                   }`}
                 >
                   <p className="break-words whitespace-pre-line text-[13px] leading-[1.35]">{message.content}</p>
                 </div>
                 {message.role === "user" && (
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-foreground/10">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-foreground/10">
                     <User className="h-3.5 w-3.5 text-foreground" />
                   </div>
                 )}
@@ -303,7 +303,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
           </div>
         </div>
 
-        <div className="shrink-0 border-t border-border/50 bg-muted/20 px-4 py-2.5">
+        <div className="shrink-0 border-t border-border/50 bg-muted/15 px-4 py-3">
           <p className="text-xs text-muted-foreground mb-2">Categories</p>
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
@@ -312,7 +312,11 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
                 variant={selectedCategoryId === category.category_id ? "default" : "outline"}
                 size="sm"
                 onClick={() => setSelectedCategoryId(category.category_id)}
-                className="gap-1.5 text-xs"
+                className={`gap-1.5 text-[11px] ${
+                  selectedCategoryId === category.category_id
+                    ? "px-3.5"
+                    : "border-border/70 bg-white/70 px-3.5 text-muted-foreground hover:text-foreground"
+                }`}
               >
                 {categoryIcons[category.category_id] ?? <Wrench className="h-3.5 w-3.5" />}
                 {category.label}
@@ -322,7 +326,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
         </div>
 
         <div className="shrink-0 border-t border-border/50 p-4 pt-3">
-          <div className="overflow-hidden rounded-[22px] border border-border/60 bg-muted/35 px-3 py-3">
+          <div className="detail-panel overflow-hidden rounded-[22px] border border-border/60 px-3 py-3">
             <div className="mb-2 text-xs font-medium text-foreground">Choose a coach request...</div>
             <div className="max-h-[176px] overflow-y-auto overscroll-contain pr-1 pb-1">
               <div className="flex flex-wrap gap-2">
@@ -330,7 +334,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
                   <button
                     key={prompt.question_id}
                     onClick={() => handlePromptClick(prompt)}
-                    className="text-xs px-3 py-1.5 rounded-full border border-border bg-muted/40 hover:bg-muted transition-colors"
+                    className="action-pill px-3 py-1.5 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,transform] hover:-translate-y-px hover:border-primary/18 hover:bg-primary/[0.06]"
                   >
                     {prompt.label}
                   </button>

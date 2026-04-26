@@ -25,11 +25,11 @@ export function WorkoutCard({ workout, onSwapExercise }: WorkoutCardProps) {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle className="text-xl">{workout.session_name}</CardTitle>
             <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="gap-1">
+              <Badge variant="secondary" className="gap-1.5">
                 <Target className="h-3 w-3" />
                 {workout.focus}
               </Badge>
-              <Badge variant="outline" className="gap-1">
+              <Badge variant="outline" className="gap-1.5">
                 <Clock className="h-3 w-3" />
                 {workout.estimated_duration}
               </Badge>
@@ -40,13 +40,13 @@ export function WorkoutCard({ workout, onSwapExercise }: WorkoutCardProps) {
           <ReadinessPanel readiness={workout.readiness} />
           
           {/* Coach message */}
-          <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
+          <div className="detail-panel rounded-xl border border-primary/18 bg-primary/[0.06] p-4">
             <div className="flex items-start gap-3">
-              <div className="rounded-full bg-primary/10 p-2">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/12 bg-primary/10">
                 <MessageCircle className="h-4 w-4 text-primary" />
               </div>
               <div>
-                <p className="text-xs font-medium text-primary mb-1">Coach Note</p>
+                <p className="mb-1 text-xs font-semibold tracking-[0.08em] text-primary uppercase">Coach Note</p>
                 <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">{workout.coach_message}</p>
               </div>
             </div>
