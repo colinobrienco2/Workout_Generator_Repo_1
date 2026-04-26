@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Sora } from 'next/font/google'
+import { Barlow_Condensed, Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
@@ -13,9 +13,10 @@ const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
 })
 
-const sora = Sora({
+const barlowCondensed = Barlow_Condensed({
   subsets: ['latin'],
-  variable: '--font-sora',
+  variable: '--font-barlow-condensed',
+  weight: ['600', '700'],
 })
 
 export const metadata: Metadata = {
@@ -49,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} bg-background`}
+      className={`${geistSans.variable} ${geistMono.variable} ${barlowCondensed.variable} bg-background`}
     >
       <body className="font-sans antialiased">
         {children}
