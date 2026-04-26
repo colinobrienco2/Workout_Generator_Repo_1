@@ -23,32 +23,34 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
   const thumbnailUrl = thumbnailFailed ? null : media.thumbnailUrl
 
   return (
-    <Card className={`border-border/50 shadow-sm overflow-hidden ${exercise.is_abs_finisher ? "border-l-4 border-l-primary" : ""}`}>
+    <Card className={`overflow-hidden border-border/50 shadow-sm ${exercise.is_abs_finisher ? "border-l-4 border-l-primary" : ""}`}>
       <CardContent className="p-0">
-        <div className="p-4">
+        <div className="p-4 sm:p-5">
           <div className="flex items-start justify-between gap-4">
-            <div className="flex gap-3 flex-1 min-w-0">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold text-sm">
+            <div className="flex min-w-0 flex-1 gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-primary/14 bg-primary/[0.08] text-sm font-semibold text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
                 {index}
               </div>
 
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-2">
                   <h4 className="font-semibold text-foreground">{exercise.name}</h4>
                   {exercise.is_abs_finisher && (
-                    <Badge variant="secondary" className="text-xs">Finisher</Badge>
+                    <Badge variant="secondary">Finisher</Badge>
                   )}
                 </div>
-                <div className="flex items-center gap-2 mt-1 flex-wrap">
-                  <Badge variant="outline" className="text-xs font-normal">
+                <div className="mt-1 flex flex-wrap items-center gap-2">
+                  <Badge variant="outline">
                     {exercise.category}
                   </Badge>
-                  <span className="text-xs text-muted-foreground">{exercise.primary_muscle}</span>
+                  <span className="meta-pill px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
+                    {exercise.primary_muscle}
+                  </span>
                 </div>
               </div>
             </div>
 
-            <div className="text-right shrink-0">
+            <div className="detail-panel shrink-0 rounded-xl px-3 py-2 text-right">
               <div className="text-lg font-bold text-foreground">
                 {exercise.sets} x {exercise.reps}
               </div>
@@ -56,28 +58,29 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
             </div>
           </div>
 
-          <div className="mt-3 flex items-center gap-4 text-sm flex-wrap">
-            <div className="flex items-center gap-1.5 text-muted-foreground">
+          <div className="mt-3 flex flex-wrap items-center gap-2.5 text-sm">
+            <div className="meta-pill flex items-center gap-1.5 px-2.5 py-1 text-muted-foreground">
               <Dumbbell className="h-3.5 w-3.5" />
               <span className="text-xs">{exercise.equipment}</span>
             </div>
-            <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-0 text-xs gap-1">
+            <Badge className="meta-pill-accent border-0">
               <Gauge className="h-3 w-3" />
               Effort: {formatEffortLabel(exercise.effort_target)}
             </Badge>
           </div>
 
-          <div className="mt-3 rounded-md bg-muted/50 p-3">
-            <p className="text-sm text-muted-foreground italic">&ldquo;{exercise.cue}&rdquo;</p>
+          <div className="detail-panel mt-3 rounded-xl p-3">
+            <p className="text-sm italic leading-relaxed text-muted-foreground">&ldquo;{exercise.cue}&rdquo;</p>
           </div>
 
-          <p className="mt-2 text-xs text-muted-foreground">
-            <span className="font-medium text-foreground">Progression:</span> {exercise.progression}
-          </p>
+          <div className="mt-3 flex items-start gap-2 rounded-xl border border-border/60 bg-white/60 px-3 py-2.5">
+            <span className="text-xs font-semibold uppercase tracking-[0.08em] text-foreground">Progression</span>
+            <p className="min-w-0 text-xs leading-relaxed text-muted-foreground">{exercise.progression}</p>
+          </div>
 
-          <div className="mt-4 flex items-center justify-between">
+          <div className="detail-panel mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl p-2.5">
             <div className="flex items-center gap-2">
-              <div className="flex h-12 w-20 items-center justify-center overflow-hidden rounded-md bg-muted">
+              <div className="flex h-12 w-20 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-muted">
                 {thumbnailUrl ? (
                   <img
                     src={thumbnailUrl}
@@ -95,7 +98,7 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
                   href={media.tutorialUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-xs text-primary underline underline-offset-4 hover:text-primary/80"
+                  className="inline-flex items-center rounded-full border border-primary/15 bg-primary/[0.06] px-3 py-1 text-xs font-semibold text-primary transition-colors hover:bg-primary/[0.1] hover:text-primary/90"
                 >
                   See Demo
                 </a>
@@ -105,7 +108,7 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
                   disabled
                   aria-disabled="true"
                   title="Demo unavailable: no media manifest or tutorial URL is configured for this exercise."
-                  className="text-xs text-muted-foreground opacity-70 cursor-not-allowed"
+                  className="cursor-not-allowed text-xs text-muted-foreground opacity-70"
                 >
                   See Demo
                 </button>
@@ -127,16 +130,16 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
         {exercise.tips && exercise.tips.length > 0 && (
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger asChild>
-              <button className="flex w-full items-center justify-between border-t border-border/50 bg-muted/30 px-4 py-2.5 text-sm font-medium text-muted-foreground hover:bg-muted/50 transition-colors">
+              <button className="flex w-full items-center justify-between border-t border-border/50 bg-muted/20 px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/[0.05] hover:text-foreground">
                 <span>Tips & Notes</span>
                 <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
               </button>
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <ul className="px-4 pb-4 pt-2 space-y-2">
+              <ul className="space-y-2 px-4 pb-4 pt-2">
                 {exercise.tips.map((tip, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="text-primary mt-1">•</span>
+                    <span className="mt-1 text-primary">•</span>
                     {tip}
                   </li>
                 ))}

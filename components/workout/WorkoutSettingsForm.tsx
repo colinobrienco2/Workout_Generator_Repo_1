@@ -44,7 +44,7 @@ export function WorkoutSettingsForm({
               onSettingsChange({ ...settings, trainingFocus: value })
             }
           >
-            <SelectTrigger id="training-focus">
+            <SelectTrigger id="training-focus" className="w-full">
               <SelectValue placeholder="Select focus" />
             </SelectTrigger>
             <SelectContent>
@@ -63,7 +63,7 @@ export function WorkoutSettingsForm({
               onSettingsChange({ ...settings, sessionLength: value })
             }
           >
-            <SelectTrigger id="session-length">
+            <SelectTrigger id="session-length" className="w-full">
               <SelectValue placeholder="Select length" />
             </SelectTrigger>
             <SelectContent>
@@ -82,7 +82,7 @@ export function WorkoutSettingsForm({
               onSettingsChange({ ...settings, equipment: value })
             }
           >
-            <SelectTrigger id="equipment">
+            <SelectTrigger id="equipment" className="w-full">
               <SelectValue placeholder="Select equipment" />
             </SelectTrigger>
             <SelectContent>
@@ -93,8 +93,8 @@ export function WorkoutSettingsForm({
           </Select>
         </div>
 
-        <div className="flex items-center justify-between rounded-lg border border-border/50 p-3">
-          <Label htmlFor="include-abs" className="cursor-pointer">
+        <div className="surface-subtle flex items-center justify-between rounded-xl border border-border/60 p-3.5">
+          <Label htmlFor="include-abs" className="cursor-pointer text-foreground">
             Include Abs Finisher
           </Label>
           <Switch
