@@ -297,9 +297,9 @@ export default function WorkoutGeneratorPage() {
         </div>
       </header>
 
-      <main className="app-main container mx-auto px-4 py-8 md:py-10">
-        <div className="grid gap-8 lg:grid-cols-[340px_1fr_380px]">
-          <aside className="lg:sticky lg:top-8 lg:self-start">
+      <main className="app-main container mx-auto px-4 py-8 md:py-10 md:pb-12">
+        <div className="grid items-start gap-8 lg:grid-cols-[340px_minmax(0,1fr)_380px] xl:gap-9">
+          <aside className="lg:sticky lg:top-10 lg:self-start">
             <WorkoutSettingsForm
               settings={settings}
               onSettingsChange={setSettings}
@@ -325,7 +325,7 @@ export default function WorkoutGeneratorPage() {
             )}
           </section>
 
-          <aside className="lg:self-start lg:flex lg:justify-end">
+          <aside className="lg:sticky lg:top-10 lg:self-start lg:flex lg:justify-end">
             <CoachPanel weeklyStatus={weeklyStatus} />
           </aside>
         </div>

@@ -1,14 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { ChevronDown, Dumbbell, Gauge, Play, RefreshCw } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { ChevronDown, RefreshCw, Play, Dumbbell, Gauge } from "lucide-react"
-import type { Exercise } from "@/lib/workout-types"
 import { formatEffortLabel } from "@/lib/formatters/effort-label"
 import { getExerciseMedia } from "@/lib/media/get-exercise-media"
+import type { Exercise } from "@/lib/workout-types"
 
 interface ExerciseCardProps {
   exercise: Exercise
@@ -23,26 +23,22 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
   const thumbnailUrl = thumbnailFailed ? null : media.thumbnailUrl
 
   return (
-    <Card className={`overflow-hidden border-border/50 shadow-sm ${exercise.is_abs_finisher ? "border-l-4 border-l-primary" : ""}`}>
+    <Card className={`surface-card overflow-hidden border-border/50 shadow-sm ${exercise.is_abs_finisher ? "border-l-4 border-l-primary" : ""}`}>
       <CardContent className="p-0">
-        <div className="p-4 sm:p-5">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex min-w-0 flex-1 gap-3">
+        <div className="p-5 sm:p-6">
+          <div className="flex items-start justify-between gap-5">
+            <div className="flex min-w-0 flex-1 gap-3.5">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-primary/14 bg-primary/[0.08] text-sm font-semibold text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
                 {index}
               </div>
 
-              <div className="min-w-0 flex-1">
+              <div className="min-w-0 flex-1 space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
                   <h4 className="font-semibold text-foreground">{exercise.name}</h4>
-                  {exercise.is_abs_finisher && (
-                    <Badge variant="secondary">Finisher</Badge>
-                  )}
+                  {exercise.is_abs_finisher && <Badge variant="secondary">Finisher</Badge>}
                 </div>
-                <div className="mt-1 flex flex-wrap items-center gap-2">
-                  <Badge variant="outline">
-                    {exercise.category}
-                  </Badge>
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="outline">{exercise.category}</Badge>
                   <span className="meta-pill px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
                     {exercise.primary_muscle}
                   </span>
@@ -58,7 +54,7 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
             </div>
           </div>
 
-          <div className="mt-3 flex flex-wrap items-center gap-2.5 text-sm">
+          <div className="mt-4 flex flex-wrap items-center gap-2.5 text-sm">
             <div className="meta-pill flex items-center gap-1.5 px-2.5 py-1 text-muted-foreground">
               <Dumbbell className="h-3.5 w-3.5" />
               <span className="text-xs">{exercise.equipment}</span>
@@ -69,11 +65,11 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
             </Badge>
           </div>
 
-          <div className="detail-panel mt-3 rounded-xl p-3">
+          <div className="detail-panel mt-4 rounded-xl p-3">
             <p className="text-sm italic leading-relaxed text-muted-foreground">&ldquo;{exercise.cue}&rdquo;</p>
           </div>
 
-          <div className="mt-3 flex items-start gap-2 rounded-xl border border-border/60 bg-white/60 px-3 py-2.5">
+          <div className="mt-4 flex items-start gap-2 rounded-xl border border-border/60 bg-white/60 px-3 py-2.5">
             <span className="text-xs font-semibold uppercase tracking-[0.08em] text-foreground">Progression</span>
             <p className="min-w-0 text-xs leading-relaxed text-muted-foreground">{exercise.progression}</p>
           </div>
@@ -130,16 +126,16 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
         {exercise.tips && exercise.tips.length > 0 && (
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger asChild>
-              <button className="flex w-full items-center justify-between border-t border-border/50 bg-muted/20 px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/[0.05] hover:text-foreground">
+              <button className="flex w-full items-center justify-between border-t border-border/50 bg-muted/20 px-5 py-3.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/[0.05] hover:text-foreground">
                 <span>Tips & Notes</span>
                 <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
               </button>
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <ul className="space-y-2 px-4 pb-4 pt-2">
+              <ul className="space-y-2 px-5 pb-5 pt-3">
                 {exercise.tips.map((tip, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="mt-1 text-primary">•</span>
+                    <span className="mt-1 text-primary">&bull;</span>
                     {tip}
                   </li>
                 ))}
