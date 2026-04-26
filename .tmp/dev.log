@@ -1,0 +1,17 @@
+
+> my-project@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.0 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.217:3000
+✓ Ready in 911ms
+Creating turbopack project {
+  dir: 'C:\\Users\\colin\\Projects\\Workout_Generator_Repo_1',
+  testMode: true
+}
+
+ GET / 200 in 1951ms (next.js: 1417ms, application-code: 534ms)
+ GET / 200 in 103ms (next.js: 10ms, application-code: 93ms)
+ GET / 200 in 83ms (next.js: 9ms, application-code: 74ms)
+[?25h

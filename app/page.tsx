@@ -266,22 +266,22 @@ export default function WorkoutGeneratorPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border/50 bg-card">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between gap-4">
+        <div className="container mx-auto px-4">
+          <div className="flex h-24 items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <Image
-                src="/co2-logo.png"
+                src="/co2-logo-transparent.png"
                 alt="CO2 logo"
-                width={144}
-                height={144}
-                className="h-16 w-auto shrink-0"
+                width={1024}
+                height={1024}
+                className="h-20 w-auto shrink-0"
                 priority
               />
               <div>
-                <h1 className="text-2xl font-bold text-foreground">
+                <h1 className="text-2xl font-bold leading-none text-foreground">
                   Workout Generator
                 </h1>
-                <p className="text-sm text-muted-foreground">
+                <p className="mt-1 text-sm leading-tight text-muted-foreground">
                   Deterministic workout builder powered by your weekly Sheets coaching engine.
                 </p>
               </div>
