@@ -264,8 +264,8 @@ export default function WorkoutGeneratorPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border/50 bg-card">
+    <div className="app-shell min-h-screen bg-background">
+      <header className="app-header border-b border-border/50">
         <div className="container mx-auto px-4">
           <div className="flex h-24 items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -297,7 +297,7 @@ export default function WorkoutGeneratorPage() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="app-main container mx-auto px-4 py-8 md:py-10">
         <div className="grid gap-8 lg:grid-cols-[340px_1fr_380px]">
           <aside className="lg:sticky lg:top-8 lg:self-start">
             <WorkoutSettingsForm
