@@ -262,7 +262,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
   }
 
   return (
-    <Card className="flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px] lg:h-[calc(100vh-9rem)] lg:max-h-[720px]">
+    <Card className="flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px] lg:h-[calc(100vh-6rem)]">
       <CardHeader className="shrink-0 border-b border-border/50 px-4 py-4">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Bot className="h-5 w-5 text-primary" />
@@ -271,7 +271,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
       </CardHeader>
 
       <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
-        <div className="min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-1.5">
+        <div className="min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-1.5 lg:flex-none lg:basis-[36%] lg:min-h-[240px] lg:max-h-[320px]">
           <div className="space-y-2">
             {messages.map((message) => (
               <div
@@ -303,7 +303,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
           </div>
         </div>
 
-        <div className="min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50">
+        <div className="min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 lg:flex-1">
           <div className="bg-muted/15 px-4 py-3">
             <p className="mb-2 text-xs text-muted-foreground">Categories</p>
             <div className="flex flex-wrap gap-2">
