@@ -262,7 +262,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
   }
 
   return (
-    <Card className="flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px]">
+    <Card className="flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px] lg:h-[calc(100vh-9rem)] lg:max-h-[720px]">
       <CardHeader className="shrink-0 border-b border-border/50 px-4 py-4">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Bot className="h-5 w-5 text-primary" />
@@ -270,8 +270,8 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="flex-1 flex flex-col p-0 min-h-0 overflow-hidden">
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-1.5">
+      <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
+        <div className="min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-1.5">
           <div className="space-y-2">
             {messages.map((message) => (
               <div
@@ -303,32 +303,32 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
           </div>
         </div>
 
-        <div className="shrink-0 border-t border-border/50 bg-muted/15 px-4 py-3">
-          <p className="text-xs text-muted-foreground mb-2">Categories</p>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <Button
-                key={category.category_id}
-                variant={selectedCategoryId === category.category_id ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategoryId(category.category_id)}
-                className={`gap-1.5 text-[11px] ${
-                  selectedCategoryId === category.category_id
-                    ? "px-3.5"
-                    : "border-border/70 bg-white/70 px-3.5 text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {categoryIcons[category.category_id] ?? <Wrench className="h-3.5 w-3.5" />}
-                {category.label}
-              </Button>
-            ))}
+        <div className="min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50">
+          <div className="bg-muted/15 px-4 py-3">
+            <p className="mb-2 text-xs text-muted-foreground">Categories</p>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <Button
+                  key={category.category_id}
+                  variant={selectedCategoryId === category.category_id ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedCategoryId(category.category_id)}
+                  className={`gap-1.5 text-[11px] ${
+                    selectedCategoryId === category.category_id
+                      ? "px-3.5"
+                      : "border-border/70 bg-white/70 px-3.5 text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {categoryIcons[category.category_id] ?? <Wrench className="h-3.5 w-3.5" />}
+                  {category.label}
+                </Button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="shrink-0 border-t border-border/50 p-4 pt-3">
-          <div className="detail-panel overflow-hidden rounded-[22px] border border-border/60 px-3 py-3">
-            <div className="mb-2 text-xs font-medium text-foreground">Choose a coach request...</div>
-            <div className="max-h-[176px] overflow-y-auto overscroll-contain pr-1 pb-1">
+          <div className="border-t border-border/50 p-4 pt-3">
+            <div className="detail-panel overflow-hidden rounded-[22px] border border-border/60 px-3 py-3">
+              <div className="mb-2 text-xs font-medium text-foreground">Choose a coach request...</div>
               <div className="flex flex-wrap gap-2">
                 {selectedCategory?.questions.map((prompt) => (
                   <button

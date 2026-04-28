@@ -325,7 +325,7 @@ export default function WorkoutGeneratorPage() {
             )}
           </section>
 
-          <aside className="lg:self-start lg:flex lg:justify-end">
+          <aside className="lg:sticky lg:top-8 lg:self-start lg:flex lg:justify-end">
             <CoachPanel weeklyStatus={weeklyStatus} />
           </aside>
         </div>
