@@ -264,15 +264,32 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
   return (
     <Card className="flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px] lg:h-[calc(100vh-4rem)]">
       <CardHeader className="shrink-0 border-b border-border/50 px-4 py-4">
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Bot className="h-5 w-5 text-primary" />
-          Coach Panel
-        </CardTitle>
+        <div className="flex items-center justify-between gap-3">
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Bot className="h-5 w-5 text-primary" />
+            Coach Panel
+          </CardTitle>
+          <div className="meta-pill inline-flex items-center gap-2 px-2.5 py-1 text-[0.68rem] font-semibold tracking-[0.08em] text-muted-foreground uppercase">
+            {weeklyStatus ? "Ready" : "Waiting"}
+          </div>
+        </div>
       </CardHeader>
 
       <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
         <div className="min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-1.5 lg:flex-none lg:basis-[24%] lg:min-h-[180px] lg:max-h-[220px]">
-          <div className="space-y-2">
+          <div className="space-y-3">
+            {messages.length === 1 ? (
+              <div className="detail-panel rounded-2xl border border-border/60 px-4 py-3">
+                <p className="text-xs font-semibold tracking-[0.08em] text-muted-foreground uppercase">
+                  Guided Help
+                </p>
+                <p className="mt-1 text-sm text-foreground">
+                  {weeklyStatus
+                    ? "Pick a coach request to get a deterministic explanation based on your current weekly status."
+                    : "Generate a workout first to load your weekly strategy, recovery context, and guided coaching details."}
+                </p>
+              </div>
+            ) : null}
             {messages.map((message) => (
               <div
                 key={message.id}
@@ -328,7 +345,12 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
 
           <div className="border-t border-border/50 p-4 pt-3 lg:pt-2.5 lg:pb-3">
             <div className="detail-panel overflow-hidden rounded-[22px] border border-border/60 px-3 py-3 lg:py-2.5">
-              <div className="mb-2 text-xs font-medium text-foreground lg:mb-1.5">Choose a coach request...</div>
+              <div className="mb-2 flex items-center justify-between gap-2 lg:mb-1.5">
+                <div className="text-xs font-medium text-foreground">Choose a coach request...</div>
+                <div className="text-[0.68rem] tracking-[0.08em] text-muted-foreground uppercase">
+                  Guided only
+                </div>
+              </div>
               <div className="flex flex-wrap gap-2">
                 {selectedCategory?.questions.map((prompt) => (
                   <button
