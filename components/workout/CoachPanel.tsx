@@ -262,7 +262,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
   }
 
   return (
-    <Card className="flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px] lg:h-[calc(100vh-6rem)]">
+    <Card className="flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px] lg:h-[calc(100vh-4rem)]">
       <CardHeader className="shrink-0 border-b border-border/50 px-4 py-4">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Bot className="h-5 w-5 text-primary" />
