@@ -271,7 +271,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
       </CardHeader>
 
       <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
-        <div className="min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-1.5 lg:flex-none lg:basis-[36%] lg:min-h-[240px] lg:max-h-[320px]">
+        <div className="min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-1.5 lg:flex-none lg:basis-[24%] lg:min-h-[180px] lg:max-h-[220px]">
           <div className="space-y-2">
             {messages.map((message) => (
               <div
@@ -304,7 +304,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
         </div>
 
         <div className="min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 lg:flex-1">
-          <div className="bg-muted/15 px-4 py-3">
+          <div className="bg-muted/15 px-4 py-3 lg:py-2.5">
             <p className="mb-2 text-xs text-muted-foreground">Categories</p>
             <div className="flex flex-wrap gap-2">
               {categories.map((category) => (
@@ -326,9 +326,9 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
             </div>
           </div>
 
-          <div className="border-t border-border/50 p-4 pt-3">
-            <div className="detail-panel overflow-hidden rounded-[22px] border border-border/60 px-3 py-3">
-              <div className="mb-2 text-xs font-medium text-foreground">Choose a coach request...</div>
+          <div className="border-t border-border/50 p-4 pt-3 lg:pt-2.5 lg:pb-3">
+            <div className="detail-panel overflow-hidden rounded-[22px] border border-border/60 px-3 py-3 lg:py-2.5">
+              <div className="mb-2 text-xs font-medium text-foreground lg:mb-1.5">Choose a coach request...</div>
               <div className="flex flex-wrap gap-2">
                 {selectedCategory?.questions.map((prompt) => (
                   <button
