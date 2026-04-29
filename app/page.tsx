@@ -267,32 +267,42 @@ export default function WorkoutGeneratorPage() {
     <div className="app-shell min-h-screen bg-background">
       <header className="app-header border-b border-border/50">
         <div className="container mx-auto px-4">
-          <div className="flex h-24 items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col gap-4 py-4 sm:py-5 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex items-start gap-3 sm:gap-4">
               <Image
                 src="/co2-logo-transparent.png"
                 alt="CO2 logo"
                 width={1024}
                 height={1024}
-                className="h-20 w-auto shrink-0"
+                className="h-16 w-auto shrink-0 sm:h-[4.5rem]"
                 priority
               />
-              <div>
-                <h1 className="text-2xl font-bold leading-none text-foreground">
-                  Workout Generator
-                </h1>
-                <p className="mt-1 text-sm leading-tight text-muted-foreground">
-                  Deterministic workout builder powered by your weekly Sheets coaching engine.
+              <div className="min-w-0 pt-1">
+                <div className="mb-1.5">
+                  <h1 className="font-display text-[1.55rem] font-semibold leading-none tracking-[-0.055em] text-foreground sm:text-[1.75rem]">
+                    <span className="text-primary">CO2</span> Workout Generator
+                  </h1>
+                </div>
+                <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-[0.95rem]">
+                  Smarter strength workouts guided by your recovery, progression, and training
+                  consistency.
                 </p>
               </div>
             </div>
 
-            <button
-              onClick={handleDisconnect}
-              className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
-            >
-              Change Sheet
-            </button>
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:justify-end">
+              <div className="meta-pill meta-pill-accent inline-flex items-center gap-2 px-3 py-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase">
+                <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
+                Training Data Connected
+              </div>
+
+              <button
+                onClick={handleDisconnect}
+                className="action-pill inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
+              >
+                Change Sheet
+              </button>
+            </div>
           </div>
         </div>
       </header>
