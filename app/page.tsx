@@ -278,8 +278,7 @@ export default function WorkoutGeneratorPage() {
                 priority
               />
               <div className="min-w-0 pt-1">
-                <div className="mb-2 flex items-center gap-3">
-                  <span className="hidden h-px w-8 bg-primary/45 sm:block" />
+                <div className="mb-1.5">
                   <h1 className="font-display text-[1.55rem] font-semibold leading-none tracking-[-0.055em] text-foreground sm:text-[1.75rem]">
                     <span className="text-primary">CO2</span> Workout Generator
                   </h1>
