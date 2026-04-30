@@ -138,9 +138,9 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
             <CollapsibleContent>
               <ul className="space-y-2 px-4 pb-4 pt-2">
                 {exercise.tips.map((tip, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="mt-1 text-primary">•</span>
-                    {tip}
+                  <li key={i} className="grid grid-cols-[auto_1fr] items-start gap-x-2 text-sm leading-relaxed text-muted-foreground">
+                    <span aria-hidden="true" className="pt-[0.2em] leading-none text-primary">&bull;</span>
+                    <span>{tip}</span>
                   </li>
                 ))}
               </ul>
