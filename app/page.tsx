@@ -360,10 +360,7 @@ export default function WorkoutGeneratorPage() {
           <aside className="lg:sticky lg:top-8 lg:self-start lg:flex lg:justify-end">
             <CoachPanel
               weeklyStatus={weeklyStatus}
-              exercises={workout?.exercises}
-              selectedExerciseId={selectedExerciseId}
               selectedExercise={selectedExercise}
-              onSelectedExerciseChange={setSelectedExerciseId}
             />
           </aside>
         </div>

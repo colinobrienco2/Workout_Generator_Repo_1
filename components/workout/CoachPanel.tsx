@@ -3,13 +3,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Bot, User, HelpCircle, Timer, Wrench, BarChart3, HeartPulse, Apple } from "lucide-react"
 import guidedHelpCatalog from "@/data/tips/guided-help-categories.json"
 import type { ChatMessage, Exercise, WeeklyStatus } from "@/lib/workout-types"
@@ -17,10 +10,7 @@ import type { GuidedHelpCategory, GuidedHelpPrompt } from "@/lib/types/guided-he
 
 interface CoachPanelProps {
   weeklyStatus?: WeeklyStatus | null
-  exercises?: Exercise[]
-  selectedExerciseId?: string | null
   selectedExercise?: Exercise | null
-  onSelectedExerciseChange?: (exerciseId: string | null) => void
 }
 
 function cleanText(value?: string | null) {
@@ -266,10 +256,7 @@ const categoryIcons: Record<string, ReactNode> = {
 
 export function CoachPanel({
   weeklyStatus,
-  exercises,
-  selectedExerciseId,
   selectedExercise,
-  onSelectedExerciseChange,
 }: CoachPanelProps) {
   const categories = guidedHelpCatalog.categories as GuidedHelpCategory[]
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>(categories[0]?.category_id ?? "")
@@ -377,54 +364,6 @@ export function CoachPanel({
 
         <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(246,242,234,0.62)_100%)] lg:flex-1">
           <div className="px-4 pt-4 pb-3 lg:px-4.5 lg:pt-3.5">
-            <div className="detail-panel mb-3 rounded-[1.1rem] border border-border/60 px-3.5 py-3">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <p className="text-xs font-medium text-foreground">Ask about an exercise</p>
-                  <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">
-                    {exercises?.length
-                      ? "Choose one exercise from the current workout to make exercise-help answers specific."
-                      : "Generate a workout to ask about a specific exercise."}
-                  </p>
-                </div>
-                {selectedExercise && onSelectedExerciseChange ? (
-                  <button
-                    type="button"
-                    onClick={() => onSelectedExerciseChange(null)}
-                    className="text-[11px] font-medium text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    Clear
-                  </button>
-                ) : null}
-              </div>
-
-              {exercises?.length ? (
-                <div className="mt-3 space-y-2">
-                  <Select
-                    value={selectedExerciseId ?? ""}
-                    onValueChange={(value) => onSelectedExerciseChange?.(value || null)}
-                  >
-                    <SelectTrigger size="sm" className="w-full">
-                      <SelectValue placeholder="Select an exercise" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {exercises.map((exercise) => (
-                        <SelectItem key={exercise.exercise_id} value={exercise.exercise_id}>
-                          {exercise.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {selectedExercise ? (
-                    <div className="meta-pill inline-flex max-w-full items-center gap-2 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-                      <span className="shrink-0">Currently asking about:</span>
-                      <span className="truncate text-foreground">{selectedExercise.name}</span>
-                    </div>
-                  ) : null}
-                </div>
-              ) : null}
-            </div>
-
             <p className="mb-2.5 text-xs font-medium text-muted-foreground">Categories</p>
             <div className="flex flex-wrap gap-2">
               {categories.map((category) => (
