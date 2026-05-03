@@ -28,7 +28,7 @@ export function WorkoutSettingsForm({
   isGenerating
 }: WorkoutSettingsFormProps) {
   return (
-    <Card className="border-border/50 shadow-sm">
+    <Card className="brand-panel border-border/50 shadow-sm">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Dumbbell className="h-5 w-5 text-primary" />
@@ -107,7 +107,7 @@ export function WorkoutSettingsForm({
         </div>
 
         <Button
-          className="w-full"
+          className="w-full focus-visible:ring-primary/24 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.26),0_22px_30px_-18px_rgba(58,119,255,0.72),0_16px_24px_-18px_rgba(15,23,42,0.26)] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_12px_18px_-16px_rgba(58,119,255,0.5)]"
           size="lg"
           onClick={onGenerate}
           disabled={isGenerating}

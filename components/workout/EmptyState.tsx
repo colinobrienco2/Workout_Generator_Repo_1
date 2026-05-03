@@ -3,7 +3,7 @@ import { Dumbbell } from "lucide-react"
 
 export function EmptyState() {
   return (
-    <Card className="surface-card border-border/50 border-dashed shadow-sm">
+    <Card className="brand-panel surface-card border-border/50 border-dashed shadow-sm">
       <CardContent className="flex flex-col items-center justify-center px-6 py-16 text-center sm:px-10">
         <div className="meta-pill meta-pill-accent mb-4 inline-flex items-center gap-2 px-3 py-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase">
           Ready When You Are

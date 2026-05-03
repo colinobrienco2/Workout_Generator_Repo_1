@@ -20,12 +20,12 @@ export function WorkoutCard({ workout, onSwapExercise }: WorkoutCardProps) {
   return (
     <div className="space-y-4">
       {/* Header card */}
-      <Card className="border-border/50 shadow-sm">
+      <Card className="brand-panel border-border/50 shadow-sm">
         <CardHeader className="pb-3">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle className="text-xl">{workout.session_name}</CardTitle>
             <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="gap-1.5">
+              <Badge variant="secondary" className="brand-chip-active gap-1.5">
                 <Target className="h-3 w-3" />
                 {workout.focus}
               </Badge>
