@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 export function LoadingState() {
   return (
     <div className="space-y-4">
-      <Card className="surface-card border-border/50 shadow-sm">
+      <Card className="brand-panel surface-card border-border/50 shadow-sm">
         <CardContent className="space-y-5 p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="space-y-3">
@@ -38,7 +38,7 @@ export function LoadingState() {
       <div className="space-y-3">
         <Skeleton className="h-5 w-28" />
         {[1, 2, 3].map((i) => (
-          <Card key={i} className="surface-card border-border/50 shadow-sm">
+          <Card key={i} className="brand-panel surface-card border-border/50 shadow-sm">
             <CardContent className="space-y-3 p-4">
               <div className="flex justify-between gap-4">
                 <div className="flex gap-3">

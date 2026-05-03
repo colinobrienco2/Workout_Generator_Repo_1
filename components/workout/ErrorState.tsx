@@ -9,7 +9,7 @@ interface ErrorStateProps {
 export function ErrorState({ onRetry, message }: ErrorStateProps) {
   return (
     <div className="flex min-h-[420px] items-center justify-center">
-      <div className="surface-card flex w-full max-w-2xl flex-col rounded-[1.6rem] border border-border/60 p-8 text-center shadow-sm">
+      <div className="brand-panel surface-card flex w-full max-w-2xl flex-col rounded-[1.6rem] border border-border/60 p-8 text-center shadow-sm">
         <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-destructive/14 bg-destructive/[0.08]">
           <AlertTriangle className="h-7 w-7 text-destructive" />
         </div>

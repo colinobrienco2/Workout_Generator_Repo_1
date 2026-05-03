@@ -262,7 +262,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
   }
 
   return (
-    <Card className="flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px] lg:h-[calc(100vh-4rem)]">
+    <Card className="brand-panel flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px] lg:h-[calc(100vh-4rem)]">
       <CardHeader className="shrink-0 border-b border-border/50 px-5 py-4.5">
         <div className="flex items-center justify-between gap-3">
           <CardTitle className="flex items-center gap-2 text-lg">
@@ -332,7 +332,7 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
                   onClick={() => setSelectedCategoryId(category.category_id)}
                   className={`gap-1.5 text-[11px] ${
                     selectedCategoryId === category.category_id
-                      ? "px-3.5 focus-visible:ring-primary/20"
+                      ? "brand-chip-active px-3.5 focus-visible:ring-primary/22"
                       : "border-border/65 bg-white/72 px-3.5 text-muted-foreground hover:border-primary/18 hover:bg-white/92 hover:text-foreground focus-visible:ring-primary/16"
                   }`}
                 >

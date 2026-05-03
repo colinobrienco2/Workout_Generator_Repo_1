@@ -23,12 +23,12 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
   const thumbnailUrl = thumbnailFailed ? null : media.thumbnailUrl
 
   return (
-    <Card className={`overflow-hidden border-border/50 shadow-sm ${exercise.is_abs_finisher ? "border-l-4 border-l-primary" : ""}`}>
+    <Card className={`brand-panel overflow-hidden border-border/50 shadow-sm ${exercise.is_abs_finisher ? "border-l-4 border-l-primary/80" : ""}`}>
       <CardContent className="p-0">
         <div className="p-4 sm:p-5">
           <div className="flex items-start justify-between gap-4">
             <div className="flex min-w-0 flex-1 gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-primary/14 bg-primary/[0.08] text-sm font-semibold text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-[linear-gradient(180deg,rgba(58,119,255,0.15)_0%,rgba(58,119,255,0.09)_100%)] text-sm font-semibold text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_12px_20px_-18px_rgba(58,119,255,0.55)]">
                 {index}
               </div>
 
@@ -98,7 +98,7 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
                   href={media.tutorialUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center rounded-full border border-primary/15 bg-primary/[0.06] px-3 py-1 text-xs font-semibold text-primary transition-colors hover:bg-primary/[0.1] hover:text-primary/90"
+                  className="inline-flex items-center rounded-full border border-primary/20 bg-[linear-gradient(180deg,rgba(58,119,255,0.1)_0%,rgba(58,119,255,0.06)_100%)] px-3 py-1 text-xs font-semibold text-primary transition-[background-color,border-color,box-shadow,color,transform] hover:-translate-y-px hover:border-primary/28 hover:bg-primary/[0.12] hover:text-primary/95 hover:shadow-[0_14px_22px_-20px_rgba(58,119,255,0.5)] active:translate-y-0"
                 >
                   See Demo
                 </a>
