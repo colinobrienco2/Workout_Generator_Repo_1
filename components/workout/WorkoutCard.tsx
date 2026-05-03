@@ -11,9 +11,16 @@ import type { Workout } from "@/lib/workout-types"
 interface WorkoutCardProps {
   workout: Workout
   onSwapExercise: (exerciseId: string) => void
+  selectedExerciseId?: string | null
+  onSelectExercise?: (exerciseId: string) => void
 }
 
-export function WorkoutCard({ workout, onSwapExercise }: WorkoutCardProps) {
+export function WorkoutCard({
+  workout,
+  onSwapExercise,
+  selectedExerciseId,
+  onSelectExercise,
+}: WorkoutCardProps) {
   const mainExercises = workout.exercises.filter(ex => !ex.is_abs_finisher)
   const absExercises = workout.exercises.filter(ex => ex.is_abs_finisher)
 
@@ -65,6 +72,8 @@ export function WorkoutCard({ workout, onSwapExercise }: WorkoutCardProps) {
             exercise={exercise}
             index={index + 1}
             onSwap={onSwapExercise}
+            isSelected={selectedExerciseId === exercise.exercise_id}
+            onSelect={onSelectExercise ? () => onSelectExercise(exercise.exercise_id) : undefined}
           />
         ))}
       </div>
@@ -79,6 +88,8 @@ export function WorkoutCard({ workout, onSwapExercise }: WorkoutCardProps) {
               exercise={exercise}
               index={mainExercises.length + index + 1}
               onSwap={onSwapExercise}
+              isSelected={selectedExerciseId === exercise.exercise_id}
+              onSelect={onSelectExercise ? () => onSelectExercise(exercise.exercise_id) : undefined}
             />
           ))}
         </div>

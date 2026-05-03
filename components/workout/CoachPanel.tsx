@@ -3,13 +3,24 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Bot, User, HelpCircle, Timer, Wrench, BarChart3, HeartPulse, Apple } from "lucide-react"
 import guidedHelpCatalog from "@/data/tips/guided-help-categories.json"
-import type { ChatMessage, WeeklyStatus } from "@/lib/workout-types"
+import type { ChatMessage, Exercise, WeeklyStatus } from "@/lib/workout-types"
 import type { GuidedHelpCategory, GuidedHelpPrompt } from "@/lib/types/guided-help"
 
 interface CoachPanelProps {
   weeklyStatus?: WeeklyStatus | null
+  exercises?: Exercise[]
+  selectedExerciseId?: string | null
+  selectedExercise?: Exercise | null
+  onSelectedExerciseChange?: (exerciseId: string | null) => void
 }
 
 function cleanText(value?: string | null) {
@@ -29,6 +40,17 @@ function formatPercent(value?: number | null) {
 function formatCalories(value?: number | null) {
   if (typeof value !== "number" || Number.isNaN(value)) return "0"
   return `${value > 0 ? "+" : ""}${value}`
+}
+
+function joinExerciseTargets(exercise: Exercise) {
+  return [exercise.primary_muscle, exercise.secondary_muscle]
+    .map((value) => cleanText(value))
+    .filter(Boolean)
+    .join(", ")
+}
+
+function getSwapOptionCount(exercise: Exercise) {
+  return exercise.allowed_swap_ids?.length ?? exercise.substitution_ids?.length ?? 0
 }
 
 function categoryFallback(categoryId: string, weeklyStatus: WeeklyStatus) {
@@ -57,9 +79,14 @@ function buildDeterministicResponse(
   prompt: GuidedHelpPrompt,
   categoryId: string,
   weeklyStatus?: WeeklyStatus | null,
+  selectedExercise?: Exercise | null,
 ) {
   if (!weeklyStatus) {
     return "Generate a workout first to load your weekly strategy, recovery context, and guided coaching details."
+  }
+
+  if (categoryId === "exercise_help" && !selectedExercise) {
+    return "Select an exercise first so I can answer that specifically."
   }
 
   const readiness = weeklyStatus.readiness_status
@@ -73,6 +100,23 @@ function buildDeterministicResponse(
   const coachNotes = fallbackText(weeklyStatus.coach_notes, "follow the current weekly structure and let the logs guide the next adjustment")
   const nutritionNote = fallbackText(weeklyStatus.nutrition_note, "keep intake consistent so recovery and performance stay supported")
   const calorieAdjustment = formatCalories(weeklyStatus.calorie_adjustment)
+  const exerciseName = selectedExercise ? fallbackText(selectedExercise.name, "This exercise") : "This exercise"
+  const exerciseTargets = selectedExercise ? joinExerciseTargets(selectedExercise) : ""
+  const exerciseCategory = selectedExercise ? fallbackText(selectedExercise.category, "structured") : "structured"
+  const exerciseCue = selectedExercise ? fallbackText(selectedExercise.cue, trainingNote) : trainingNote
+  const exerciseProgression = selectedExercise
+    ? fallbackText(selectedExercise.progression, progressionFocus)
+    : progressionFocus
+  const exerciseEffort = selectedExercise
+    ? fallbackText(selectedExercise.effort_target, "the planned effort target")
+    : "the planned effort target"
+  const exercisePlan = selectedExercise
+    ? `${selectedExercise.sets} sets of ${selectedExercise.reps}`
+    : ""
+  const exerciseTip = selectedExercise
+    ? fallbackText(selectedExercise.tips?.[0], exerciseCue)
+    : exerciseCue
+  const swapOptionCount = selectedExercise ? getSwapOptionCount(selectedExercise) : 0
 
   switch (prompt.question_id) {
     case "why_this_week_strategy":
@@ -99,25 +143,25 @@ function buildDeterministicResponse(
       return `Approach this week with ${readiness.toLowerCase()}-appropriate discipline. The practical focus is ${trainingNote}. The broader coaching direction is ${coachNotes}, so the win is following the plan with clean execution and solid logging rather than chasing random extra work.`
 
     case "why_is_this_exercise_here":
-      return `This exercise is here because it fills a specific role in the workout, not because it was picked at random. It supports the session structure, matches the deterministic template, and helps deliver the week's training goal without overlapping too much with the other work.`
+      return `${exerciseName} is here because it fits the workout's current training focus and fills a defined ${exerciseCategory.toLowerCase()} role in the session. It also gives you a clear progression target for the week: ${exerciseProgression}.`
     case "what_should_i_focus_on":
-      return `Focus on the quality of the reps more than the appearance of effort. The priority is ${trainingNote}, which usually means staying controlled, owning the hard positions, and making the target muscles do the work instead of rushing through the set.`
+      return `For ${exerciseName}, focus on ${exerciseCue}. Keep the set controlled, stay honest to the listed effort target of ${exerciseEffort}, and make ${exerciseTargets || "the intended muscles"} do the work instead of rushing the reps.`
     case "what_is_the_goal_of_this_exercise":
-      return `The goal of this exercise is to add productive training stimulus inside the session without wasting fatigue. Depending on where it sits in the workout, that usually means either a main stimulus slot or a fatigue-efficient accessory slot that supports the bigger lifts.`
+      return `The goal of ${exerciseName} is to train your ${exerciseTargets || "target muscles"} with productive volume that matches this session. In this workout, it is placed as a ${exerciseCategory.toLowerCase()} movement and is programmed for ${exercisePlan || "the listed prescription"}.`
     case "why_this_order_in_workout":
-      return `Exercise order is part of the coaching logic. Movements placed earlier usually need more focus, stability, or output, while later movements are there to add volume once the highest-priority work is already done.`
+      return `${exerciseName} appears in this position because the workout is ordered to prioritize larger or more demanding movements before smaller accessory work. Its ${exerciseCategory.toLowerCase()} role helps determine where it fits once the higher-priority slots are placed.`
     case "should_i_push_or_control_reps":
-      return `Default to controlled, clean reps first, then push effort inside that standard. If the rep quality drops early, the set is no longer doing its job well. This movement is most useful when effort stays connected to execution instead of turning into sloppy momentum.`
+      return `With ${exerciseName}, default to clean, controlled reps first and then push effort inside that standard. You are aiming for ${exerciseEffort}, so keep the reps honest and let the difficulty come from execution quality rather than sloppy momentum.`
     case "what_makes_this_different":
-      return `What makes this movement different is the training effect it creates inside the session. Even when it looks similar to another exercise, small changes in stability, loading pattern, or range emphasis can make it better for this slot in the plan.`
+      return `${exerciseName} stands out in this workout because of the role it fills, the way it targets ${exerciseTargets || "the intended muscles"}, and the coaching emphasis of ${exerciseTip}. It also carries ${swapOptionCount} listed swap option${swapOptionCount === 1 ? "" : "s"}, which shows the plan is keeping the movement in a defined slot rather than treating it as interchangeable with everything.`
     case "how_should_this_feel":
-      return `Done well, this should feel targeted rather than random. You should feel the intended muscles carrying the work, the positions should stay stable, and the reps should look repeatable instead of turning into compensations.`
+      return `${exerciseName} should feel targeted rather than random. You want ${exerciseTargets || "the intended muscles"} carrying the work, stable positions throughout the set, and reps that stay repeatable instead of turning into compensations.`
     case "is_this_main_or_accessory":
-      return `Treat this as a role-based movement inside the session. In this system, an exercise is "main" when it drives the session's primary stimulus and "accessory" when it supports that work with cleaner, lower-cost volume. This one is best approached as a structured support piece unless the workout clearly places it up front.`
+      return `${exerciseName} is best understood through its assigned role in this workout. Right now it is labeled as a ${exerciseCategory.toLowerCase()} movement, which tells you whether it is driving the main stimulus or supporting the bigger work with structured volume.`
     case "what_common_mistake_should_i_avoid":
-      return `The most common mistake here is chasing reps without keeping the movement honest. Avoid speeding through the easiest range, losing tension, or changing the movement just to finish the set. Clean reps give the system better training to build from.`
+      return `The biggest mistake with ${exerciseName} is chasing reps without keeping the movement honest. Avoid losing the cue of ${exerciseCue}, speeding through the easy range, or changing the movement just to finish the set.`
     case "how_does_this_help_the_workout":
-      return `This exercise helps the rest of the workout by covering a specific need in the session. It either sets up the main work, adds useful volume after it, or fills a movement pattern that keeps the whole workout balanced and productive.`
+      return `${exerciseName} helps the workout by covering a specific need in the session. It contributes ${exerciseCategory.toLowerCase()} work for ${exerciseTargets || "the target area"}, and its current progression note keeps it aligned with the week's plan: ${exerciseProgression}.`
 
     case "how_improve_coaching_accuracy":
       return `You improve coaching accuracy by giving the system a cleaner trend to work from. Log workouts consistently, enter recovery honestly, and avoid long gaps. Deterministic coaching gets better when the inputs are complete, not when the app tries to guess around missing data.`
@@ -220,7 +264,13 @@ const categoryIcons: Record<string, ReactNode> = {
   program_basics: <Timer className="h-3.5 w-3.5" />,
 }
 
-export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
+export function CoachPanel({
+  weeklyStatus,
+  exercises,
+  selectedExerciseId,
+  selectedExercise,
+  onSelectedExerciseChange,
+}: CoachPanelProps) {
   const categories = guidedHelpCatalog.categories as GuidedHelpCategory[]
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>(categories[0]?.category_id ?? "")
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -252,13 +302,18 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
         content: prompt.label,
         timestamp: new Date(now),
       },
-      {
-        id: `assistant-${now}`,
-        role: "assistant",
-        content: buildDeterministicResponse(prompt, selectedCategory.category_id, weeklyStatus),
-        timestamp: new Date(now + 1),
-      },
-    ])
+        {
+          id: `assistant-${now}`,
+          role: "assistant",
+          content: buildDeterministicResponse(
+            prompt,
+            selectedCategory.category_id,
+            weeklyStatus,
+            selectedExercise,
+          ),
+          timestamp: new Date(now + 1),
+        },
+      ])
   }
 
   return (
@@ -322,6 +377,54 @@ export function CoachPanel({ weeklyStatus }: CoachPanelProps) {
 
         <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(246,242,234,0.62)_100%)] lg:flex-1">
           <div className="px-4 pt-4 pb-3 lg:px-4.5 lg:pt-3.5">
+            <div className="detail-panel mb-3 rounded-[1.1rem] border border-border/60 px-3.5 py-3">
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <p className="text-xs font-medium text-foreground">Ask about an exercise</p>
+                  <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">
+                    {exercises?.length
+                      ? "Choose one exercise from the current workout to make exercise-help answers specific."
+                      : "Generate a workout to ask about a specific exercise."}
+                  </p>
+                </div>
+                {selectedExercise && onSelectedExerciseChange ? (
+                  <button
+                    type="button"
+                    onClick={() => onSelectedExerciseChange(null)}
+                    className="text-[11px] font-medium text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Clear
+                  </button>
+                ) : null}
+              </div>
+
+              {exercises?.length ? (
+                <div className="mt-3 space-y-2">
+                  <Select
+                    value={selectedExerciseId ?? ""}
+                    onValueChange={(value) => onSelectedExerciseChange?.(value || null)}
+                  >
+                    <SelectTrigger size="sm" className="w-full">
+                      <SelectValue placeholder="Select an exercise" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {exercises.map((exercise) => (
+                        <SelectItem key={exercise.exercise_id} value={exercise.exercise_id}>
+                          {exercise.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {selectedExercise ? (
+                    <div className="meta-pill inline-flex max-w-full items-center gap-2 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
+                      <span className="shrink-0">Currently asking about:</span>
+                      <span className="truncate text-foreground">{selectedExercise.name}</span>
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+
             <p className="mb-2.5 text-xs font-medium text-muted-foreground">Categories</p>
             <div className="flex flex-wrap gap-2">
               {categories.map((category) => (

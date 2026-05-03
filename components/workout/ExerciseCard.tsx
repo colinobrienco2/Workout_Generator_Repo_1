@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, type KeyboardEvent, type SyntheticEvent } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -14,16 +14,50 @@ interface ExerciseCardProps {
   exercise: Exercise
   index: number
   onSwap: (exerciseId: string) => void
+  isSelected?: boolean
+  onSelect?: () => void
 }
 
-export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
+export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSelect }: ExerciseCardProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [thumbnailFailed, setThumbnailFailed] = useState(false)
   const media = getExerciseMedia(exercise)
   const thumbnailUrl = thumbnailFailed ? null : media.thumbnailUrl
+  const isSelectable = Boolean(onSelect)
+
+  const handleCardClick = () => {
+    onSelect?.()
+  }
+
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (!onSelect) return
+    if (event.key !== "Enter" && event.key !== " ") return
+    event.preventDefault()
+    onSelect()
+  }
+
+  const stopSelectionPropagation = (event: SyntheticEvent) => {
+    event.stopPropagation()
+  }
 
   return (
-    <Card className={`brand-panel overflow-hidden border-border/50 shadow-sm ${exercise.is_abs_finisher ? "border-l-4 border-l-primary/80" : ""}`}>
+    <Card
+      className={`brand-panel overflow-hidden border-border/50 shadow-sm transition-[border-color,box-shadow,background-color] ${
+        exercise.is_abs_finisher ? "border-l-4 border-l-primary/80" : ""
+      } ${
+        isSelectable ? "cursor-pointer" : ""
+      } ${
+        isSelected
+          ? "border-primary/50 bg-primary/[0.035] ring-2 ring-primary/20 shadow-md"
+          : "hover:border-primary/20 hover:shadow-md/40"
+      }`}
+      onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
+      role={isSelectable ? "button" : undefined}
+      tabIndex={isSelectable ? 0 : undefined}
+      aria-pressed={isSelectable ? isSelected : undefined}
+      aria-label={isSelectable ? `${exercise.name}${isSelected ? ", selected for Coach" : ""}` : undefined}
+    >
       <CardContent className="p-0">
         <div className="p-4 sm:p-5">
           <div className="flex items-start justify-between gap-4">
@@ -35,6 +69,9 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <h4 className="font-semibold text-foreground">{exercise.name}</h4>
+                  {isSelected && (
+                    <Badge className="meta-pill-accent border-0">Selected for Coach</Badge>
+                  )}
                   {exercise.is_abs_finisher && (
                     <Badge variant="secondary">Finisher</Badge>
                   )}
@@ -98,6 +135,7 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
                   href={media.tutorialUrl}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={stopSelectionPropagation}
                   className="inline-flex items-center rounded-full border border-primary/20 bg-[linear-gradient(180deg,rgba(58,119,255,0.1)_0%,rgba(58,119,255,0.06)_100%)] px-3 py-1 text-xs font-semibold text-primary transition-[background-color,border-color,box-shadow,color,transform] hover:-translate-y-px hover:border-primary/28 hover:bg-primary/[0.12] hover:text-primary/95 hover:shadow-[0_14px_22px_-20px_rgba(58,119,255,0.5)] active:translate-y-0"
                 >
                   See Demo
@@ -108,6 +146,7 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
                   disabled
                   aria-disabled="true"
                   title="Demo unavailable: no media manifest or tutorial URL is configured for this exercise."
+                  onClick={stopSelectionPropagation}
                   className="cursor-not-allowed text-xs text-muted-foreground opacity-70"
                 >
                   See Demo
@@ -117,7 +156,10 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => onSwap(exercise.exercise_id)}
+              onClick={(event) => {
+                event.stopPropagation()
+                onSwap(exercise.exercise_id)
+              }}
               className="gap-1.5"
               disabled={!exercise.allowed_swap_ids?.length}
             >
@@ -130,7 +172,10 @@ export function ExerciseCard({ exercise, index, onSwap }: ExerciseCardProps) {
         {exercise.tips && exercise.tips.length > 0 && (
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger asChild>
-              <button className="flex w-full items-center justify-between border-t border-border/50 bg-muted/20 px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/[0.05] hover:text-foreground">
+              <button
+                onClick={stopSelectionPropagation}
+                className="flex w-full items-center justify-between border-t border-border/50 bg-muted/20 px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/[0.05] hover:text-foreground"
+              >
                 <span>Tips & Notes</span>
                 <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
               </button>

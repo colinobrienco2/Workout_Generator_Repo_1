@@ -137,7 +137,10 @@ export default function WorkoutGeneratorPage() {
   const [workout, setWorkout] = useState<Workout | null>(null)
   const [weeklyStatus, setWeeklyStatus] = useState<WeeklyStatus | null>(null)
   const [lastGeneratedSettings, setLastGeneratedSettings] = useState<WorkoutSettings | null>(null)
+  const [selectedExerciseId, setSelectedExerciseId] = useState<string | null>(null)
   const generationVariantRef = useRef(0)
+  const selectedExercise =
+    workout?.exercises.find((exercise) => exercise.exercise_id === selectedExerciseId) ?? null
 
   useEffect(() => {
     const storedUrl = getStoredApiUrl()
@@ -151,6 +154,7 @@ export default function WorkoutGeneratorPage() {
     setWorkout(null)
     setWeeklyStatus(null)
     setLastGeneratedSettings(null)
+    setSelectedExerciseId(null)
     setErrorMessage("")
     generationVariantRef.current = 0
   }, [])
@@ -162,6 +166,7 @@ export default function WorkoutGeneratorPage() {
     setWorkout(null)
     setWeeklyStatus(null)
     setLastGeneratedSettings(null)
+    setSelectedExerciseId(null)
     setErrorMessage("")
     generationVariantRef.current = 0
   }, [])
@@ -175,6 +180,7 @@ export default function WorkoutGeneratorPage() {
 
     setState("loading")
     setErrorMessage("")
+    setSelectedExerciseId(null)
 
     try {
       const response = await fetch(
@@ -219,8 +225,14 @@ export default function WorkoutGeneratorPage() {
     handleGenerate()
   }, [handleGenerate])
 
+  const handleSelectExercise = useCallback((exerciseId: string) => {
+    setSelectedExerciseId((prev) => (prev === exerciseId ? null : exerciseId))
+  }, [])
+
   const handleSwapExercise = useCallback((exerciseId: string) => {
     if (!weeklyStatus || !lastGeneratedSettings) return
+
+    let nextSelectedExerciseId: string | null | undefined
 
     setWorkout((prev) => {
       if (!prev) return prev
@@ -248,6 +260,10 @@ export default function WorkoutGeneratorPage() {
         return prev
       }
 
+      if (selectedExerciseId === exerciseId) {
+        nextSelectedExerciseId = replacement.exercise_id
+      }
+
       return {
         ...prev,
         exercises: prev.exercises.map((exercise) =>
@@ -257,7 +273,11 @@ export default function WorkoutGeneratorPage() {
         ),
       }
     })
-  }, [lastGeneratedSettings, weeklyStatus])
+
+    if (nextSelectedExerciseId) {
+      setSelectedExerciseId(nextSelectedExerciseId)
+    }
+  }, [lastGeneratedSettings, selectedExerciseId, weeklyStatus])
 
   if (!apiUrl) {
     return <ConnectSheet onConnect={handleConnect} />
@@ -331,12 +351,20 @@ export default function WorkoutGeneratorPage() {
               <WorkoutCard
                 workout={workout}
                 onSwapExercise={handleSwapExercise}
+                selectedExerciseId={selectedExerciseId}
+                onSelectExercise={handleSelectExercise}
               />
             )}
           </section>
 
           <aside className="lg:sticky lg:top-8 lg:self-start lg:flex lg:justify-end">
-            <CoachPanel weeklyStatus={weeklyStatus} />
+            <CoachPanel
+              weeklyStatus={weeklyStatus}
+              exercises={workout?.exercises}
+              selectedExerciseId={selectedExerciseId}
+              selectedExercise={selectedExercise}
+              onSelectedExerciseChange={setSelectedExerciseId}
+            />
           </aside>
         </div>
       </main>
