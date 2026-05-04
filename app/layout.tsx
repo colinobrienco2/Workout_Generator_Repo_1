@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Barlow_Condensed, Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { AuthSessionProvider } from '@/components/auth/session-provider'
 import './globals.css'
 
 const geistSans = Geist({
@@ -53,7 +54,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${barlowCondensed.variable} bg-background`}
     >
       <body className="font-sans antialiased">
-        {children}
+        <AuthSessionProvider>{children}</AuthSessionProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

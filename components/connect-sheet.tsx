@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import { AlertCircle, CheckCircle2, ChevronDown, ChevronUp, Link2, Loader2, ShieldCheck } from "lucide-react"
+import { useEffect, useState } from "react"
+import { signIn, signOut, useSession } from "next-auth/react"
+import { AlertCircle, CheckCircle2, ChevronDown, ChevronUp, Link2, Loader2, LogOut, ShieldCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -13,10 +14,39 @@ interface ConnectSheetProps {
 }
 
 export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
+  const { data: session, status } = useSession()
   const [url, setUrl] = useState("")
   const [error, setError] = useState("")
   const [isConnecting, setIsConnecting] = useState(false)
   const [showManualFlow, setShowManualFlow] = useState(false)
+  const [googleAuthAvailable, setGoogleAuthAvailable] = useState(false)
+  const [isGoogleActionPending, setIsGoogleActionPending] = useState(false)
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadProviders() {
+      try {
+        const response = await fetch("/api/auth/providers", { cache: "no-store" })
+        if (!response.ok) return
+
+        const providers = (await response.json()) as Record<string, { id: string }> | null
+        if (isMounted) {
+          setGoogleAuthAvailable(Boolean(providers?.google))
+        }
+      } catch {
+        if (isMounted) {
+          setGoogleAuthAvailable(false)
+        }
+      }
+    }
+
+    loadProviders()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const handleConnect = async () => {
     const trimmedUrl = url.trim()
@@ -48,6 +78,29 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
       setIsConnecting(false)
     }
   }
+
+  const handleGoogleSignIn = async () => {
+    setIsGoogleActionPending(true)
+
+    try {
+      await signIn("google", { callbackUrl: "/" })
+    } finally {
+      setIsGoogleActionPending(false)
+    }
+  }
+
+  const handleGoogleSignOut = async () => {
+    setIsGoogleActionPending(true)
+
+    try {
+      await signOut({ callbackUrl: "/" })
+    } finally {
+      setIsGoogleActionPending(false)
+    }
+  }
+
+  const isGoogleConnected = status === "authenticated" && Boolean(session?.user?.email)
+  const connectButtonDisabled = !googleAuthAvailable || isGoogleActionPending || status === "loading"
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-8">
@@ -95,18 +148,51 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
                 <div>
                   <h2 className="section-heading text-xl text-foreground">Connect Google Tracker</h2>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Google account connection is planned next. This Phase 1 build keeps the product
-                    flow ready without claiming tracker provisioning or Sheet sync yet.
+                    Sign in with Google to connect your account foundation now. Tracker provisioning
+                    and Google Sheet sync are still a later phase, so the manual Apps Script URL
+                    remains required for workout data.
                   </p>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <Button disabled className="w-full opacity-100">
-                  Google Connection Setup Required
-                </Button>
+                {isGoogleConnected ? (
+                  <>
+                    <div className="surface-subtle rounded-2xl border border-border/60 p-3 text-sm">
+                      <p className="font-medium text-foreground">Google connected · Tracker not provisioned</p>
+                      <p className="mt-1 text-muted-foreground">
+                        Signed in as {session?.user?.email}. Manual tracker URL is still required until
+                        Sheet provisioning is added.
+                      </p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      onClick={handleGoogleSignOut}
+                      disabled={isGoogleActionPending}
+                      className="w-full"
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Sign out of Google
+                    </Button>
+                  </>
+                ) : (
+                  <Button onClick={handleGoogleSignIn} disabled={connectButtonDisabled} className="w-full">
+                    {isGoogleActionPending || status === "loading" ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Connecting Google...
+                      </>
+                    ) : googleAuthAvailable ? (
+                      "Connect Google Tracker"
+                    ) : (
+                      "Google Sign-In Not Configured"
+                    )}
+                  </Button>
+                )}
                 <div className="surface-subtle rounded-2xl border border-border/60 p-3 text-sm text-muted-foreground">
-                  Coming soon: secure Google sign-in, then tracker provisioning in a later phase.
+                  {googleAuthAvailable
+                    ? "Google sign-in only creates a session in this phase. It does not create a tracker sheet or sync any metrics."
+                    : "Add Google OAuth environment variables to enable sign-in. The manual Apps Script URL path still works without them."}
                 </div>
               </div>
             </div>
@@ -135,6 +221,14 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
 
           {showManualFlow ? (
             <div className="space-y-5 rounded-[1.4rem] border border-border/60 bg-white/45 p-4 sm:p-5">
+              {isGoogleConnected ? (
+                <div className="rounded-2xl border border-primary/18 bg-primary/[0.06] p-4 text-sm">
+                  <p className="font-medium text-foreground">
+                    Google connected. Manual tracker URL is still required until Sheet provisioning is added.
+                  </p>
+                </div>
+              ) : null}
+
               <div className="detail-panel space-y-2 p-4">
                 <label htmlFor="apps-script-url" className="text-sm font-medium text-foreground">
                   Apps Script Web App URL

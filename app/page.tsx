@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import Image from "next/image"
+import { signOut, useSession } from "next-auth/react"
 import ConnectSheet from "@/components/connect-sheet"
 import { TodayCheckInCard } from "@/components/tracker/TodayCheckInCard"
 import { WorkoutSettingsForm } from "@/components/workout/WorkoutSettingsForm"
@@ -126,6 +127,7 @@ function mapRenderedWorkoutToLegacy(rendered: RenderedWorkout): Workout {
 }
 
 export default function WorkoutGeneratorPage() {
+  const { data: session, status: sessionStatus } = useSession()
   const [apiUrl, setApiUrl] = useState<string | null>(null)
   const [state, setState] = useState<AppState>("idle")
   const [errorMessage, setErrorMessage] = useState<string>("")
@@ -142,6 +144,7 @@ export default function WorkoutGeneratorPage() {
   const generationVariantRef = useRef(0)
   const selectedExercise =
     workout?.exercises.find((exercise) => exercise.exercise_id === selectedExerciseId) ?? null
+  const hasGoogleSession = sessionStatus === "authenticated" && Boolean(session?.user?.email)
 
   useEffect(() => {
     const storedUrl = getStoredApiUrl()
@@ -317,12 +320,28 @@ export default function WorkoutGeneratorPage() {
                 Tracker: Manual URL
               </div>
 
+              {hasGoogleSession ? (
+                <div className="meta-pill inline-flex items-center gap-2 px-3 py-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+                  Google connected
+                </div>
+              ) : null}
+
               <button
                 onClick={handleDisconnect}
                 className="action-pill inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
               >
                 Manage Tracker
               </button>
+
+              {hasGoogleSession ? (
+                <button
+                  onClick={() => void signOut({ callbackUrl: "/" })}
+                  className="action-pill inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
+                >
+                  Sign Out Google
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
