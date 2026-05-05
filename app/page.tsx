@@ -364,13 +364,9 @@ export default function WorkoutGeneratorPage() {
             <div className="brand-panel mb-6 rounded-2xl border border-border/50 px-5 py-4 shadow-sm md:mb-8">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="min-w-0">
-                  <p className="text-lg font-semibold text-foreground">
-                    {workout ? workout.session_name : "Workout Builder"}
-                  </p>
+                  <p className="text-lg font-semibold text-foreground">Workout Builder</p>
                   <p className="text-sm text-muted-foreground">
-                    {workout
-                      ? "Adjust your settings any time, then generate a fresh session."
-                      : "Configure your settings, then generate your session."}
+                    Adjust your settings, then generate a fresh session.
                   </p>
                 </div>
 
