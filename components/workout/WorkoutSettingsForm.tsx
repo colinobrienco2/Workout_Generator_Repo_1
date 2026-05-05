@@ -1,7 +1,6 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import {
@@ -17,15 +16,11 @@ import type { WorkoutSettings, TrainingFocus, SessionLength, Equipment } from "@
 interface WorkoutSettingsFormProps {
   settings: WorkoutSettings
   onSettingsChange: (settings: WorkoutSettings) => void
-  onGenerate: () => void
-  isGenerating: boolean
 }
 
 export function WorkoutSettingsForm({
   settings,
   onSettingsChange,
-  onGenerate,
-  isGenerating
 }: WorkoutSettingsFormProps) {
   return (
     <Card className="brand-panel border-border/50 shadow-sm">
@@ -105,26 +100,6 @@ export function WorkoutSettingsForm({
             }
           />
         </div>
-
-        <Button
-          className="w-full focus-visible:ring-primary/24 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.26),0_22px_30px_-18px_rgba(58,119,255,0.72),0_16px_24px_-18px_rgba(15,23,42,0.26)] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_12px_18px_-16px_rgba(58,119,255,0.5)]"
-          size="lg"
-          onClick={onGenerate}
-          disabled={isGenerating}
-        >
-          {isGenerating ? (
-            <>
-              <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
-              Generating...
-            </>
-          ) : (
-            "Generate Workout"
-          )}
-        </Button>
-
-        <p className="text-center text-xs text-muted-foreground">
-          Uses structured training logic and exercise constraints to build your session.
-        </p>
       </CardContent>
     </Card>
   )
