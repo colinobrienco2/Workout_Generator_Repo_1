@@ -318,7 +318,7 @@ export function CoachPanel({
       </CardHeader>
 
       <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
-        <div className="coach-scroll min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-3 lg:flex-none lg:basis-[24%] lg:min-h-[180px] lg:max-h-[220px]">
+        <div className="coach-scroll min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-3 lg:flex-none lg:basis-[28%] lg:min-h-[215px] lg:max-h-[295px]">
           <div className="space-y-3">
             {messages.length === 1 ? (
               <div className="detail-panel rounded-[1.25rem] border border-border/60 px-4.5 py-3.5">
@@ -363,9 +363,9 @@ export function CoachPanel({
         </div>
 
         <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(246,242,234,0.62)_100%)] lg:flex-1">
-          <div className="px-4 pt-4 pb-3 lg:px-4.5 lg:pt-3.5">
-            <p className="mb-2.5 text-xs font-medium text-muted-foreground">Categories</p>
-            <div className="flex flex-wrap gap-2">
+          <div className="px-4 pt-4 pb-2.5 lg:px-4.5 lg:pt-3 lg:pb-2">
+            <p className="mb-2 text-xs font-medium text-muted-foreground">Categories</p>
+            <div className="flex flex-wrap gap-1.5">
               {categories.map((category) => (
                 <Button
                   key={category.category_id}
@@ -385,15 +385,15 @@ export function CoachPanel({
             </div>
           </div>
 
-          <div className="px-4 pb-5 lg:px-4.5 lg:pb-6">
-            <div className="detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
-              <div className="mb-3 flex items-center justify-between gap-2">
+          <div className="px-4 pb-4 lg:px-4.5 lg:pb-4.5">
+            <div className="detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
+              <div className="mb-2.5 flex items-center justify-between gap-2">
                 <div className="text-xs font-medium text-foreground">Choose a coach request...</div>
                 <div className="text-[0.68rem] tracking-[0.08em] text-muted-foreground uppercase">
                   Guided only
                 </div>
               </div>
-              <div className="flex flex-wrap gap-2.5 pb-0.5">
+              <div className="flex flex-wrap gap-2 pb-0.5">
                 {selectedCategory?.questions.map((prompt) => (
                   <button
                     key={prompt.question_id}

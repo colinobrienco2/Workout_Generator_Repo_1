@@ -4,6 +4,7 @@ import { useState, type KeyboardEvent, type SyntheticEvent } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { ChevronDown, RefreshCw, Play, Dumbbell, Gauge } from "lucide-react"
 import type { Exercise } from "@/lib/workout-types"
@@ -20,6 +21,7 @@ interface ExerciseCardProps {
 
 export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSelect }: ExerciseCardProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const [thumbnailFailed, setThumbnailFailed] = useState(false)
   const media = getExerciseMedia(exercise)
   const thumbnailUrl = thumbnailFailed ? null : media.thumbnailUrl
@@ -38,6 +40,25 @@ export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSe
 
   const stopSelectionPropagation = (event: SyntheticEvent) => {
     event.stopPropagation()
+  }
+
+  const handleThumbnailClick = (event: SyntheticEvent) => {
+    event.stopPropagation()
+    if (!thumbnailUrl) return
+    setIsPreviewOpen(true)
+  }
+
+  const handleThumbnailKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    event.stopPropagation()
+    if (event.key !== "Enter" && event.key !== " ") return
+    event.preventDefault()
+    if (!thumbnailUrl) return
+    setIsPreviewOpen(true)
+  }
+
+  const handlePreviewImageClick = (event: SyntheticEvent) => {
+    event.stopPropagation()
+    setIsPreviewOpen(false)
   }
 
   return (
@@ -117,7 +138,19 @@ export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSe
 
           <div className="detail-panel mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl p-2.5">
             <div className="flex items-center gap-2">
-              <div className="flex h-12 w-20 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-muted">
+              <button
+                type="button"
+                onClick={handleThumbnailClick}
+                onKeyDown={handleThumbnailKeyDown}
+                onMouseDown={stopSelectionPropagation}
+                className={`flex h-12 w-20 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-muted transition-[transform,box-shadow,filter] focus-visible:outline-none ${
+                  thumbnailUrl
+                    ? "cursor-zoom-in hover:scale-[1.03] hover:ring-2 hover:ring-blue-300/70 hover:brightness-105 focus-visible:ring-2 focus-visible:ring-blue-300/70"
+                    : "cursor-default"
+                }`}
+                aria-label={thumbnailUrl ? `Open larger preview for ${exercise.name}` : `${exercise.name} demo thumbnail unavailable`}
+                disabled={!thumbnailUrl}
+              >
                 {thumbnailUrl ? (
                   <img
                     src={thumbnailUrl}
@@ -129,7 +162,7 @@ export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSe
                 ) : (
                   <Play className="h-5 w-5 text-muted-foreground" />
                 )}
-              </div>
+              </button>
               {media.tutorialUrl ? (
                 <a
                   href={media.tutorialUrl}
@@ -168,6 +201,24 @@ export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSe
             </Button>
           </div>
         </div>
+
+        {thumbnailUrl ? (
+          <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
+            <DialogContent
+              showCloseButton={false}
+              className="w-auto max-w-[calc(100vw-2rem)] border-0 bg-transparent p-0 shadow-none sm:max-w-[calc(100vw-2rem)]"
+              onClick={stopSelectionPropagation}
+            >
+              <DialogTitle className="sr-only">Preview image for {exercise.name}</DialogTitle>
+              <img
+                src={thumbnailUrl}
+                alt={`${exercise.name} enlarged demo preview`}
+                className="max-h-[80vh] max-w-[80vw] cursor-zoom-out rounded-2xl object-contain shadow-2xl"
+                onClick={handlePreviewImageClick}
+              />
+            </DialogContent>
+          </Dialog>
+        ) : null}
 
         {exercise.tips && exercise.tips.length > 0 && (
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>

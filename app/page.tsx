@@ -2,7 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import Image from "next/image"
+import { signOut, useSession } from "next-auth/react"
 import ConnectSheet from "@/components/connect-sheet"
+import { TodayCheckInCard } from "@/components/tracker/TodayCheckInCard"
 import { WorkoutSettingsForm } from "@/components/workout/WorkoutSettingsForm"
 import { WorkoutCard } from "@/components/workout/WorkoutCard"
 import { CoachPanel } from "@/components/workout/CoachPanel"
@@ -125,6 +127,7 @@ function mapRenderedWorkoutToLegacy(rendered: RenderedWorkout): Workout {
 }
 
 export default function WorkoutGeneratorPage() {
+  const { data: session, status: sessionStatus } = useSession()
   const [apiUrl, setApiUrl] = useState<string | null>(null)
   const [state, setState] = useState<AppState>("idle")
   const [errorMessage, setErrorMessage] = useState<string>("")
@@ -141,6 +144,7 @@ export default function WorkoutGeneratorPage() {
   const generationVariantRef = useRef(0)
   const selectedExercise =
     workout?.exercises.find((exercise) => exercise.exercise_id === selectedExerciseId) ?? null
+  const hasGoogleSession = sessionStatus === "authenticated" && Boolean(session?.user?.email)
 
   useEffect(() => {
     const storedUrl = getStoredApiUrl()
@@ -313,15 +317,31 @@ export default function WorkoutGeneratorPage() {
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:justify-end">
               <div className="meta-pill meta-pill-accent inline-flex items-center gap-2 px-3 py-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase">
                 <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
-                Training Data Connected
+                Tracker: Manual URL
               </div>
+
+              {hasGoogleSession ? (
+                <div className="meta-pill inline-flex items-center gap-2 px-3 py-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+                  Google connected
+                </div>
+              ) : null}
 
               <button
                 onClick={handleDisconnect}
                 className="action-pill inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
               >
-                Change Sheet
+                Manage Tracker
               </button>
+
+              {hasGoogleSession ? (
+                <button
+                  onClick={() => void signOut({ callbackUrl: "/" })}
+                  className="action-pill inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
+                >
+                  Sign Out Google
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
@@ -330,12 +350,15 @@ export default function WorkoutGeneratorPage() {
       <main className="app-main container mx-auto px-4 py-8 md:py-10">
         <div className="grid gap-8 lg:grid-cols-[340px_1fr_380px]">
           <aside className="lg:sticky lg:top-8 lg:self-start">
-            <WorkoutSettingsForm
-              settings={settings}
-              onSettingsChange={setSettings}
-              onGenerate={handleGenerate}
-              isGenerating={state === "loading"}
-            />
+            <div className="space-y-5">
+              <TodayCheckInCard />
+              <WorkoutSettingsForm
+                settings={settings}
+                onSettingsChange={setSettings}
+                onGenerate={handleGenerate}
+                isGenerating={state === "loading"}
+              />
+            </div>
           </aside>
 
           <section className="min-w-0">
