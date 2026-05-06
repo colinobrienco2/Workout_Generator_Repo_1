@@ -11,6 +11,7 @@ import { CoachPanel } from "@/components/workout/CoachPanel"
 import { EmptyState } from "@/components/workout/EmptyState"
 import { LoadingState } from "@/components/workout/LoadingState"
 import { ErrorState } from "@/components/workout/ErrorState"
+import { Button } from "@/components/ui/button"
 import { clearStoredApiUrl, getStoredApiUrl } from "@/lib/api-url"
 import type { WorkoutSettings, Workout, Exercise } from "@/lib/workout-types"
 import type { WeeklyStatus } from "@/lib/types/weekly-status"
@@ -355,13 +356,37 @@ export default function WorkoutGeneratorPage() {
               <WorkoutSettingsForm
                 settings={settings}
                 onSettingsChange={setSettings}
-                onGenerate={handleGenerate}
-                isGenerating={state === "loading"}
               />
             </div>
           </aside>
 
           <section className="min-w-0">
+            <div className="brand-panel mb-6 rounded-2xl border border-border/50 px-5 py-4 shadow-sm md:mb-8">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0">
+                  <p className="text-lg font-semibold text-foreground">Workout Builder</p>
+                  <p className="text-sm text-muted-foreground">
+                    Adjust your settings, then generate a fresh session.
+                  </p>
+                </div>
+
+                <Button
+                  className="w-full shrink-0 px-6 focus-visible:ring-primary/24 sm:w-auto hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.26),0_22px_30px_-18px_rgba(58,119,255,0.72),0_16px_24px_-18px_rgba(15,23,42,0.26)] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_12px_18px_-16px_rgba(58,119,255,0.5)]"
+                  onClick={handleGenerate}
+                  disabled={state === "loading"}
+                >
+                  {state === "loading" ? (
+                    <>
+                      <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                      Generating...
+                    </>
+                  ) : (
+                    "Generate Workout"
+                  )}
+                </Button>
+              </div>
+            </div>
+
             {state === "idle" && <EmptyState />}
             {state === "loading" && <LoadingState />}
             {state === "error" && (
