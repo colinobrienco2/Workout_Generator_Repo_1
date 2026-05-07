@@ -1,0 +1,17 @@
+
+> my-project@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.0 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.217:3000
+- Environments: .env.local
+✓ Ready in 1679ms
+Creating turbopack project {
+  dir: 'C:\\Users\\colin\\Projects\\Workout_Generator_Repo_1',
+  testMode: true
+}
+
+○ Compiling /api/tracker/metadata ...
+ GET /api/tracker/metadata 401 in 249ms (next.js: 103ms, application-code: 147ms)
+✓ Finished writing to filesystem cache in 10.9s
