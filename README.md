@@ -13,12 +13,24 @@ This repository is linked to a [v0](https://v0.app) project. You can continue de
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
 ```
+
+If `pnpm` is not installed globally, use:
+
+```bash
+npx pnpm@10.33.3 install
+npx pnpm@10.33.3 dev
+```
+
+## Package Manager
+
+This repo is standardized on `pnpm@10.33.3`.
+
+- Use `pnpm` for dependency changes.
+- If `pnpm` is not available globally, use `npx pnpm@10.33.3 install`.
+- Do not run `npm install` when adding or updating dependencies.
+- Commit `pnpm-lock.yaml` whenever `package.json` changes.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
