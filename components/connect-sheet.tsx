@@ -13,6 +13,14 @@ interface ConnectSheetProps {
   onConnect: (url: string) => void
 }
 
+interface TrackerMetadataResponse {
+  trackerMetadata?: {
+    trackerConnectionMode: "none" | "manual" | "google"
+    googleTrackerSpreadsheetId: string | null
+    manualAppsScriptUrlFallback: string | null
+  }
+}
+
 export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
   const { data: session, status } = useSession()
   const [url, setUrl] = useState("")
@@ -21,6 +29,9 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
   const [showManualFlow, setShowManualFlow] = useState(false)
   const [googleAuthAvailable, setGoogleAuthAvailable] = useState(false)
   const [isGoogleActionPending, setIsGoogleActionPending] = useState(false)
+  const [isProvisioningTracker, setIsProvisioningTracker] = useState(false)
+  const [provisionError, setProvisionError] = useState("")
+  const [provisionedSpreadsheetId, setProvisionedSpreadsheetId] = useState<string | null>(null)
 
   useEffect(() => {
     let isMounted = true
@@ -47,6 +58,40 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
       isMounted = false
     }
   }, [])
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadTrackerMetadata() {
+      if (status !== "authenticated") {
+        if (isMounted) {
+          setProvisionedSpreadsheetId(null)
+          setProvisionError("")
+        }
+        return
+      }
+
+      try {
+        const response = await fetch("/api/tracker/metadata", { cache: "no-store" })
+        if (!response.ok) return
+
+        const payload = (await response.json()) as TrackerMetadataResponse
+        if (isMounted) {
+          setProvisionedSpreadsheetId(payload.trackerMetadata?.googleTrackerSpreadsheetId ?? null)
+        }
+      } catch {
+        if (isMounted) {
+          setProvisionedSpreadsheetId(null)
+        }
+      }
+    }
+
+    void loadTrackerMetadata()
+
+    return () => {
+      isMounted = false
+    }
+  }, [status])
 
   const handleConnect = async () => {
     const trimmedUrl = url.trim()
@@ -83,7 +128,7 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
     setIsGoogleActionPending(true)
 
     try {
-      await signIn("google", { callbackUrl: "/" })
+      await signIn("google", { callbackUrl: "/", prompt: "consent" })
     } finally {
       setIsGoogleActionPending(false)
     }
@@ -99,8 +144,38 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
     }
   }
 
+  const handleProvisionTracker = async () => {
+    setIsProvisioningTracker(true)
+    setProvisionError("")
+
+    try {
+      const response = await fetch("/api/tracker/provision", { method: "POST" })
+      const payload = (await response.json().catch(() => null)) as
+        | {
+            spreadsheetId?: string
+            error?: string
+          }
+        | null
+
+      if (!response.ok || !payload?.spreadsheetId) {
+        throw new Error(payload?.error || "Tracker provisioning failed.")
+      }
+
+      setProvisionedSpreadsheetId(payload.spreadsheetId)
+    } catch (provisioningError) {
+      setProvisionError(
+        provisioningError instanceof Error
+          ? provisioningError.message
+          : "Tracker provisioning failed."
+      )
+    } finally {
+      setIsProvisioningTracker(false)
+    }
+  }
+
   const isGoogleConnected = status === "authenticated" && Boolean(session?.user?.email)
   const connectButtonDisabled = !googleAuthAvailable || isGoogleActionPending || status === "loading"
+  const isTrackerProvisioned = Boolean(provisionedSpreadsheetId)
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-8">
@@ -148,9 +223,8 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
                 <div>
                   <h2 className="section-heading text-xl text-foreground">Connect Google Tracker</h2>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Sign in with Google to connect your account foundation now. Tracker provisioning
-                    and Google Sheet sync are still a later phase, so the manual Apps Script URL
-                    remains required for workout data.
+                    Sign in with Google to create your own CO2 tracker copy in Drive. The manual
+                    Apps Script URL path remains available and unchanged for workout data.
                   </p>
                 </div>
               </div>
@@ -159,12 +233,37 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
                 {isGoogleConnected ? (
                   <>
                     <div className="surface-subtle rounded-2xl border border-border/60 p-3 text-sm">
-                      <p className="font-medium text-foreground">Google connected · Tracker not provisioned</p>
-                      <p className="mt-1 text-muted-foreground">
-                        Signed in as {session?.user?.email}. Manual tracker URL is still required until
-                        Sheet provisioning is added.
+                      <p className="font-medium text-foreground">
+                        {isTrackerProvisioned
+                          ? "Google connected - Tracker provisioned"
+                          : "Google connected - Ready to create tracker"}
                       </p>
+                      <p className="mt-1 text-muted-foreground">
+                        Signed in as {session?.user?.email}. Manual Apps Script setup still remains
+                        available below.
+                      </p>
+                      {isTrackerProvisioned ? (
+                        <p className="mt-2 break-all text-xs text-muted-foreground">
+                          Spreadsheet ID: {provisionedSpreadsheetId}
+                        </p>
+                      ) : null}
                     </div>
+                    <Button
+                      onClick={handleProvisionTracker}
+                      disabled={isGoogleActionPending || isProvisioningTracker || isTrackerProvisioned}
+                      className="w-full"
+                    >
+                      {isProvisioningTracker ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Creating Tracker...
+                        </>
+                      ) : isTrackerProvisioned ? (
+                        "Tracker Created"
+                      ) : (
+                        "Create My CO2 Tracker"
+                      )}
+                    </Button>
                     <Button
                       variant="outline"
                       onClick={handleGoogleSignOut}
@@ -191,9 +290,22 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
                 )}
                 <div className="surface-subtle rounded-2xl border border-border/60 p-3 text-sm text-muted-foreground">
                   {googleAuthAvailable
-                    ? "Google sign-in only creates a session in this phase. It does not create a tracker sheet or sync any metrics."
+                    ? "Google sign-in stays server-backed. Tracker creation does not replace the existing manual Apps Script fallback."
                     : "Add Google OAuth environment variables to enable sign-in. The manual Apps Script URL path still works without them."}
                 </div>
+                {provisionError ? (
+                  <div className="rounded-2xl border border-destructive/18 bg-destructive/[0.06] p-4">
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-destructive/14 bg-destructive/10 text-destructive">
+                        <AlertCircle className="h-4 w-4" />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm font-medium text-foreground">Tracker creation failed</p>
+                        <p className="text-sm text-muted-foreground">{provisionError}</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
@@ -224,7 +336,8 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
               {isGoogleConnected ? (
                 <div className="rounded-2xl border border-primary/18 bg-primary/[0.06] p-4 text-sm">
                   <p className="font-medium text-foreground">
-                    Google connected. Manual tracker URL is still required until Sheet provisioning is added.
+                    Google connected. Manual tracker URL still works here even if you create a
+                    Google-owned tracker copy.
                   </p>
                 </div>
               ) : null}
