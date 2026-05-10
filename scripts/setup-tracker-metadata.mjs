@@ -1,31 +1,84 @@
+import { readFile } from "node:fs/promises"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
 import { neon } from "@neondatabase/serverless"
 
-const databaseUrl = process.env.DATABASE_URL
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const repoRoot = path.resolve(__dirname, "..")
 
-if (!databaseUrl) {
-  console.error("DATABASE_URL is required.")
-  process.exit(1)
+async function loadLocalDatabaseUrl() {
+  if (process.env.DATABASE_URL) {
+    return process.env.DATABASE_URL
+  }
+
+  const envLocalPath = path.join(repoRoot, ".env.local")
+
+  try {
+    const envLocal = await readFile(envLocalPath, "utf8")
+
+    for (const rawLine of envLocal.split(/\r?\n/)) {
+      const line = rawLine.trim()
+
+      if (!line || line.startsWith("#")) {
+        continue
+      }
+
+      const match = line.match(/^DATABASE_URL\s*=\s*(.*)$/)
+
+      if (!match) {
+        continue
+      }
+
+      const value = match[1].trim().replace(/^['"]|['"]$/g, "")
+
+      if (value) {
+        process.env.DATABASE_URL = value
+        return value
+      }
+    }
+  } catch (error) {
+    if (error?.code !== "ENOENT") {
+      throw error
+    }
+  }
+
+  return process.env.DATABASE_URL
 }
 
-const sql = neon(databaseUrl)
+function splitSqlStatements(sqlText) {
+  return sqlText
+    .split(/;\s*(?:\r?\n|$)/)
+    .map((statement) => statement.trim())
+    .filter(Boolean)
+}
 
-await sql`
-  CREATE TABLE IF NOT EXISTS tracker_metadata (
-    user_id TEXT PRIMARY KEY,
-    email TEXT,
-    tracker_connection_mode TEXT NOT NULL DEFAULT 'none',
-    google_tracker_spreadsheet_id TEXT,
-    manual_apps_script_url_fallback TEXT,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    CONSTRAINT tracker_metadata_connection_mode_check
-      CHECK (tracker_connection_mode IN ('none', 'manual', 'google'))
-  )
-`
+console.log("Starting tracker metadata setup...")
 
-await sql`
-  CREATE INDEX IF NOT EXISTS tracker_metadata_email_idx
-  ON tracker_metadata (email)
-`
+try {
+  const databaseUrl = await loadLocalDatabaseUrl()
 
-console.log("tracker_metadata table is ready.")
+  if (!databaseUrl) {
+    throw new Error("DATABASE_URL is required.")
+  }
+
+  const sqlFilePath = path.join(repoRoot, "sql", "create-tracker-metadata.sql")
+  const sqlFile = await readFile(sqlFilePath, "utf8")
+  const statements = splitSqlStatements(sqlFile)
+  const sql = neon(databaseUrl)
+
+  for (const statement of statements) {
+    await sql.query(statement)
+  }
+
+  console.log("tracker_metadata table ensured.")
+  console.log("Setup complete.")
+} catch (error) {
+  const message =
+    error instanceof Error && error.message
+      ? error.message
+      : "Unknown error during tracker metadata setup."
+
+  console.error(`Tracker metadata setup failed: ${message}`)
+  process.exit(1)
+}
