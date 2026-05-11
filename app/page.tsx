@@ -140,6 +140,7 @@ export default function WorkoutGeneratorPage() {
   const { data: session, status: sessionStatus } = useSession()
   const [apiUrl, setApiUrl] = useState<string | null>(null)
   const [trackerConnectionMode, setTrackerConnectionMode] = useState<TrackerConnectionMode>("none")
+  const [googleTrackerSpreadsheetId, setGoogleTrackerSpreadsheetId] = useState<string | null>(null)
   const [state, setState] = useState<AppState>("idle")
   const [errorMessage, setErrorMessage] = useState<string>("")
   const [settings, setSettings] = useState<WorkoutSettings>({
@@ -169,6 +170,7 @@ export default function WorkoutGeneratorPage() {
       if (sessionStatus !== "authenticated") {
         if (isMounted) {
           setTrackerConnectionMode("none")
+          setGoogleTrackerSpreadsheetId(null)
         }
         return
       }
@@ -180,10 +182,12 @@ export default function WorkoutGeneratorPage() {
         const payload = (await response.json()) as TrackerMetadataResponse
         if (isMounted) {
           setTrackerConnectionMode(payload.trackerMetadata?.trackerConnectionMode ?? "none")
+          setGoogleTrackerSpreadsheetId(payload.trackerMetadata?.googleTrackerSpreadsheetId ?? null)
         }
       } catch {
         if (isMounted) {
           setTrackerConnectionMode("none")
+          setGoogleTrackerSpreadsheetId(null)
         }
       }
     }
@@ -220,7 +224,10 @@ export default function WorkoutGeneratorPage() {
   }, [])
 
   const handleGenerate = useCallback(async () => {
-    if (!apiUrl) return
+    const shouldUseGoogleTracker =
+      trackerConnectionMode === "google" && Boolean(googleTrackerSpreadsheetId)
+
+    if (!shouldUseGoogleTracker && !apiUrl) return
 
     const currentSettings = { ...settings }
     const variantIndex = generationVariantRef.current
@@ -232,13 +239,18 @@ export default function WorkoutGeneratorPage() {
 
     try {
       const response = await fetch(
-        `/api/weekly-latest?url=${encodeURIComponent(apiUrl)}`
+        shouldUseGoogleTracker
+          ? "/api/tracker/weekly-latest"
+          : `/api/weekly-latest?url=${encodeURIComponent(apiUrl ?? "")}`
       )
 
       if (!response.ok) {
         const payload = await response.json().catch(() => null)
         throw new Error(
-          payload?.error || "Could not load weekly status from your Apps Script URL."
+          payload?.error ||
+            (shouldUseGoogleTracker
+              ? "Could not load weekly status from your provisioned Google tracker."
+              : "Could not load weekly status from your Apps Script URL.")
         )
       }
 
@@ -267,7 +279,7 @@ export default function WorkoutGeneratorPage() {
           : "Something went wrong while generating the workout."
       )
     }
-  }, [apiUrl, settings])
+  }, [apiUrl, googleTrackerSpreadsheetId, settings, trackerConnectionMode])
 
   const handleRetry = useCallback(() => {
     handleGenerate()
@@ -327,7 +339,10 @@ export default function WorkoutGeneratorPage() {
     }
   }, [lastGeneratedSettings, selectedExerciseId, weeklyStatus])
 
-  if (!apiUrl) {
+  const hasDirectGoogleTracker =
+    trackerConnectionMode === "google" && Boolean(googleTrackerSpreadsheetId)
+
+  if (!apiUrl && !hasDirectGoogleTracker) {
     return <ConnectSheet onConnect={handleConnect} />
   }
 
