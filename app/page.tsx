@@ -4,7 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { signOut, useSession } from "next-auth/react"
 import ConnectSheet from "@/components/connect-sheet"
-import { TodayCheckInCard } from "@/components/tracker/TodayCheckInCard"
+import {
+  TodayCheckInCard,
+  type CheckInValues,
+} from "@/components/tracker/TodayCheckInCard"
 import { WorkoutSettingsForm } from "@/components/workout/WorkoutSettingsForm"
 import { WorkoutCard } from "@/components/workout/WorkoutCard"
 import { CoachPanel } from "@/components/workout/CoachPanel"
@@ -35,6 +38,24 @@ interface TrackerMetadataResponse {
     googleTrackerSpreadsheetId: string | null
     manualAppsScriptUrlFallback: string | null
   }
+}
+
+interface DailyLogResponse {
+  checkIn?: {
+    date: string
+    bodyweight: string | null
+    calories: string | null
+    sleep: number
+    soreness: number
+    energy: number
+    stress: number
+    workoutCompleted: "yes" | "no"
+    notes: string
+  }
+  synced?: boolean
+  rowNumber?: number
+  operation?: "updated" | "appended"
+  error?: string
 }
 
 function mapScoreBand(scoreBand: string): "green" | "yellow" | "red" {
@@ -140,8 +161,13 @@ export default function WorkoutGeneratorPage() {
   const { data: session, status: sessionStatus } = useSession()
   const [apiUrl, setApiUrl] = useState<string | null>(null)
   const [trackerConnectionMode, setTrackerConnectionMode] = useState<TrackerConnectionMode>("none")
+  const [googleTrackerSpreadsheetId, setGoogleTrackerSpreadsheetId] = useState<string | null>(null)
   const [state, setState] = useState<AppState>("idle")
   const [errorMessage, setErrorMessage] = useState<string>("")
+  const [savedCheckIn, setSavedCheckIn] = useState<CheckInValues | null>(null)
+  const [isSavingCheckIn, setIsSavingCheckIn] = useState(false)
+  const [checkInError, setCheckInError] = useState("")
+  const [isCheckInSynced, setIsCheckInSynced] = useState(false)
   const [settings, setSettings] = useState<WorkoutSettings>({
     trainingFocus: "chest-triceps",
     sessionLength: "medium",
@@ -169,6 +195,7 @@ export default function WorkoutGeneratorPage() {
       if (sessionStatus !== "authenticated") {
         if (isMounted) {
           setTrackerConnectionMode("none")
+          setGoogleTrackerSpreadsheetId(null)
         }
         return
       }
@@ -180,10 +207,12 @@ export default function WorkoutGeneratorPage() {
         const payload = (await response.json()) as TrackerMetadataResponse
         if (isMounted) {
           setTrackerConnectionMode(payload.trackerMetadata?.trackerConnectionMode ?? "none")
+          setGoogleTrackerSpreadsheetId(payload.trackerMetadata?.googleTrackerSpreadsheetId ?? null)
         }
       } catch {
         if (isMounted) {
           setTrackerConnectionMode("none")
+          setGoogleTrackerSpreadsheetId(null)
         }
       }
     }
@@ -216,11 +245,89 @@ export default function WorkoutGeneratorPage() {
     setLastGeneratedSettings(null)
     setSelectedExerciseId(null)
     setErrorMessage("")
+    setSavedCheckIn(null)
+    setCheckInError("")
+    setIsCheckInSynced(false)
     generationVariantRef.current = 0
   }, [])
 
+  const getLocalTodayDate = useCallback(() => {
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = String(now.getMonth() + 1).padStart(2, "0")
+    const day = String(now.getDate()).padStart(2, "0")
+    return `${year}-${month}-${day}`
+  }, [])
+
+  const handleSaveCheckIn = useCallback(async (values: CheckInValues) => {
+    const shouldUseGoogleTracker =
+      trackerConnectionMode === "google" && Boolean(googleTrackerSpreadsheetId)
+
+    setCheckInError("")
+
+    if (!shouldUseGoogleTracker) {
+      setSavedCheckIn(values)
+      setIsCheckInSynced(false)
+      return { success: true }
+    }
+
+    setIsSavingCheckIn(true)
+
+    try {
+      const response = await fetch("/api/tracker/daily-log", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          date: getLocalTodayDate(),
+          bodyweight: values.bodyweight.trim() ? values.bodyweight.trim() : null,
+          calories: values.calories.trim() ? values.calories.trim() : null,
+          sleep: Number(values.sleep),
+          soreness: Number(values.soreness),
+          energy: Number(values.energy),
+          stress: Number(values.stress),
+          workoutCompleted: values.workoutCompleted,
+          notes: values.notes,
+        }),
+      })
+
+      const payload = (await response.json().catch(() => null)) as DailyLogResponse | null
+
+      if (!response.ok || !payload?.checkIn || !payload.synced) {
+        throw new Error(payload?.error || "Could not save daily log to your Google tracker.")
+      }
+
+      setSavedCheckIn({
+        bodyweight: payload.checkIn.bodyweight ?? "",
+        calories: payload.checkIn.calories ?? "",
+        sleep: String(payload.checkIn.sleep) as CheckInValues["sleep"],
+        soreness: String(payload.checkIn.soreness) as CheckInValues["soreness"],
+        energy: String(payload.checkIn.energy) as CheckInValues["energy"],
+        stress: String(payload.checkIn.stress) as CheckInValues["stress"],
+        workoutCompleted: payload.checkIn.workoutCompleted,
+        notes: payload.checkIn.notes,
+      })
+      setIsCheckInSynced(true)
+      return { success: true }
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Could not save daily log to your Google tracker."
+
+      setCheckInError(message)
+      return { success: false, error: message }
+    } finally {
+      setIsSavingCheckIn(false)
+    }
+  }, [getLocalTodayDate, googleTrackerSpreadsheetId, trackerConnectionMode])
+
   const handleGenerate = useCallback(async () => {
-    if (!apiUrl) return
+    const shouldUseGoogleTracker =
+      trackerConnectionMode === "google" && Boolean(googleTrackerSpreadsheetId)
+
+    if (!shouldUseGoogleTracker && !apiUrl) return
 
     const currentSettings = { ...settings }
     const variantIndex = generationVariantRef.current
@@ -232,13 +339,18 @@ export default function WorkoutGeneratorPage() {
 
     try {
       const response = await fetch(
-        `/api/weekly-latest?url=${encodeURIComponent(apiUrl)}`
+        shouldUseGoogleTracker
+          ? "/api/tracker/weekly-latest"
+          : `/api/weekly-latest?url=${encodeURIComponent(apiUrl ?? "")}`
       )
 
       if (!response.ok) {
         const payload = await response.json().catch(() => null)
         throw new Error(
-          payload?.error || "Could not load weekly status from your Apps Script URL."
+          payload?.error ||
+            (shouldUseGoogleTracker
+              ? "Could not load weekly status from your provisioned Google tracker."
+              : "Could not load weekly status from your Apps Script URL.")
         )
       }
 
@@ -267,7 +379,7 @@ export default function WorkoutGeneratorPage() {
           : "Something went wrong while generating the workout."
       )
     }
-  }, [apiUrl, settings])
+  }, [apiUrl, googleTrackerSpreadsheetId, settings, trackerConnectionMode])
 
   const handleRetry = useCallback(() => {
     handleGenerate()
@@ -327,7 +439,10 @@ export default function WorkoutGeneratorPage() {
     }
   }, [lastGeneratedSettings, selectedExerciseId, weeklyStatus])
 
-  if (!apiUrl) {
+  const hasDirectGoogleTracker =
+    trackerConnectionMode === "google" && Boolean(googleTrackerSpreadsheetId)
+
+  if (!apiUrl && !hasDirectGoogleTracker) {
     return <ConnectSheet onConnect={handleConnect} />
   }
 
@@ -395,7 +510,14 @@ export default function WorkoutGeneratorPage() {
         <div className="grid gap-8 lg:grid-cols-[340px_1fr_380px]">
           <aside className="lg:sticky lg:top-8 lg:self-start">
             <div className="space-y-5">
-              <TodayCheckInCard />
+              <TodayCheckInCard
+                savedCheckIn={savedCheckIn}
+                onSave={handleSaveCheckIn}
+                isSaving={isSavingCheckIn}
+                saveError={checkInError}
+                isGoogleTracker={hasDirectGoogleTracker}
+                synced={isCheckInSynced}
+              />
               <WorkoutSettingsForm
                 settings={settings}
                 onSettingsChange={setSettings}
