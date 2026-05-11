@@ -41,19 +41,30 @@ function normalizeHeader(header: unknown) {
     .replace(/_+/g, "_")
 }
 
-function coerceNumber(value: unknown, fieldName: string) {
+function coerceNumber(value: unknown, fieldName: string, fallbackValue?: number) {
   if (typeof value === "number" && Number.isFinite(value)) {
     return value
   }
 
   if (typeof value === "string") {
     const normalized = value.trim()
-    if (normalized) {
-      const parsed = Number(normalized)
+    if (!normalized) {
+      if (fallbackValue !== undefined) {
+        return fallbackValue
+      }
+    } else {
+      const parsed = normalized.endsWith("%")
+        ? Number(normalized.slice(0, -1).trim())
+        : Number(normalized)
+
       if (Number.isFinite(parsed)) {
         return parsed
       }
     }
+  }
+
+  if ((value == null || value === "") && fallbackValue !== undefined) {
+    return fallbackValue
   }
 
   throw new Error(`Weekly Summary field "${fieldName}" is not a valid number.`)
@@ -88,14 +99,14 @@ function buildWeeklyStatusCandidate(row: Record<string, unknown>) {
     program_week_key: coerceString(row.program_week_key),
     avg_recovery: coerceNumber(row.avg_recovery, "avg_recovery"),
     avg_weight: coerceNumber(row.avg_weight, "avg_weight"),
-    w_w_weight_change: coerceNumber(row.w_w_weight_change, "w_w_weight_change"),
-    days_logged: coerceNumber(row.days_logged, "days_logged"),
-    workouts_completed: coerceNumber(row.workouts_completed, "workouts_completed"),
+    w_w_weight_change: coerceNumber(row.w_w_weight_change, "w_w_weight_change", 0),
+    days_logged: coerceNumber(row.days_logged, "days_logged", 0),
+    workouts_completed: coerceNumber(row.workouts_completed, "workouts_completed", 0),
     readiness_status: coerceString(row.readiness_status),
     readiness_score_band: coerceString(row.readiness_score_band),
     volume_mode: coerceString(row.volume_mode),
-    volume_adjustment_pct: coerceNumber(row.volume_adjustment_pct, "volume_adjustment_pct"),
-    calorie_adjustment: coerceNumber(row.calorie_adjustment, "calorie_adjustment"),
+    volume_adjustment_pct: coerceNumber(row.volume_adjustment_pct, "volume_adjustment_pct", 0),
+    calorie_adjustment: coerceNumber(row.calorie_adjustment, "calorie_adjustment", 0),
     deload_flag: coerceBoolean(row.deload_flag, "deload_flag"),
     progression_focus: coerceString(row.progression_focus),
     weekly_strategy_label: coerceString(row.weekly_strategy_label),
