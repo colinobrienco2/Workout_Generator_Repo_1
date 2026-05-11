@@ -23,10 +23,10 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 
-type RatingValue = "1" | "2" | "3" | "4" | "5"
-type WorkoutCompleted = "yes" | "no"
+export type RatingValue = "1" | "2" | "3" | "4" | "5"
+export type WorkoutCompleted = "yes" | "no"
 
-interface CheckInValues {
+export interface CheckInValues {
   bodyweight: string
   calories: string
   sleep: RatingValue
@@ -37,7 +37,7 @@ interface CheckInValues {
   notes: string
 }
 
-const defaultValues: CheckInValues = {
+export const defaultCheckInValues: CheckInValues = {
   bodyweight: "",
   calories: "",
   sleep: "3",
@@ -59,10 +59,25 @@ function MetricRow({ label, value }: { label: string; value: string }) {
   )
 }
 
-export function TodayCheckInCard() {
+interface TodayCheckInCardProps {
+  savedCheckIn: CheckInValues | null
+  onSave: (values: CheckInValues) => Promise<{ success: boolean; error?: string }>
+  isSaving?: boolean
+  saveError?: string
+  isGoogleTracker?: boolean
+  synced?: boolean
+}
+
+export function TodayCheckInCard({
+  savedCheckIn,
+  onSave,
+  isSaving = false,
+  saveError = "",
+  isGoogleTracker = false,
+  synced = false,
+}: TodayCheckInCardProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [savedCheckIn, setSavedCheckIn] = useState<CheckInValues | null>(null)
-  const [formValues, setFormValues] = useState<CheckInValues>(defaultValues)
+  const [formValues, setFormValues] = useState<CheckInValues>(defaultCheckInValues)
 
   const summaryRows = useMemo(() => {
     if (!savedCheckIn) {
@@ -88,18 +103,17 @@ export function TodayCheckInCard() {
   }, [savedCheckIn])
 
   const openForCreate = () => {
-    setFormValues(savedCheckIn ?? defaultValues)
+    setFormValues(savedCheckIn ?? defaultCheckInValues)
     setIsOpen(true)
   }
 
-  const handleSave = () => {
-    setSavedCheckIn(formValues)
-    setIsOpen(false)
-  }
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    handleSave()
+    const result = await onSave(formValues)
+
+    if (result.success) {
+      setIsOpen(false)
+    }
   }
 
   return (
@@ -118,7 +132,7 @@ export function TodayCheckInCard() {
               </CardTitle>
             </div>
             <div className="meta-pill inline-flex items-center rounded-full px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-              Local only
+              {isGoogleTracker ? (synced ? "Synced" : "Ready to sync") : "Local only"}
             </div>
           </div>
         </CardHeader>
@@ -150,7 +164,7 @@ export function TodayCheckInCard() {
                   </span>
                 </span>
                 <span className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-primary">
-                  Not synced
+                  {isGoogleTracker ? (synced ? "Synced" : "Not synced") : "Not synced"}
                 </span>
               </div>
 
@@ -202,12 +216,19 @@ export function TodayCheckInCard() {
               </div>
               <DialogTitle className="pt-2 text-xl">Log training metrics</DialogTitle>
               <DialogDescription className="max-w-lg text-sm">
-                Local only in Phase 1. Nothing here writes to Google Sheets, Apps Script, or the
-                workout engine.
+                {isGoogleTracker
+                  ? "This check-in syncs to your Google tracker Daily Log and feeds the existing weekly summary formulas."
+                  : "Local only in Phase 1. Nothing here writes to Google Sheets, Apps Script, or the workout engine."}
               </DialogDescription>
             </DialogHeader>
 
             <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
+              {saveError ? (
+                <div className="mb-3 rounded-xl border border-destructive/18 bg-destructive/[0.06] px-3 py-2 text-sm text-destructive">
+                  {saveError}
+                </div>
+              ) : null}
+
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="space-y-1.5">
                   <Label htmlFor="bodyweight">Bodyweight</Label>
@@ -355,14 +376,16 @@ export function TodayCheckInCard() {
 
             <DialogFooter className="shrink-0 border-t border-border/50 bg-background/96 px-5 py-3 backdrop-blur sm:flex-row sm:items-center sm:justify-between">
               <p className="text-xs text-muted-foreground">
-                Saved only in local React state for this session.
+                {isGoogleTracker
+                  ? "Saves to your Google tracker when connected."
+                  : "Saved only in local React state for this session."}
               </p>
               <div className="flex gap-2">
-                <Button type="button" variant="outline" size="sm" onClick={() => setIsOpen(false)}>
+                <Button type="button" variant="outline" size="sm" onClick={() => setIsOpen(false)} disabled={isSaving}>
                   Cancel
                 </Button>
-                <Button type="submit" size="sm">
-                  Save Check-In
+                <Button type="submit" size="sm" disabled={isSaving}>
+                  {isSaving ? "Saving..." : "Save Check-In"}
                 </Button>
               </div>
             </DialogFooter>
