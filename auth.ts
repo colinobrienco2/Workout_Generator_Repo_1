@@ -8,7 +8,11 @@ const GOOGLE_OAUTH_SCOPE = [
   "openid",
   "email",
   "profile",
-  "https://www.googleapis.com/auth/drive.file",
+  // Tracker provisioning copies a pre-existing template spreadsheet by ID.
+  // `drive.file` is too narrow for Drive to read arbitrary existing templates
+  // that were not created or explicitly opened by this app, which can surface
+  // as a misleading 404 "File not found" from files.copy.
+  "https://www.googleapis.com/auth/drive",
   "https://www.googleapis.com/auth/spreadsheets",
 ].join(" ")
 

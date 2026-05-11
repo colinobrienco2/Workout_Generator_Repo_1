@@ -130,5 +130,15 @@ export async function copyTrackerTemplate(accessToken: string, name: string) {
     )
   }
 
+  if (
+    response.status === 404 &&
+    payload?.error?.message?.includes(templateSpreadsheetId)
+  ) {
+    throw new GoogleTrackerProvisioningError(
+      "Google could not access the tracker template with your current Drive permissions. If Google sign-in was connected before the latest scope update, sign out and reconnect Google, then try again.",
+      403
+    )
+  }
+
   throw new GoogleTrackerProvisioningError(message, response.status || 500)
 }
