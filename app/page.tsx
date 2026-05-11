@@ -27,6 +27,15 @@ import {
 import { getExerciseSwapOptions } from "@/lib/adapters/get-exercise-swap-options"
 
 type AppState = "idle" | "loading" | "success" | "error"
+type TrackerConnectionMode = "none" | "manual" | "google"
+
+interface TrackerMetadataResponse {
+  trackerMetadata?: {
+    trackerConnectionMode: TrackerConnectionMode
+    googleTrackerSpreadsheetId: string | null
+    manualAppsScriptUrlFallback: string | null
+  }
+}
 
 function mapScoreBand(scoreBand: string): "green" | "yellow" | "red" {
   const normalized = scoreBand.toLowerCase()
@@ -130,6 +139,7 @@ function mapRenderedWorkoutToLegacy(rendered: RenderedWorkout): Workout {
 export default function WorkoutGeneratorPage() {
   const { data: session, status: sessionStatus } = useSession()
   const [apiUrl, setApiUrl] = useState<string | null>(null)
+  const [trackerConnectionMode, setTrackerConnectionMode] = useState<TrackerConnectionMode>("none")
   const [state, setState] = useState<AppState>("idle")
   const [errorMessage, setErrorMessage] = useState<string>("")
   const [settings, setSettings] = useState<WorkoutSettings>({
@@ -151,6 +161,39 @@ export default function WorkoutGeneratorPage() {
     const storedUrl = getStoredApiUrl()
     setApiUrl(storedUrl)
   }, [])
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadTrackerMetadata() {
+      if (sessionStatus !== "authenticated") {
+        if (isMounted) {
+          setTrackerConnectionMode("none")
+        }
+        return
+      }
+
+      try {
+        const response = await fetch("/api/tracker/metadata", { cache: "no-store" })
+        if (!response.ok) return
+
+        const payload = (await response.json()) as TrackerMetadataResponse
+        if (isMounted) {
+          setTrackerConnectionMode(payload.trackerMetadata?.trackerConnectionMode ?? "none")
+        }
+      } catch {
+        if (isMounted) {
+          setTrackerConnectionMode("none")
+        }
+      }
+    }
+
+    void loadTrackerMetadata()
+
+    return () => {
+      isMounted = false
+    }
+  }, [sessionStatus])
 
   const handleConnect = useCallback(() => {
     const storedUrl = getStoredApiUrl()
@@ -318,7 +361,7 @@ export default function WorkoutGeneratorPage() {
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:justify-end">
               <div className="meta-pill meta-pill-accent inline-flex items-center gap-2 px-3 py-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase">
                 <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
-                Tracker: Manual URL
+                {trackerConnectionMode === "google" ? "Google Tracker Created" : "Tracker: Manual URL"}
               </div>
 
               {hasGoogleSession ? (
