@@ -11,6 +11,10 @@ import { validateAppsScriptUrl } from "@/lib/connection"
 
 interface ConnectSheetProps {
   onConnect: (url: string) => void
+  onGoogleTrackerProvisioned: (tracker: {
+    trackerConnectionMode: "none" | "manual" | "google"
+    googleTrackerSpreadsheetId: string | null
+  }) => void
 }
 
 interface TrackerMetadataResponse {
@@ -21,7 +25,7 @@ interface TrackerMetadataResponse {
   }
 }
 
-export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
+export default function ConnectSheet({ onConnect, onGoogleTrackerProvisioned }: ConnectSheetProps) {
   const { data: session, status } = useSession()
   const [url, setUrl] = useState("")
   const [error, setError] = useState("")
@@ -157,6 +161,7 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
       const payload = (await response.json().catch(() => null)) as
         | {
             spreadsheetId?: string
+            trackerConnectionMode?: "none" | "manual" | "google"
             error?: string
           }
         | null
@@ -166,7 +171,11 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
       }
 
       setProvisionedSpreadsheetId(payload.spreadsheetId)
-      setTrackerConnectionMode("google")
+      setTrackerConnectionMode(payload.trackerConnectionMode ?? "google")
+      onGoogleTrackerProvisioned({
+        trackerConnectionMode: payload.trackerConnectionMode ?? "google",
+        googleTrackerSpreadsheetId: payload.spreadsheetId,
+      })
     } catch (provisioningError) {
       setProvisionError(
         provisioningError instanceof Error
@@ -264,6 +273,17 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
                               </a>
                             </Button>
                           ) : null}
+                          <Button
+                            onClick={() =>
+                              onGoogleTrackerProvisioned({
+                                trackerConnectionMode: "google",
+                                googleTrackerSpreadsheetId: provisionedSpreadsheetId,
+                              })
+                            }
+                            className="mt-3 w-full sm:ml-3 sm:w-auto"
+                          >
+                            Continue to Workout Generator
+                          </Button>
                         </div>
                       ) : null}
                     </div>

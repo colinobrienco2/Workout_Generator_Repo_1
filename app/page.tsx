@@ -40,6 +40,11 @@ interface TrackerMetadataResponse {
   }
 }
 
+interface TrackerProvisioningResult {
+  trackerConnectionMode: TrackerConnectionMode
+  googleTrackerSpreadsheetId: string | null
+}
+
 interface DailyLogResponse {
   checkIn?: {
     date: string
@@ -251,6 +256,21 @@ export default function WorkoutGeneratorPage() {
     generationVariantRef.current = 0
   }, [])
 
+  const handleGoogleTrackerProvisioned = useCallback(
+    ({ trackerConnectionMode, googleTrackerSpreadsheetId }: TrackerProvisioningResult) => {
+      setTrackerConnectionMode(trackerConnectionMode)
+      setGoogleTrackerSpreadsheetId(googleTrackerSpreadsheetId)
+      setState("idle")
+      setWorkout(null)
+      setWeeklyStatus(null)
+      setLastGeneratedSettings(null)
+      setSelectedExerciseId(null)
+      setErrorMessage("")
+      generationVariantRef.current = 0
+    },
+    []
+  )
+
   const getLocalTodayDate = useCallback(() => {
     const now = new Date()
     const year = now.getFullYear()
@@ -443,7 +463,12 @@ export default function WorkoutGeneratorPage() {
     trackerConnectionMode === "google" && Boolean(googleTrackerSpreadsheetId)
 
   if (!apiUrl && !hasDirectGoogleTracker) {
-    return <ConnectSheet onConnect={handleConnect} />
+    return (
+      <ConnectSheet
+        onConnect={handleConnect}
+        onGoogleTrackerProvisioned={handleGoogleTrackerProvisioned}
+      />
+    )
   }
 
   return (
