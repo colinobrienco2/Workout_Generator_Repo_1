@@ -31,6 +31,7 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
   const [isGoogleActionPending, setIsGoogleActionPending] = useState(false)
   const [isProvisioningTracker, setIsProvisioningTracker] = useState(false)
   const [provisionError, setProvisionError] = useState("")
+  const [trackerConnectionMode, setTrackerConnectionMode] = useState<"none" | "manual" | "google">("none")
   const [provisionedSpreadsheetId, setProvisionedSpreadsheetId] = useState<string | null>(null)
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
     async function loadTrackerMetadata() {
       if (status !== "authenticated") {
         if (isMounted) {
+          setTrackerConnectionMode("none")
           setProvisionedSpreadsheetId(null)
           setProvisionError("")
         }
@@ -77,10 +79,12 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
 
         const payload = (await response.json()) as TrackerMetadataResponse
         if (isMounted) {
+          setTrackerConnectionMode(payload.trackerMetadata?.trackerConnectionMode ?? "none")
           setProvisionedSpreadsheetId(payload.trackerMetadata?.googleTrackerSpreadsheetId ?? null)
         }
       } catch {
         if (isMounted) {
+          setTrackerConnectionMode("none")
           setProvisionedSpreadsheetId(null)
         }
       }
@@ -162,6 +166,7 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
       }
 
       setProvisionedSpreadsheetId(payload.spreadsheetId)
+      setTrackerConnectionMode("google")
     } catch (provisioningError) {
       setProvisionError(
         provisioningError instanceof Error
@@ -176,6 +181,9 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
   const isGoogleConnected = status === "authenticated" && Boolean(session?.user?.email)
   const connectButtonDisabled = !googleAuthAvailable || isGoogleActionPending || status === "loading"
   const isTrackerProvisioned = Boolean(provisionedSpreadsheetId)
+  const trackerSheetUrl = provisionedSpreadsheetId
+    ? `https://docs.google.com/spreadsheets/d/${provisionedSpreadsheetId}/edit`
+    : null
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-8">
@@ -235,7 +243,7 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
                     <div className="surface-subtle rounded-2xl border border-border/60 p-3 text-sm">
                       <p className="font-medium text-foreground">
                         {isTrackerProvisioned
-                          ? "Google connected - Tracker provisioned"
+                          ? "Google Tracker Created"
                           : "Google connected - Ready to create tracker"}
                       </p>
                       <p className="mt-1 text-muted-foreground">
@@ -243,27 +251,38 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
                         available below.
                       </p>
                       {isTrackerProvisioned ? (
-                        <p className="mt-2 break-all text-xs text-muted-foreground">
-                          Spreadsheet ID: {provisionedSpreadsheetId}
-                        </p>
+                        <div className="mt-3 rounded-2xl border border-primary/18 bg-primary/[0.06] p-4">
+                          <p className="font-medium text-foreground">Your CO2 tracker has been created.</p>
+                          <p className="mt-1 text-muted-foreground">
+                            Your copied Google Sheet is ready. Direct app sync and read/write from
+                            this tracker are coming in the next phase.
+                          </p>
+                          {trackerSheetUrl ? (
+                            <Button asChild variant="outline" className="mt-3 w-full sm:w-auto">
+                              <a href={trackerSheetUrl} target="_blank" rel="noreferrer">
+                                Open Tracker Sheet
+                              </a>
+                            </Button>
+                          ) : null}
+                        </div>
                       ) : null}
                     </div>
-                    <Button
-                      onClick={handleProvisionTracker}
-                      disabled={isGoogleActionPending || isProvisioningTracker || isTrackerProvisioned}
-                      className="w-full"
-                    >
-                      {isProvisioningTracker ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Creating Tracker...
-                        </>
-                      ) : isTrackerProvisioned ? (
-                        "Tracker Created"
-                      ) : (
-                        "Create My CO2 Tracker"
-                      )}
-                    </Button>
+                    {!isTrackerProvisioned || trackerConnectionMode !== "google" ? (
+                      <Button
+                        onClick={handleProvisionTracker}
+                        disabled={isGoogleActionPending || isProvisioningTracker || isTrackerProvisioned}
+                        className="w-full"
+                      >
+                        {isProvisioningTracker ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Creating Tracker...
+                          </>
+                        ) : (
+                          "Create My CO2 Tracker"
+                        )}
+                      </Button>
+                    ) : null}
                     <Button
                       variant="outline"
                       onClick={handleGoogleSignOut}
