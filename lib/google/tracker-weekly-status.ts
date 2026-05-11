@@ -92,31 +92,65 @@ function coerceString(value: unknown) {
   return String(value).trim()
 }
 
+function normalizeRequiredText(fieldName: string, value: unknown, fallbackValue?: string) {
+  const normalized = coerceString(value)
+
+  if (normalized) {
+    return normalized
+  }
+
+  if (fallbackValue !== undefined) {
+    return fallbackValue
+  }
+
+  throw new Error(`Weekly Summary field "${fieldName}" is required.`)
+}
+
 function buildWeeklyStatusCandidate(row: Record<string, unknown>) {
   return {
-    program_week_start: coerceString(row.program_week_start),
+    program_week_start: normalizeRequiredText("program_week_start", row.program_week_start),
     program_week: coerceNumber(row.program_week, "program_week"),
-    program_week_key: coerceString(row.program_week_key),
+    program_week_key: normalizeRequiredText("program_week_key", row.program_week_key),
     avg_recovery: coerceNumber(row.avg_recovery, "avg_recovery"),
     avg_weight: coerceNumber(row.avg_weight, "avg_weight"),
     w_w_weight_change: coerceNumber(row.w_w_weight_change, "w_w_weight_change", 0),
     days_logged: coerceNumber(row.days_logged, "days_logged", 0),
     workouts_completed: coerceNumber(row.workouts_completed, "workouts_completed", 0),
     readiness_status: coerceString(row.readiness_status),
-    readiness_score_band: coerceString(row.readiness_score_band),
+    readiness_score_band: normalizeRequiredText("readiness_score_band", row.readiness_score_band),
     volume_mode: coerceString(row.volume_mode),
     volume_adjustment_pct: coerceNumber(row.volume_adjustment_pct, "volume_adjustment_pct", 0),
     calorie_adjustment: coerceNumber(row.calorie_adjustment, "calorie_adjustment", 0),
     deload_flag: coerceBoolean(row.deload_flag, "deload_flag"),
-    progression_focus: coerceString(row.progression_focus),
-    weekly_strategy_label: coerceString(row.weekly_strategy_label),
-    data_quality_flag: coerceString(row.data_quality_flag),
-    trigger_reason: coerceString(row.trigger_reason),
-    training_note: coerceString(row.training_note),
-    recovery_note: coerceString(row.recovery_note),
-    nutrition_note: coerceString(row.nutrition_note),
-    coach_notes: coerceString(row.coach_notes),
-    system_version: coerceString(row.system_version),
+    progression_focus: normalizeRequiredText(
+      "progression_focus",
+      row.progression_focus,
+      "Maintain current progression."
+    ),
+    weekly_strategy_label: normalizeRequiredText("weekly_strategy_label", row.weekly_strategy_label),
+    data_quality_flag: normalizeRequiredText("data_quality_flag", row.data_quality_flag),
+    trigger_reason: normalizeRequiredText("trigger_reason", row.trigger_reason),
+    training_note: normalizeRequiredText(
+      "training_note",
+      row.training_note,
+      "Maintain current training approach."
+    ),
+    recovery_note: normalizeRequiredText(
+      "recovery_note",
+      row.recovery_note,
+      "No recovery adjustment yet."
+    ),
+    nutrition_note: normalizeRequiredText(
+      "nutrition_note",
+      row.nutrition_note,
+      "No nutrition adjustment yet."
+    ),
+    coach_notes: normalizeRequiredText(
+      "coach_notes",
+      row.coach_notes,
+      "Maintain current course this week."
+    ),
+    system_version: normalizeRequiredText("system_version", row.system_version),
   }
 }
 
