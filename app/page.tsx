@@ -537,8 +537,8 @@ export default function WorkoutGeneratorPage() {
 
       <main className="app-main container mx-auto px-4 py-8 md:py-10">
         <div className="grid gap-8 lg:grid-cols-[340px_1fr_380px]">
-          <aside className="lg:sticky lg:top-8 lg:self-start">
-            <div className="space-y-5">
+          <aside className="lg:sticky lg:top-8 lg:self-start lg:max-h-[calc(100vh-4rem)] lg:pr-2">
+            <div className="coach-scroll space-y-5 lg:max-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:overscroll-contain">
               <TodayCheckInCard
                 savedCheckIn={savedCheckIn}
                 onSave={handleSaveCheckIn}
