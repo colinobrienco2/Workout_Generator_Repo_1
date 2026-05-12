@@ -11,6 +11,11 @@ import { validateAppsScriptUrl } from "@/lib/connection"
 
 interface ConnectSheetProps {
   onConnect: (url: string) => void
+  onGoogleTrackerProvisioned: (tracker: {
+    trackerConnectionMode: "none" | "manual" | "google"
+    googleTrackerSpreadsheetId: string | null
+  }) => void
+  onBack?: () => void
 }
 
 interface TrackerMetadataResponse {
@@ -21,7 +26,11 @@ interface TrackerMetadataResponse {
   }
 }
 
-export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
+export default function ConnectSheet({
+  onConnect,
+  onGoogleTrackerProvisioned,
+  onBack,
+}: ConnectSheetProps) {
   const { data: session, status } = useSession()
   const [url, setUrl] = useState("")
   const [error, setError] = useState("")
@@ -157,6 +166,7 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
       const payload = (await response.json().catch(() => null)) as
         | {
             spreadsheetId?: string
+            trackerConnectionMode?: "none" | "manual" | "google"
             error?: string
           }
         | null
@@ -166,7 +176,11 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
       }
 
       setProvisionedSpreadsheetId(payload.spreadsheetId)
-      setTrackerConnectionMode("google")
+      setTrackerConnectionMode(payload.trackerConnectionMode ?? "google")
+      onGoogleTrackerProvisioned({
+        trackerConnectionMode: payload.trackerConnectionMode ?? "google",
+        googleTrackerSpreadsheetId: payload.spreadsheetId,
+      })
     } catch (provisioningError) {
       setProvisionError(
         provisioningError instanceof Error
@@ -189,6 +203,13 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
     <div className="flex min-h-screen items-center justify-center px-4 py-8">
       <Card className="brand-panel surface-card w-full max-w-4xl overflow-hidden border-border/50">
         <CardHeader className="space-y-6 pb-5">
+          {onBack ? (
+            <div className="flex justify-end">
+              <Button variant="ghost" onClick={onBack} className="rounded-full px-4">
+                Back to Workout Generator
+              </Button>
+            </div>
+          ) : null}
           <div className="meta-pill meta-pill-accent inline-flex w-fit items-center gap-2 px-3 py-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase">
             <CheckCircle2 className="h-3.5 w-3.5" />
             CO2 Connected Tracker
@@ -264,6 +285,17 @@ export default function ConnectSheet({ onConnect }: ConnectSheetProps) {
                               </a>
                             </Button>
                           ) : null}
+                          <Button
+                            onClick={() =>
+                              onGoogleTrackerProvisioned({
+                                trackerConnectionMode: "google",
+                                googleTrackerSpreadsheetId: provisionedSpreadsheetId,
+                              })
+                            }
+                            className="mt-3 w-full sm:ml-3 sm:w-auto"
+                          >
+                            Continue to Workout Generator
+                          </Button>
                         </div>
                       ) : null}
                     </div>
