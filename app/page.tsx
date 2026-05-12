@@ -165,6 +165,7 @@ function mapRenderedWorkoutToLegacy(rendered: RenderedWorkout): Workout {
 export default function WorkoutGeneratorPage() {
   const { data: session, status: sessionStatus } = useSession()
   const [apiUrl, setApiUrl] = useState<string | null>(null)
+  const [isManagingTracker, setIsManagingTracker] = useState(false)
   const [trackerConnectionMode, setTrackerConnectionMode] = useState<TrackerConnectionMode>("none")
   const [googleTrackerSpreadsheetId, setGoogleTrackerSpreadsheetId] = useState<string | null>(null)
   const [state, setState] = useState<AppState>("idle")
@@ -232,6 +233,7 @@ export default function WorkoutGeneratorPage() {
   const handleConnect = useCallback(() => {
     const storedUrl = getStoredApiUrl()
     setApiUrl(storedUrl)
+    setIsManagingTracker(false)
     setState("idle")
     setWorkout(null)
     setWeeklyStatus(null)
@@ -260,6 +262,7 @@ export default function WorkoutGeneratorPage() {
     ({ trackerConnectionMode, googleTrackerSpreadsheetId }: TrackerProvisioningResult) => {
       setTrackerConnectionMode(trackerConnectionMode)
       setGoogleTrackerSpreadsheetId(googleTrackerSpreadsheetId)
+      setIsManagingTracker(false)
       setState("idle")
       setWorkout(null)
       setWeeklyStatus(null)
@@ -462,11 +465,12 @@ export default function WorkoutGeneratorPage() {
   const hasDirectGoogleTracker =
     trackerConnectionMode === "google" && Boolean(googleTrackerSpreadsheetId)
 
-  if (!apiUrl && !hasDirectGoogleTracker) {
+  if (isManagingTracker || (!apiUrl && !hasDirectGoogleTracker)) {
     return (
       <ConnectSheet
         onConnect={handleConnect}
         onGoogleTrackerProvisioned={handleGoogleTrackerProvisioned}
+        onBack={apiUrl || hasDirectGoogleTracker ? () => setIsManagingTracker(false) : undefined}
       />
     )
   }
@@ -512,7 +516,7 @@ export default function WorkoutGeneratorPage() {
               ) : null}
 
               <button
-                onClick={handleDisconnect}
+                onClick={() => setIsManagingTracker(true)}
                 className="action-pill inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
               >
                 Manage Tracker
