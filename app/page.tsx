@@ -174,6 +174,7 @@ export default function WorkoutGeneratorPage() {
   const [isSavingCheckIn, setIsSavingCheckIn] = useState(false)
   const [checkInError, setCheckInError] = useState("")
   const [isCheckInSynced, setIsCheckInSynced] = useState(false)
+  const [checkInOpenRequestKey, setCheckInOpenRequestKey] = useState(0)
   const [settings, setSettings] = useState<WorkoutSettings>({
     trainingFocus: "chest-triceps",
     sessionLength: "medium",
@@ -256,6 +257,10 @@ export default function WorkoutGeneratorPage() {
     setCheckInError("")
     setIsCheckInSynced(false)
     generationVariantRef.current = 0
+  }, [])
+
+  const handleOpenCheckIn = useCallback(() => {
+    setCheckInOpenRequestKey((current) => current + 1)
   }, [])
 
   const handleGoogleTrackerProvisioned = useCallback(
@@ -546,6 +551,7 @@ export default function WorkoutGeneratorPage() {
                 saveError={checkInError}
                 isGoogleTracker={hasDirectGoogleTracker}
                 synced={isCheckInSynced}
+                openRequestKey={checkInOpenRequestKey}
               />
               <WorkoutSettingsForm
                 settings={settings}
@@ -587,6 +593,7 @@ export default function WorkoutGeneratorPage() {
               <ErrorState
                 onRetry={handleRetry}
                 message={errorMessage}
+                onOpenCheckIn={handleOpenCheckIn}
               />
             )}
             {state === "success" && workout && (

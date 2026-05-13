@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { CalendarCheck2, Edit3, MoonStar, NotebookPen, Plus, Sparkles, Weight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -66,6 +66,7 @@ interface TodayCheckInCardProps {
   saveError?: string
   isGoogleTracker?: boolean
   synced?: boolean
+  openRequestKey?: number
 }
 
 export function TodayCheckInCard({
@@ -75,6 +76,7 @@ export function TodayCheckInCard({
   saveError = "",
   isGoogleTracker = false,
   synced = false,
+  openRequestKey = 0,
 }: TodayCheckInCardProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [formValues, setFormValues] = useState<CheckInValues>(defaultCheckInValues)
@@ -106,6 +108,12 @@ export function TodayCheckInCard({
     setFormValues(savedCheckIn ?? defaultCheckInValues)
     setIsOpen(true)
   }
+
+  useEffect(() => {
+    if (openRequestKey > 0) {
+      openForCreate()
+    }
+  }, [openRequestKey, savedCheckIn])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()

@@ -1,12 +1,13 @@
-import { AlertTriangle, RefreshCw } from "lucide-react"
+import { AlertTriangle, ClipboardList, RefreshCw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface ErrorStateProps {
   onRetry: () => void
   message?: string
+  onOpenCheckIn?: () => void
 }
 
-export function ErrorState({ onRetry, message }: ErrorStateProps) {
+export function ErrorState({ onRetry, message, onOpenCheckIn }: ErrorStateProps) {
   const normalizedMessage = message?.toLowerCase() ?? ""
   const isMissingCheckInState =
     normalizedMessage.includes("weekly summary sheet is empty or missing data rows") ||
@@ -24,6 +25,8 @@ export function ErrorState({ onRetry, message }: ErrorStateProps) {
     : message || "Something went wrong while creating your workout. Please try again."
   const actionLabel = isMissingCheckInState ? "Log Metrics" : "Try Again"
   const helperText = "Make sure your tracker is connected and your first check-in has been saved."
+  const handlePrimaryAction = isMissingCheckInState && onOpenCheckIn ? onOpenCheckIn : onRetry
+  const ActionIcon = isMissingCheckInState ? ClipboardList : RefreshCw
 
   return (
     <div className="flex min-h-[420px] items-center justify-center">
@@ -44,8 +47,8 @@ export function ErrorState({ onRetry, message }: ErrorStateProps) {
         </div>
 
         <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-          <Button onClick={onRetry} variant="outline" className="gap-2">
-            <RefreshCw className="h-4 w-4" />
+          <Button onClick={handlePrimaryAction} variant="outline" className="gap-2">
+            <ActionIcon className="h-4 w-4" />
             {actionLabel}
           </Button>
           <p className="text-xs text-muted-foreground">{helperText}</p>
