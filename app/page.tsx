@@ -174,6 +174,7 @@ export default function WorkoutGeneratorPage() {
   const [isSavingCheckIn, setIsSavingCheckIn] = useState(false)
   const [checkInError, setCheckInError] = useState("")
   const [isCheckInSynced, setIsCheckInSynced] = useState(false)
+  const [checkInOpenRequestKey, setCheckInOpenRequestKey] = useState(0)
   const [settings, setSettings] = useState<WorkoutSettings>({
     trainingFocus: "chest-triceps",
     sessionLength: "medium",
@@ -256,6 +257,10 @@ export default function WorkoutGeneratorPage() {
     setCheckInError("")
     setIsCheckInSynced(false)
     generationVariantRef.current = 0
+  }, [])
+
+  const handleOpenCheckIn = useCallback(() => {
+    setCheckInOpenRequestKey((current) => current + 1)
   }, [])
 
   const handleGoogleTrackerProvisioned = useCallback(
@@ -373,7 +378,7 @@ export default function WorkoutGeneratorPage() {
           payload?.error ||
             (shouldUseGoogleTracker
               ? "Could not load weekly status from your provisioned Google tracker."
-              : "Could not load weekly status from your Apps Script URL.")
+              : "Could not load weekly status from your manually connected tracker.")
         )
       }
 
@@ -505,7 +510,7 @@ export default function WorkoutGeneratorPage() {
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:justify-end">
               <div className="meta-pill meta-pill-accent inline-flex items-center gap-2 px-3 py-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase">
                 <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
-                {trackerConnectionMode === "google" ? "Google Tracker Created" : "Tracker: Manual URL"}
+                {trackerConnectionMode === "google" ? "Google Tracker Created" : "Tracker: Manual Connection"}
               </div>
 
               {hasGoogleSession ? (
@@ -536,9 +541,9 @@ export default function WorkoutGeneratorPage() {
       </header>
 
       <main className="app-main container mx-auto px-4 py-8 md:py-10">
-        <div className="grid gap-8 xl:grid-cols-[340px_minmax(0,1fr)_380px]">
-          <aside className="xl:sticky xl:top-8 xl:self-start xl:max-h-[calc(100vh-4rem)] xl:pr-2">
-            <div className="coach-scroll space-y-5 xl:max-h-[calc(100vh-4rem)] xl:overflow-y-auto xl:overscroll-contain">
+        <div className="grid gap-8 lg:grid-cols-[320px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)_380px]">
+          <aside className="lg:sticky lg:top-8 lg:self-start lg:max-h-[calc(100vh-4rem)] lg:pr-2">
+            <div className="coach-scroll space-y-5 lg:max-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:overscroll-contain">
               <TodayCheckInCard
                 savedCheckIn={savedCheckIn}
                 onSave={handleSaveCheckIn}
@@ -546,6 +551,7 @@ export default function WorkoutGeneratorPage() {
                 saveError={checkInError}
                 isGoogleTracker={hasDirectGoogleTracker}
                 synced={isCheckInSynced}
+                openRequestKey={checkInOpenRequestKey}
               />
               <WorkoutSettingsForm
                 settings={settings}
@@ -587,6 +593,7 @@ export default function WorkoutGeneratorPage() {
               <ErrorState
                 onRetry={handleRetry}
                 message={errorMessage}
+                onOpenCheckIn={handleOpenCheckIn}
               />
             )}
             {state === "success" && workout && (
@@ -599,7 +606,7 @@ export default function WorkoutGeneratorPage() {
             )}
           </section>
 
-          <aside className="xl:sticky xl:top-8 xl:self-start xl:flex xl:justify-end">
+          <aside className="lg:col-span-2 lg:flex lg:justify-center xl:col-span-1 xl:sticky xl:top-8 xl:self-start xl:justify-end">
             <CoachPanel
               weeklyStatus={weeklyStatus}
               selectedExercise={selectedExercise}

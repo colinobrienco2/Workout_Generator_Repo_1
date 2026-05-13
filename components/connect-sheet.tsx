@@ -241,7 +241,7 @@ export default function ConnectSheet({
                 </div>
                 <div className="surface-subtle rounded-2xl border border-border/60 p-4">
                   <p className="eyebrow text-primary">Control</p>
-                  <p className="mt-2 text-sm text-foreground">Keep the current manual Apps Script path as an advanced fallback.</p>
+                  <p className="mt-2 text-sm text-foreground">You can still connect your tracker manually if needed.</p>
                 </div>
               </div>
             </div>
@@ -252,8 +252,8 @@ export default function ConnectSheet({
                 <div>
                   <h2 className="section-heading text-xl text-foreground">Connect Google Tracker</h2>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Sign in with Google to create your own CO2 tracker copy in Drive. The manual
-                    Apps Script URL path remains available and unchanged for workout data.
+                    Sign in with Google to create your own CO2 tracker copy in Drive. A manual
+                    tracker connection is still available if you need it.
                   </p>
                 </div>
               </div>
@@ -268,7 +268,7 @@ export default function ConnectSheet({
                           : "Google connected - Ready to create tracker"}
                       </p>
                       <p className="mt-1 text-muted-foreground">
-                        Signed in as {session?.user?.email}. Manual Apps Script setup still remains
+                        Signed in as {session?.user?.email}. Manual tracker setup still remains
                         available below.
                       </p>
                       {isTrackerProvisioned ? (
@@ -341,8 +341,8 @@ export default function ConnectSheet({
                 )}
                 <div className="surface-subtle rounded-2xl border border-border/60 p-3 text-sm text-muted-foreground">
                   {googleAuthAvailable
-                    ? "Google sign-in stays server-backed. Tracker creation does not replace the existing manual Apps Script fallback."
-                    : "Add Google OAuth environment variables to enable sign-in. The manual Apps Script URL path still works without them."}
+                    ? "Google sign-in stays server-backed. Tracker creation does not replace the existing manual tracker connection."
+                    : "Google sign-in is not configured right now. The manual tracker connection still works without it."}
                 </div>
                 {provisionError ? (
                   <div className="rounded-2xl border border-destructive/18 bg-destructive/[0.06] p-4">
@@ -373,9 +373,9 @@ export default function ConnectSheet({
                 <Link2 className="h-4 w-4" />
               </span>
               <span>
-                <span className="block text-sm font-semibold">Use Apps Script URL instead</span>
+                <span className="block text-sm font-semibold">Connect manually instead</span>
                 <span className="block text-xs text-muted-foreground">
-                  Advanced manual fallback for the current tracker connection flow.
+                  Advanced option for connecting your tracker manually.
                 </span>
               </span>
             </span>
@@ -387,7 +387,7 @@ export default function ConnectSheet({
               {isGoogleConnected ? (
                 <div className="rounded-2xl border border-primary/18 bg-primary/[0.06] p-4 text-sm">
                   <p className="font-medium text-foreground">
-                    Google connected. Manual tracker URL still works here even if you create a
+                    Google connected. Manual tracker connection still works here even if you create a
                     Google-owned tracker copy.
                   </p>
                 </div>
@@ -444,7 +444,7 @@ export default function ConnectSheet({
                   )}
                 </Button>
                 <p className="text-center text-xs text-muted-foreground">
-                  Your Apps Script URL stays on this device unless you choose Manage Tracker later.
+                  Your manual tracker connection stays on this device unless you choose Manage Tracker later.
                 </p>
               </div>
             </div>

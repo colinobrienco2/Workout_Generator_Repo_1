@@ -1,12 +1,33 @@
-import { AlertTriangle, RefreshCw } from "lucide-react"
+import { AlertTriangle, ClipboardList, RefreshCw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface ErrorStateProps {
   onRetry: () => void
   message?: string
+  onOpenCheckIn?: () => void
 }
 
-export function ErrorState({ onRetry, message }: ErrorStateProps) {
+export function ErrorState({ onRetry, message, onOpenCheckIn }: ErrorStateProps) {
+  const normalizedMessage = message?.toLowerCase() ?? ""
+  const isMissingCheckInState =
+    normalizedMessage.includes("weekly summary sheet is empty or missing data rows") ||
+    normalizedMessage.includes("weekly summary sheet does not contain a populated weekly row") ||
+    normalizedMessage.includes("no recovery or training data has been logged yet")
+
+  const title = isMissingCheckInState
+    ? "Log your first check-in to generate workouts"
+    : "Could not generate your workout"
+  const body = isMissingCheckInState
+    ? "CO2 needs at least one daily check-in before it can build your workout plan."
+    : "Your connection and workout logic are still intact. The app just could not finish this request with the current data pull."
+  const details = isMissingCheckInState
+    ? "No recovery or training data has been logged yet."
+    : message || "Something went wrong while creating your workout. Please try again."
+  const actionLabel = isMissingCheckInState ? "Log Metrics" : "Try Again"
+  const helperText = "Make sure your tracker is connected and your first check-in has been saved."
+  const handlePrimaryAction = isMissingCheckInState && onOpenCheckIn ? onOpenCheckIn : onRetry
+  const ActionIcon = isMissingCheckInState ? ClipboardList : RefreshCw
+
   return (
     <div className="flex min-h-[420px] items-center justify-center">
       <div className="brand-panel surface-card flex w-full max-w-2xl flex-col rounded-[1.6rem] border border-border/60 p-8 text-center shadow-sm">
@@ -14,30 +35,23 @@ export function ErrorState({ onRetry, message }: ErrorStateProps) {
           <AlertTriangle className="h-7 w-7 text-destructive" />
         </div>
 
-        <h2 className="text-2xl font-semibold text-foreground">Could not generate your workout</h2>
+        <h2 className="text-2xl font-semibold text-foreground">{title}</h2>
 
-        <p className="mt-2 text-sm text-muted-foreground">
-          Your connection and workout logic are still intact. The app just could not finish this
-          request with the current data pull.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">{body}</p>
 
         <div className="detail-panel mt-5 rounded-2xl border border-border/60 px-4 py-3 text-left">
           <p className="text-xs font-semibold tracking-[0.08em] text-muted-foreground uppercase">
             Details
           </p>
-          <p className="mt-1 text-sm text-foreground">
-            {message || "Something went wrong while creating your workout. Please try again."}
-          </p>
+          <p className="mt-1 text-sm text-foreground">{details}</p>
         </div>
 
         <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-          <Button onClick={onRetry} variant="outline" className="gap-2">
-            <RefreshCw className="h-4 w-4" />
-            Try Again
+          <Button onClick={handlePrimaryAction} variant="outline" className="gap-2">
+            <ActionIcon className="h-4 w-4" />
+            {actionLabel}
           </Button>
-          <p className="text-xs text-muted-foreground">
-            If the problem keeps showing up, use Change Sheet to verify the saved Apps Script URL.
-          </p>
+          <p className="text-xs text-muted-foreground">{helperText}</p>
         </div>
       </div>
     </div>
