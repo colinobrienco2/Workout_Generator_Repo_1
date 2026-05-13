@@ -304,7 +304,7 @@ export function CoachPanel({
   }
 
   return (
-    <Card className="brand-panel flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px] lg:h-[calc(100vh-4rem)]">
+    <Card className="brand-panel flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px] xl:h-[calc(100vh-4rem)]">
       <CardHeader className="shrink-0 border-b border-border/50 px-5 py-4.5">
         <div className="flex items-center justify-between gap-3">
           <CardTitle className="flex items-center gap-2 text-lg">
@@ -318,7 +318,7 @@ export function CoachPanel({
       </CardHeader>
 
       <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
-        <div className="coach-scroll min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-3 lg:flex-none lg:basis-[28%] lg:min-h-[215px] lg:max-h-[295px]">
+        <div className="coach-scroll min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-3 xl:flex-none xl:basis-[28%] xl:min-h-[215px] xl:max-h-[295px]">
           <div className="space-y-3">
             {messages.length === 1 ? (
               <div className="detail-panel rounded-[1.25rem] border border-border/60 px-4.5 py-3.5">
@@ -362,7 +362,7 @@ export function CoachPanel({
           </div>
         </div>
 
-        <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(246,242,234,0.62)_100%)] lg:flex-1">
+        <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(246,242,234,0.62)_100%)] xl:flex-1">
           <div className="px-4 pt-4 pb-2.5 lg:px-4.5 lg:pt-3 lg:pb-2">
             <p className="mb-2 text-xs font-medium text-muted-foreground">Categories</p>
             <div className="flex flex-wrap gap-1.5">

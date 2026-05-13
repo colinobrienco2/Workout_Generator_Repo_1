@@ -536,9 +536,9 @@ export default function WorkoutGeneratorPage() {
       </header>
 
       <main className="app-main container mx-auto px-4 py-8 md:py-10">
-        <div className="grid gap-8 lg:grid-cols-[340px_1fr_380px]">
-          <aside className="lg:sticky lg:top-8 lg:self-start lg:max-h-[calc(100vh-4rem)] lg:pr-2">
-            <div className="coach-scroll space-y-5 lg:max-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:overscroll-contain">
+        <div className="grid gap-8 xl:grid-cols-[340px_minmax(0,1fr)_380px]">
+          <aside className="xl:sticky xl:top-8 xl:self-start xl:max-h-[calc(100vh-4rem)] xl:pr-2">
+            <div className="coach-scroll space-y-5 xl:max-h-[calc(100vh-4rem)] xl:overflow-y-auto xl:overscroll-contain">
               <TodayCheckInCard
                 savedCheckIn={savedCheckIn}
                 onSave={handleSaveCheckIn}
@@ -599,7 +599,7 @@ export default function WorkoutGeneratorPage() {
             )}
           </section>
 
-          <aside className="lg:sticky lg:top-8 lg:self-start lg:flex lg:justify-end">
+          <aside className="xl:sticky xl:top-8 xl:self-start xl:flex xl:justify-end">
             <CoachPanel
               weeklyStatus={weeklyStatus}
               selectedExercise={selectedExercise}
