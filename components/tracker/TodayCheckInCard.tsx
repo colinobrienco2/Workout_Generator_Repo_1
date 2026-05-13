@@ -217,8 +217,8 @@ export function TodayCheckInCard({
               <DialogTitle className="pt-2 text-xl">Log training metrics</DialogTitle>
               <DialogDescription className="max-w-lg text-sm">
                 {isGoogleTracker
-                  ? "This check-in syncs to your Google tracker Daily Log and feeds the existing weekly summary formulas."
-                  : "Local only in Phase 1. Nothing here writes to Google Sheets, Apps Script, or the workout engine."}
+                  ? "Log today's recovery and training metrics to generate smarter workouts and track your progress."
+                  : "Save your daily recovery and training metrics here, then connect your tracker when you're ready to sync everything."}
               </DialogDescription>
             </DialogHeader>
 

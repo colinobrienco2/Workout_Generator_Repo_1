@@ -156,7 +156,7 @@ function buildWeeklyStatusCandidate(row: Record<string, unknown>) {
 
 export function mapWeeklySummaryValuesToWeeklyStatus(values: unknown[][]): WeeklyStatus {
   if (!Array.isArray(values) || values.length < 2) {
-    throw new Error(`Weekly Summary sheet is empty or missing data rows.`)
+    throw new Error("No recovery or training data has been logged yet.")
   }
 
   const [headerRow, ...dataRows] = values
@@ -167,7 +167,7 @@ export function mapWeeklySummaryValuesToWeeklyStatus(values: unknown[][]): Weekl
   })
 
   if (!latestDataRow) {
-    throw new Error(`Weekly Summary sheet does not contain a populated weekly row.`)
+    throw new Error("No recovery or training data has been logged yet.")
   }
 
   const normalizedRow = headers.reduce<Record<string, unknown>>((result, header, index) => {

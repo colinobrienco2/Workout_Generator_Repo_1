@@ -373,7 +373,7 @@ export default function WorkoutGeneratorPage() {
           payload?.error ||
             (shouldUseGoogleTracker
               ? "Could not load weekly status from your provisioned Google tracker."
-              : "Could not load weekly status from your Apps Script URL.")
+              : "Could not load weekly status from your manually connected tracker.")
         )
       }
 
@@ -505,7 +505,7 @@ export default function WorkoutGeneratorPage() {
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:justify-end">
               <div className="meta-pill meta-pill-accent inline-flex items-center gap-2 px-3 py-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase">
                 <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
-                {trackerConnectionMode === "google" ? "Google Tracker Created" : "Tracker: Manual URL"}
+                {trackerConnectionMode === "google" ? "Google Tracker Created" : "Tracker: Manual Connection"}
               </div>
 
               {hasGoogleSession ? (
