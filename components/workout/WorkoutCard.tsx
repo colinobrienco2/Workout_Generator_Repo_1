@@ -1,8 +1,10 @@
 "use client"
 
+import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Clock, Target, MessageCircle } from "lucide-react"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { Clock, Target, MessageCircle, ChevronDown } from "lucide-react"
 import { ReadinessPanel } from "./ReadinessPanel"
 import { ProgressionSummary } from "./ProgressionSummary"
 import { ExerciseCard } from "./ExerciseCard"
@@ -21,8 +23,32 @@ export function WorkoutCard({
   selectedExerciseId,
   onSelectExercise,
 }: WorkoutCardProps) {
+  const [isMobileSummaryOpen, setIsMobileSummaryOpen] = useState(false)
   const mainExercises = workout.exercises.filter(ex => !ex.is_abs_finisher)
   const absExercises = workout.exercises.filter(ex => ex.is_abs_finisher)
+  const readinessLabel = workout.readiness.status.trim()
+  const volumeModeLabel = workout.readiness.volume_mode.trim()
+  const summarySubtitle = `${readinessLabel} · ${volumeModeLabel}`
+  const workoutSupportDetails = (
+    <>
+      <ReadinessPanel readiness={workout.readiness} />
+
+      {/* Coach message */}
+      <div className="detail-panel rounded-xl border border-primary/18 bg-primary/[0.06] p-4">
+        <div className="flex items-start gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/12 bg-primary/10">
+            <MessageCircle className="h-4 w-4 text-primary" />
+          </div>
+          <div>
+            <p className="mb-1 text-xs font-semibold tracking-[0.08em] text-primary uppercase">Coach Note</p>
+            <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">{workout.coach_message}</p>
+          </div>
+        </div>
+      </div>
+
+      <ProgressionSummary summary={workout.progression_summary} />
+    </>
+  )
 
   return (
     <div className="space-y-4">
@@ -44,22 +70,37 @@ export function WorkoutCard({
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <ReadinessPanel readiness={workout.readiness} />
-          
-          {/* Coach message */}
-          <div className="detail-panel rounded-xl border border-primary/18 bg-primary/[0.06] p-4">
-            <div className="flex items-start gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/12 bg-primary/10">
-                <MessageCircle className="h-4 w-4 text-primary" />
+          <Collapsible
+            open={isMobileSummaryOpen}
+            onOpenChange={setIsMobileSummaryOpen}
+            className="md:hidden"
+          >
+            <div className="rounded-xl border border-border/50 bg-muted/20 p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-foreground">Readiness & Progression</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{summarySubtitle}</p>
+                </div>
+                <CollapsibleTrigger asChild>
+                  <button
+                    type="button"
+                    className="action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:text-primary"
+                    aria-label={isMobileSummaryOpen ? "Collapse readiness and progression details" : "Expand readiness and progression details"}
+                  >
+                    {isMobileSummaryOpen ? "Collapse" : "Expand"}
+                    <ChevronDown className={`h-4 w-4 transition-transform ${isMobileSummaryOpen ? "rotate-180" : ""}`} />
+                  </button>
+                </CollapsibleTrigger>
               </div>
-              <div>
-                <p className="mb-1 text-xs font-semibold tracking-[0.08em] text-primary uppercase">Coach Note</p>
-                <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">{workout.coach_message}</p>
-              </div>
+              <CollapsibleContent className="mt-4 space-y-4">
+                {workoutSupportDetails}
+              </CollapsibleContent>
             </div>
-          </div>
+          </Collapsible>
 
-          <ProgressionSummary summary={workout.progression_summary} />
+          <div className="hidden md:block space-y-4">
+            {workoutSupportDetails}
+          </div>
         </CardContent>
       </Card>
 
