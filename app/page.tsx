@@ -176,7 +176,8 @@ export default function WorkoutGeneratorPage() {
   const [isCheckInSynced, setIsCheckInSynced] = useState(false)
   const [checkInOpenRequestKey, setCheckInOpenRequestKey] = useState(0)
   const [settings, setSettings] = useState<WorkoutSettings>({
-    trainingFocus: "chest-triceps",
+    primaryMuscle: "chest",
+    secondaryMuscle: "triceps",
     sessionLength: "medium",
     equipment: "full-gym",
     includeAbs: true,
@@ -385,7 +386,8 @@ export default function WorkoutGeneratorPage() {
       const weeklyStatus = (await response.json()) as WeeklyStatus
 
       const renderedWorkout = buildWorkoutFromStatus(weeklyStatus, {
-        trainingFocus: currentSettings.trainingFocus,
+        primaryMuscle: currentSettings.primaryMuscle,
+        secondaryMuscle: currentSettings.secondaryMuscle,
         sessionLength: currentSettings.sessionLength,
         equipment: currentSettings.equipment,
         includeAbs: currentSettings.includeAbs,

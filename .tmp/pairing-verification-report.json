@@ -1,0 +1,173 @@
+{
+  "results": [
+    {
+      "pairing": "Chest + Back",
+      "duplicateSecondaryPrevented": false,
+      "labelClean": false,
+      "generateWorked": false,
+      "titleMatches": false,
+      "focusMatches": false,
+      "exercises": [],
+      "swapWorked": false,
+      "absToggleWorked": false,
+      "coachWorked": false,
+      "errors": [
+        "TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#primary-muscle') to be visible\u001b[22m\n"
+      ],
+      "screenshot": null
+    },
+    {
+      "pairing": "Back + Triceps",
+      "duplicateSecondaryPrevented": false,
+      "labelClean": false,
+      "generateWorked": false,
+      "titleMatches": false,
+      "focusMatches": false,
+      "exercises": [],
+      "swapWorked": false,
+      "absToggleWorked": false,
+      "coachWorked": false,
+      "errors": [
+        "TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#primary-muscle') to be visible\u001b[22m\n"
+      ],
+      "screenshot": null
+    },
+    {
+      "pairing": "Chest + Biceps",
+      "duplicateSecondaryPrevented": false,
+      "labelClean": false,
+      "generateWorked": false,
+      "titleMatches": false,
+      "focusMatches": false,
+      "exercises": [],
+      "swapWorked": false,
+      "absToggleWorked": false,
+      "coachWorked": false,
+      "errors": [
+        "TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#primary-muscle') to be visible\u001b[22m\n"
+      ],
+      "screenshot": null
+    },
+    {
+      "pairing": "Chest + Triceps",
+      "duplicateSecondaryPrevented": false,
+      "labelClean": false,
+      "generateWorked": false,
+      "titleMatches": false,
+      "focusMatches": false,
+      "exercises": [],
+      "swapWorked": false,
+      "absToggleWorked": false,
+      "coachWorked": false,
+      "errors": [
+        "TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#primary-muscle') to be visible\u001b[22m\n"
+      ],
+      "screenshot": null
+    },
+    {
+      "pairing": "Back + Biceps",
+      "duplicateSecondaryPrevented": false,
+      "labelClean": false,
+      "generateWorked": false,
+      "titleMatches": false,
+      "focusMatches": false,
+      "exercises": [],
+      "swapWorked": false,
+      "absToggleWorked": false,
+      "coachWorked": false,
+      "errors": [
+        "TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#primary-muscle') to be visible\u001b[22m\n"
+      ],
+      "screenshot": null
+    },
+    {
+      "pairing": "Legs + Shoulders",
+      "duplicateSecondaryPrevented": false,
+      "labelClean": false,
+      "generateWorked": false,
+      "titleMatches": false,
+      "focusMatches": false,
+      "exercises": [],
+      "swapWorked": false,
+      "absToggleWorked": false,
+      "coachWorked": false,
+      "errors": [
+        "TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#primary-muscle') to be visible\u001b[22m\n"
+      ],
+      "screenshot": null
+    },
+    {
+      "pairing": "Legs + Biceps",
+      "duplicateSecondaryPrevented": false,
+      "labelClean": false,
+      "generateWorked": false,
+      "titleMatches": false,
+      "focusMatches": false,
+      "exercises": [],
+      "swapWorked": false,
+      "absToggleWorked": false,
+      "coachWorked": false,
+      "errors": [
+        "TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#primary-muscle') to be visible\u001b[22m\n"
+      ],
+      "screenshot": null
+    },
+    {
+      "pairing": "Biceps + Triceps",
+      "duplicateSecondaryPrevented": false,
+      "labelClean": false,
+      "generateWorked": false,
+      "titleMatches": false,
+      "focusMatches": false,
+      "exercises": [],
+      "swapWorked": false,
+      "absToggleWorked": false,
+      "coachWorked": false,
+      "errors": [
+        "TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#primary-muscle') to be visible\u001b[22m\n"
+      ],
+      "screenshot": null
+    }
+  ],
+  "consoleErrors": [
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=Io7DcpHBDVPZXpWZ4l3hY' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=Io7DcpHBDVPZXpWZ4l3hY' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=Io7DcpHBDVPZXpWZ4l3hY' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=Io7DcpHBDVPZXpWZ4l3hY' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=Io7DcpHBDVPZXpWZ4l3hY' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=Io7DcpHBDVPZXpWZ4l3hY' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=Io7DcpHBDVPZXpWZ4l3hY' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=3gj7YnCBB7sL4ZXMkC8ys' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=3gj7YnCBB7sL4ZXMkC8ys' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=3gj7YnCBB7sL4ZXMkC8ys' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=3gj7YnCBB7sL4ZXMkC8ys' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=3gj7YnCBB7sL4ZXMkC8ys' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=3gj7YnCBB7sL4ZXMkC8ys' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=3gj7YnCBB7sL4ZXMkC8ys' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=9qas6YnDqRaIlNSUCKslq' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=9qas6YnDqRaIlNSUCKslq' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=9qas6YnDqRaIlNSUCKslq' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=9qas6YnDqRaIlNSUCKslq' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=pRL9Te-lznHiGdMzVAkRF' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=pRL9Te-lznHiGdMzVAkRF' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=pRL9Te-lznHiGdMzVAkRF' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=pRL9Te-lznHiGdMzVAkRF' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=euLZUZuL1j-9y89-UrNCF' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=euLZUZuL1j-9y89-UrNCF' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=euLZUZuL1j-9y89-UrNCF' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=euLZUZuL1j-9y89-UrNCF' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=euLZUZuL1j-9y89-UrNCF' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=J1SZ4rxJBJYKKsey82Z5V' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=J1SZ4rxJBJYKKsey82Z5V' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=J1SZ4rxJBJYKKsey82Z5V' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=J1SZ4rxJBJYKKsey82Z5V' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=gp8TMFfosNxoFxQrkWETz' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=gp8TMFfosNxoFxQrkWETz' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=gp8TMFfosNxoFxQrkWETz' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=gp8TMFfosNxoFxQrkWETz' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=m4B7tRJXoifgVhOeRoN-T' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=m4B7tRJXoifgVhOeRoN-T' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    "WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=m4B7tRJXoifgVhOeRoN-T' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE"
+  ],
+  "pageErrors": []
+}
