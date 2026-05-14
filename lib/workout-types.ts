@@ -1,9 +1,11 @@
 export type TrainingFocus = "chest-triceps" | "legs-shoulders" | "back-biceps"
+export type MuscleGroup = "chest" | "back" | "legs" | "shoulders" | "biceps" | "triceps"
 export type SessionLength = "short" | "medium" | "long"
 export type Equipment = "full-gym" | "dumbbell-only" | "bodyweight"
 
 export interface WorkoutSettings {
-  trainingFocus: TrainingFocus
+  primaryMuscle: MuscleGroup
+  secondaryMuscle: MuscleGroup
   sessionLength: SessionLength
   equipment: Equipment
   includeAbs: boolean

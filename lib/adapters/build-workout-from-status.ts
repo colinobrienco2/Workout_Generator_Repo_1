@@ -1,4 +1,4 @@
-import type { Equipment, SessionLength, TrainingFocus } from "@/lib/workout-types"
+import type { Equipment, MuscleGroup, SessionLength, TrainingFocus } from "@/lib/workout-types"
 import type { WeeklyStatus } from "@/lib/types/weekly-status"
 import type { ExerciseLibraryItem } from "@/lib/types/exercise"
 import type { RenderedExercise, RenderedWorkout } from "@/lib/types/rendered-workout"
@@ -7,34 +7,55 @@ import backBicepsExercises from "@/data/exercises/back-biceps.json"
 import legsShouldersExercises from "@/data/exercises/legs-shoulders.json"
 import absCoreExercises from "@/data/exercises/abs-core.json"
 
-const splitTemplates = {
-  "chest-triceps": {
-    short: ["chest_primary", "chest_secondary", "triceps_main", "triceps_iso"],
-    medium: ["chest_primary", "chest_secondary", "chest_accessory", "triceps_main", "triceps_secondary", "triceps_iso"],
-    long: ["chest_primary", "chest_secondary", "chest_accessory", "triceps_main", "triceps_secondary", "triceps_iso"],
+const muscleSlotTemplates: Record<MuscleGroup, Record<SessionLength, string[]>> = {
+  chest: {
+    short: ["chest_primary", "chest_secondary"],
+    medium: ["chest_primary", "chest_secondary", "chest_accessory"],
+    long: ["chest_primary", "chest_secondary", "chest_accessory"],
   },
-  "back-biceps": {
-    short: ["back_vertical", "back_row", "biceps_main", "biceps_secondary"],
-    medium: ["back_vertical", "back_row", "back_accessory", "biceps_main", "biceps_secondary", "biceps_accessory"],
-    long: ["back_vertical", "back_row", "back_accessory", "biceps_main", "biceps_secondary", "biceps_accessory"],
+  back: {
+    short: ["back_vertical", "back_row"],
+    medium: ["back_vertical", "back_row", "back_accessory"],
+    long: ["back_vertical", "back_row", "back_accessory"],
   },
-  "legs-shoulders": {
-    short: ["legs_primary", "legs_secondary", "shoulders_primary", "shoulders_lateral"],
-    medium: ["legs_primary", "legs_secondary", "legs_accessory", "shoulders_primary", "shoulders_lateral", "shoulders_secondary"],
-    long: ["legs_primary", "legs_secondary", "legs_accessory", "shoulders_primary", "shoulders_lateral", "shoulders_secondary"],
+  legs: {
+    short: ["legs_primary", "legs_secondary"],
+    medium: ["legs_primary", "legs_secondary", "legs_accessory"],
+    long: ["legs_primary", "legs_secondary", "legs_accessory"],
   },
-} as const
+  shoulders: {
+    short: ["shoulders_primary", "shoulders_lateral"],
+    medium: ["shoulders_primary", "shoulders_lateral", "shoulders_secondary"],
+    long: ["shoulders_primary", "shoulders_lateral", "shoulders_secondary"],
+  },
+  biceps: {
+    short: ["biceps_main", "biceps_secondary"],
+    medium: ["biceps_main", "biceps_secondary", "biceps_accessory"],
+    long: ["biceps_main", "biceps_secondary", "biceps_accessory"],
+  },
+  triceps: {
+    short: ["triceps_main", "triceps_iso"],
+    medium: ["triceps_main", "triceps_secondary", "triceps_iso"],
+    long: ["triceps_main", "triceps_secondary", "triceps_iso"],
+  },
+}
+
+const legacyFocusMuscles: Record<TrainingFocus, [MuscleGroup, MuscleGroup]> = {
+  "chest-triceps": ["chest", "triceps"],
+  "back-biceps": ["back", "biceps"],
+  "legs-shoulders": ["legs", "shoulders"],
+}
+
+const allExercises = [
+  ...(chestTricepsExercises as ExerciseLibraryItem[]),
+  ...(backBicepsExercises as ExerciseLibraryItem[]),
+  ...(legsShouldersExercises as ExerciseLibraryItem[]),
+] as ExerciseLibraryItem[]
 
 const equipmentModeMap: Record<Equipment, string[]> = {
   "full-gym": ["full_gym"],
   "dumbbell-only": ["dumbbell_only", "hotel_gym"],
   bodyweight: ["bodyweight", "hotel_gym", "dumbbell_only"],
-}
-
-const focusLabels: Record<TrainingFocus, string> = {
-  "chest-triceps": "Chest / Triceps",
-  "back-biceps": "Back / Biceps",
-  "legs-shoulders": "Legs / Shoulders",
 }
 
 const durationLabels: Record<SessionLength, string> = {
@@ -43,15 +64,50 @@ const durationLabels: Record<SessionLength, string> = {
   long: "70-80 min",
 }
 
-function getLibraryForFocus(trainingFocus: TrainingFocus): ExerciseLibraryItem[] {
-  switch (trainingFocus) {
-    case "chest-triceps":
-      return chestTricepsExercises as ExerciseLibraryItem[]
-    case "back-biceps":
-      return backBicepsExercises as ExerciseLibraryItem[]
-    case "legs-shoulders":
-      return legsShouldersExercises as ExerciseLibraryItem[]
+function getFallbackSecondaryMuscle(primaryMuscle: MuscleGroup): MuscleGroup {
+  return primaryMuscle === "triceps" ? "chest" : "triceps"
+}
+
+function normalizeSelectedMuscles(
+  primaryMuscle: MuscleGroup,
+  secondaryMuscle: MuscleGroup,
+): [MuscleGroup, MuscleGroup] {
+  if (primaryMuscle === secondaryMuscle) {
+    return [primaryMuscle, getFallbackSecondaryMuscle(primaryMuscle)]
   }
+
+  return [primaryMuscle, secondaryMuscle]
+}
+
+function getMusclesFromOptions(options: {
+  trainingFocus?: TrainingFocus
+  primaryMuscle?: MuscleGroup
+  secondaryMuscle?: MuscleGroup
+}): [MuscleGroup, MuscleGroup] {
+  if (options.primaryMuscle && options.secondaryMuscle) {
+    return normalizeSelectedMuscles(options.primaryMuscle, options.secondaryMuscle)
+  }
+
+  if (options.trainingFocus) {
+    return legacyFocusMuscles[options.trainingFocus]
+  }
+
+  return ["chest", "triceps"]
+}
+
+function getSlotTemplateForMuscles(
+  primaryMuscle: MuscleGroup,
+  secondaryMuscle: MuscleGroup,
+  sessionLength: SessionLength,
+): string[] {
+  return [
+    ...muscleSlotTemplates[primaryMuscle][sessionLength],
+    ...muscleSlotTemplates[secondaryMuscle][sessionLength],
+  ]
+}
+
+function getFocusLabel(primaryMuscle: MuscleGroup, secondaryMuscle: MuscleGroup): string {
+  return `${titleCase(primaryMuscle)} + ${titleCase(secondaryMuscle)}`
 }
 
 function matchesSlot(exercise: ExerciseLibraryItem, slotId: string): boolean {
@@ -215,20 +271,24 @@ function chooseExercise(
 export function buildWorkoutFromStatus(
   weeklyStatus: WeeklyStatus,
   options: {
-    trainingFocus: TrainingFocus
+    trainingFocus?: TrainingFocus
+    primaryMuscle?: MuscleGroup
+    secondaryMuscle?: MuscleGroup
     sessionLength: SessionLength
     equipment: Equipment
     includeAbs: boolean
     variantIndex?: number
   },
 ): RenderedWorkout {
-  const library = getLibraryForFocus(options.trainingFocus)
-  const slotIds = splitTemplates[options.trainingFocus][options.sessionLength]
+  const [primaryMuscle, secondaryMuscle] = getMusclesFromOptions(options)
+  const library = allExercises
+  const slotIds = getSlotTemplateForMuscles(primaryMuscle, secondaryMuscle, options.sessionLength)
   const usedIds = new Set<string>()
   const variantIndex = options.variantIndex ?? 0
+  const focusLabel = getFocusLabel(primaryMuscle, secondaryMuscle)
 
-  const exercises: RenderedExercise[] = slotIds
-    .map((slotId, slotIndex) => {
+  const exercises = slotIds
+    .map<RenderedExercise | null>((slotId, slotIndex) => {
       const selected = chooseExercise(
         library,
         slotId,
@@ -308,8 +368,8 @@ export function buildWorkoutFromStatus(
   }
 
   return {
-    session_name: `${focusLabels[options.trainingFocus]} — ${titleCase(weeklyStatus.weekly_strategy_label)}`,
-    focus: focusLabels[options.trainingFocus],
+    session_name: `${focusLabel} — ${titleCase(weeklyStatus.weekly_strategy_label)}`,
+    focus: focusLabel,
     estimated_duration: durationLabels[options.sessionLength],
     readiness: {
       status: weeklyStatus.readiness_status,

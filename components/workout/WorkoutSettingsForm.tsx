@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { ChevronDown, Dumbbell } from "lucide-react"
-import type { WorkoutSettings, TrainingFocus, SessionLength, Equipment } from "@/lib/workout-types"
+import type { WorkoutSettings, MuscleGroup, SessionLength, Equipment } from "@/lib/workout-types"
 
 interface WorkoutSettingsFormProps {
   settings: WorkoutSettings
@@ -25,34 +25,73 @@ export function WorkoutSettingsForm({
   onSettingsChange,
 }: WorkoutSettingsFormProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const focusLabel = {
-    "chest-triceps": "Chest / Triceps",
-    "legs-shoulders": "Legs / Shoulders",
-    "back-biceps": "Back / Biceps",
-  }[settings.trainingFocus]
+  const muscleLabelMap: Record<MuscleGroup, string> = {
+    chest: "Chest",
+    back: "Back",
+    legs: "Legs",
+    shoulders: "Shoulders",
+    biceps: "Biceps",
+    triceps: "Triceps",
+  }
+  const getFallbackSecondaryMuscle = (primaryMuscle: MuscleGroup): MuscleGroup =>
+    primaryMuscle === "triceps" ? "chest" : "triceps"
+  const focusLabel = `${muscleLabelMap[settings.primaryMuscle]} + ${muscleLabelMap[settings.secondaryMuscle]}`
   const durationLabel = {
     short: "35-45 min",
     medium: "50-60 min",
     long: "70-80 min",
   }[settings.sessionLength]
+  const availableSecondaryMuscles = (Object.keys(muscleLabelMap) as MuscleGroup[]).filter(
+    (muscle) => muscle !== settings.primaryMuscle,
+  )
 
   const settingsFields = (
     <div className="space-y-5">
       <div className="space-y-2">
-        <Label htmlFor="training-focus">Training Focus</Label>
+        <Label htmlFor="primary-muscle">Primary Muscle</Label>
         <Select
-          value={settings.trainingFocus}
-          onValueChange={(value: TrainingFocus) =>
-            onSettingsChange({ ...settings, trainingFocus: value })
+          value={settings.primaryMuscle}
+          onValueChange={(value: MuscleGroup) =>
+            onSettingsChange({
+              ...settings,
+              primaryMuscle: value,
+              secondaryMuscle:
+                value === settings.secondaryMuscle
+                  ? getFallbackSecondaryMuscle(value)
+                  : settings.secondaryMuscle,
+            })
           }
         >
-          <SelectTrigger id="training-focus" className="w-full">
-            <SelectValue placeholder="Select focus" />
+          <SelectTrigger id="primary-muscle" className="w-full">
+            <SelectValue placeholder="Select primary muscle" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="chest-triceps">Chest / Triceps</SelectItem>
-            <SelectItem value="legs-shoulders">Legs / Shoulders</SelectItem>
-            <SelectItem value="back-biceps">Back / Biceps</SelectItem>
+            {(Object.keys(muscleLabelMap) as MuscleGroup[]).map((muscle) => (
+              <SelectItem key={muscle} value={muscle}>
+                {muscleLabelMap[muscle]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="secondary-muscle">Secondary Muscle</Label>
+        <Select
+          value={settings.secondaryMuscle}
+          onValueChange={(value: MuscleGroup) =>
+            onSettingsChange({ ...settings, secondaryMuscle: value })
+          }
+        >
+          <SelectTrigger id="secondary-muscle" className="w-full">
+            <SelectValue placeholder="Select secondary muscle" />
+          </SelectTrigger>
+          <SelectContent>
+            {availableSecondaryMuscles.map((muscle) => (
+              <SelectItem key={muscle} value={muscle}>
+                {muscleLabelMap[muscle]}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
