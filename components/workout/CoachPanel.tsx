@@ -3,7 +3,9 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Bot, User, HelpCircle, Timer, Wrench, BarChart3, HeartPulse, Apple } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 import guidedHelpCatalog from "@/data/tips/guided-help-categories.json"
 import type { ChatMessage, Exercise, WeeklyStatus } from "@/lib/workout-types"
 import type { GuidedHelpCategory, GuidedHelpPrompt } from "@/lib/types/guided-help"
@@ -264,10 +266,11 @@ export function CoachPanel({
     {
       id: "welcome",
       role: "assistant",
-      content: "Choose a guided coach request below. This panel is deterministic - no free typing.",
+      content: "Choose a guided coaching topic below.",
       timestamp: new Date(),
     },
   ])
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement | null>(null)
 
   const selectedCategory = useMemo(
@@ -304,110 +307,230 @@ export function CoachPanel({
   }
 
   return (
-    <Card className="brand-panel flex h-[680px] w-full max-w-sm flex-col gap-0 overflow-hidden border-border/50 pt-0 pb-0 shadow-sm sm:h-[720px] xl:h-[calc(100vh-4rem)]">
-      <CardHeader className="shrink-0 border-b border-border/50 px-5 py-4.5">
-        <div className="flex items-center justify-between gap-3">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Bot className="h-5 w-5 text-primary" />
-            Coach Panel
-          </CardTitle>
-          <div className="meta-pill inline-flex items-center gap-2 px-2.5 py-1 text-[0.68rem] font-semibold tracking-[0.08em] text-muted-foreground uppercase">
-            {weeklyStatus ? "Ready" : "Waiting"}
-          </div>
-        </div>
-      </CardHeader>
-
-      <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
-        <div className="coach-scroll min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-3 xl:flex-none xl:basis-[28%] xl:min-h-[215px] xl:max-h-[295px]">
-          <div className="space-y-3">
-            {messages.length === 1 ? (
-              <div className="detail-panel rounded-[1.25rem] border border-border/60 px-4.5 py-3.5">
-                <p className="text-xs font-semibold tracking-[0.08em] text-muted-foreground uppercase">
-                  Guided Help
-                </p>
-                <p className="mt-1.5 text-sm leading-relaxed text-foreground">
-                  {weeklyStatus
-                    ? "Pick a coach request to get a deterministic explanation based on your current weekly status."
-                    : "Generate a workout first to load your weekly strategy, recovery context, and guided coaching details."}
-                </p>
-              </div>
-            ) : null}
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex items-end gap-2 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+    <Card className="brand-panel w-full max-w-sm overflow-hidden border-border/50 pt-0 pb-0 shadow-sm xl:flex xl:h-[calc(100vh-4rem)] xl:flex-col xl:gap-0">
+      <Collapsible open={isMobileOpen} onOpenChange={setIsMobileOpen} className="xl:hidden">
+        <CardHeader className="border-b border-border/50 px-4 py-3.5">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Bot className="h-4.5 w-4.5 text-primary" />
+                Coach Panel
+              </CardTitle>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Guided coaching help when you want extra context.
+              </p>
+            </div>
+            <CollapsibleTrigger asChild>
+              <button
+                type="button"
+                className="action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:text-primary"
+                aria-label={isMobileOpen ? "Collapse coach panel" : "Expand coach panel"}
               >
-                {message.role === "assistant" && (
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/12 bg-primary/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
-                    <Bot className="h-3.5 w-3.5 text-primary" />
-                  </div>
-                )}
-                <div
-                  className={`rounded-2xl ${
-                    message.role === "user"
-                      ? "max-w-[89%] rounded-br-md border border-primary/75 bg-primary px-3.5 py-2 text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_16px_24px_-22px_rgba(58,119,255,0.55)]"
-                      : "detail-panel max-w-[95%] rounded-bl-md border-white/50 px-3.5 py-2 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.78),0_12px_22px_-24px_rgba(15,23,42,0.28)]"
-                  }`}
-                >
-                  <p className="break-words whitespace-pre-line text-[13px] leading-[1.45]">{message.content}</p>
-                </div>
-                {message.role === "user" && (
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-foreground/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.66)]">
-                    <User className="h-3.5 w-3.5 text-foreground" />
-                  </div>
-                )}
-              </div>
-            ))}
-            <div ref={messagesEndRef} />
+                {isMobileOpen ? "Collapse" : "Expand"}
+                <ChevronDown className={`h-4 w-4 transition-transform ${isMobileOpen ? "rotate-180" : ""}`} />
+              </button>
+            </CollapsibleTrigger>
           </div>
-        </div>
+        </CardHeader>
+        <CollapsibleContent>
+          <div className="flex h-[560px] flex-col overflow-hidden sm:h-[640px]">
+            <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
+              <div className="coach-scroll min-h-0 flex-[1.05] overflow-y-auto overscroll-contain px-3 py-3">
+                <div className="space-y-3">
+                  {messages.length === 1 ? (
+                    <div className="detail-panel rounded-[1.25rem] border border-border/60 px-4 py-3">
+                      <p className="mt-0 text-sm leading-relaxed text-foreground">
+                        {weeklyStatus
+                          ? "Pick a coaching topic to get a guided explanation based on your current week."
+                          : "Generate a workout first to load your weekly context and guided coaching details."}
+                      </p>
+                    </div>
+                  ) : null}
+                  {messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`flex items-end gap-2 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                    >
+                      {message.role === "assistant" && (
+                        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/12 bg-primary/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                          <Bot className="h-3.5 w-3.5 text-primary" />
+                        </div>
+                      )}
+                      <div
+                        className={`rounded-2xl ${
+                          message.role === "user"
+                            ? "max-w-[89%] rounded-br-md border border-primary/75 bg-primary px-3.5 py-2 text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_16px_24px_-22px_rgba(58,119,255,0.55)]"
+                            : "detail-panel max-w-[95%] rounded-bl-md border-white/50 px-3.5 py-2 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.78),0_12px_22px_-24px_rgba(15,23,42,0.28)]"
+                        }`}
+                      >
+                        <p className="break-words whitespace-pre-line text-[13px] leading-[1.45]">{message.content}</p>
+                      </div>
+                      {message.role === "user" && (
+                        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-foreground/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.66)]">
+                          <User className="h-3.5 w-3.5 text-foreground" />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  <div ref={messagesEndRef} />
+                </div>
+              </div>
 
-        <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(246,242,234,0.62)_100%)] xl:flex-1">
-          <div className="px-4 pt-4 pb-2.5 lg:px-4.5 lg:pt-3 lg:pb-2">
-            <p className="mb-2 text-xs font-medium text-muted-foreground">Categories</p>
-            <div className="flex flex-wrap gap-1.5">
-              {categories.map((category) => (
-                <Button
-                  key={category.category_id}
-                  variant={selectedCategoryId === category.category_id ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategoryId(category.category_id)}
-                  className={`gap-1.5 text-[11px] ${
-                    selectedCategoryId === category.category_id
-                      ? "brand-chip-active px-3.5 focus-visible:ring-primary/22"
-                      : "border-border/65 bg-white/72 px-3.5 text-muted-foreground hover:border-primary/18 hover:bg-white/92 hover:text-foreground focus-visible:ring-primary/16"
-                  }`}
+              <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(246,242,234,0.62)_100%)]">
+                <div className="px-4 pt-3.5 pb-2">
+                  <p className="mb-2 text-xs font-medium text-muted-foreground">Categories</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {categories.map((category) => (
+                      <Button
+                        key={category.category_id}
+                        variant={selectedCategoryId === category.category_id ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setSelectedCategoryId(category.category_id)}
+                        className={`gap-1.5 text-[11px] ${
+                          selectedCategoryId === category.category_id
+                            ? "brand-chip-active px-3.5 focus-visible:ring-primary/22"
+                            : "border-border/65 bg-white/72 px-3.5 text-muted-foreground hover:border-primary/18 hover:bg-white/92 hover:text-foreground focus-visible:ring-primary/16"
+                        }`}
+                      >
+                        {categoryIcons[category.category_id] ?? <Wrench className="h-3.5 w-3.5" />}
+                        {category.label}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="px-4 pb-4">
+                  <div className="detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
+                    <div className="mb-2.5 flex items-center justify-between gap-2">
+                      <div className="text-xs font-medium text-foreground">Choose a coach request...</div>
+                      <div className="text-[0.68rem] tracking-[0.08em] text-muted-foreground uppercase">
+                        Guided only
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2 pb-0.5">
+                      {selectedCategory?.questions.map((prompt) => (
+                        <button
+                          key={prompt.question_id}
+                          onClick={() => handlePromptClick(prompt)}
+                          className="action-pill px-3.5 py-1.5 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,transform,color] hover:-translate-y-px hover:border-primary/18 hover:bg-primary/[0.06] hover:text-foreground focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/14 active:translate-y-0 active:border-primary/16 active:bg-primary/[0.08]"
+                        >
+                          {prompt.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+
+      <div className="hidden xl:flex xl:h-[calc(100vh-4rem)] xl:flex-col">
+        <CardHeader className="shrink-0 border-b border-border/50 px-5 py-4.5">
+          <div className="flex items-center justify-between gap-3">
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Bot className="h-5 w-5 text-primary" />
+              Coach Panel
+            </CardTitle>
+            <div className="meta-pill inline-flex items-center gap-2 px-2.5 py-1 text-[0.68rem] font-semibold tracking-[0.08em] text-muted-foreground uppercase">
+              {weeklyStatus ? "Ready" : "Waiting"}
+            </div>
+          </div>
+        </CardHeader>
+
+        <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
+          <div className="coach-scroll min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-3 xl:flex-none xl:basis-[28%] xl:min-h-[215px] xl:max-h-[295px]">
+            <div className="space-y-3">
+              {messages.length === 1 ? (
+                <div className="detail-panel rounded-[1.25rem] border border-border/60 px-4.5 py-3.5">
+                  <p className="text-xs font-semibold tracking-[0.08em] text-muted-foreground uppercase">
+                    Guided Help
+                  </p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-foreground">
+                    {weeklyStatus
+                      ? "Pick a coaching topic to get a guided explanation based on your current week."
+                      : "Generate a workout first to load your weekly context and guided coaching details."}
+                  </p>
+                </div>
+              ) : null}
+              {messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex items-end gap-2 ${message.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  {categoryIcons[category.category_id] ?? <Wrench className="h-3.5 w-3.5" />}
-                  {category.label}
-                </Button>
+                  {message.role === "assistant" && (
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/12 bg-primary/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                      <Bot className="h-3.5 w-3.5 text-primary" />
+                    </div>
+                  )}
+                  <div
+                    className={`rounded-2xl ${
+                      message.role === "user"
+                        ? "max-w-[89%] rounded-br-md border border-primary/75 bg-primary px-3.5 py-2 text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_16px_24px_-22px_rgba(58,119,255,0.55)]"
+                        : "detail-panel max-w-[95%] rounded-bl-md border-white/50 px-3.5 py-2 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.78),0_12px_22px_-24px_rgba(15,23,42,0.28)]"
+                    }`}
+                  >
+                    <p className="break-words whitespace-pre-line text-[13px] leading-[1.45]">{message.content}</p>
+                  </div>
+                  {message.role === "user" && (
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-foreground/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.66)]">
+                      <User className="h-3.5 w-3.5 text-foreground" />
+                    </div>
+                  )}
+                </div>
               ))}
+              <div ref={messagesEndRef} />
             </div>
           </div>
 
-          <div className="px-4 pb-4 lg:px-4.5 lg:pb-4.5">
-            <div className="detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
-              <div className="mb-2.5 flex items-center justify-between gap-2">
-                <div className="text-xs font-medium text-foreground">Choose a coach request...</div>
-                <div className="text-[0.68rem] tracking-[0.08em] text-muted-foreground uppercase">
-                  Guided only
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-2 pb-0.5">
-                {selectedCategory?.questions.map((prompt) => (
-                  <button
-                    key={prompt.question_id}
-                    onClick={() => handlePromptClick(prompt)}
-                    className="action-pill px-3.5 py-1.5 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,transform,color] hover:-translate-y-px hover:border-primary/18 hover:bg-primary/[0.06] hover:text-foreground focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/14 active:translate-y-0 active:border-primary/16 active:bg-primary/[0.08]"
+          <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(246,242,234,0.62)_100%)] xl:flex-1">
+            <div className="px-4 pt-4 pb-2.5 lg:px-4.5 lg:pt-3 lg:pb-2">
+              <p className="mb-2 text-xs font-medium text-muted-foreground">Categories</p>
+              <div className="flex flex-wrap gap-1.5">
+                {categories.map((category) => (
+                  <Button
+                    key={category.category_id}
+                    variant={selectedCategoryId === category.category_id ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedCategoryId(category.category_id)}
+                    className={`gap-1.5 text-[11px] ${
+                      selectedCategoryId === category.category_id
+                        ? "brand-chip-active px-3.5 focus-visible:ring-primary/22"
+                        : "border-border/65 bg-white/72 px-3.5 text-muted-foreground hover:border-primary/18 hover:bg-white/92 hover:text-foreground focus-visible:ring-primary/16"
+                    }`}
                   >
-                    {prompt.label}
-                  </button>
+                    {categoryIcons[category.category_id] ?? <Wrench className="h-3.5 w-3.5" />}
+                    {category.label}
+                  </Button>
                 ))}
               </div>
             </div>
+
+            <div className="px-4 pb-4 lg:px-4.5 lg:pb-4.5">
+              <div className="detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
+                <div className="mb-2.5 flex items-center justify-between gap-2">
+                  <div className="text-xs font-medium text-foreground">Choose a coach request...</div>
+                  <div className="text-[0.68rem] tracking-[0.08em] text-muted-foreground uppercase">
+                    Guided only
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2 pb-0.5">
+                  {selectedCategory?.questions.map((prompt) => (
+                    <button
+                      key={prompt.question_id}
+                      onClick={() => handlePromptClick(prompt)}
+                      className="action-pill px-3.5 py-1.5 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,transform,color] hover:-translate-y-px hover:border-primary/18 hover:bg-primary/[0.06] hover:text-foreground focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/14 active:translate-y-0 active:border-primary/16 active:bg-primary/[0.08]"
+                    >
+                      {prompt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </CardContent>
+        </CardContent>
+      </div>
     </Card>
   )
 }

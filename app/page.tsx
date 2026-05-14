@@ -484,7 +484,7 @@ export default function WorkoutGeneratorPage() {
     <div className="app-shell min-h-screen bg-background">
       <header className="app-header border-b border-border/50">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col gap-4 py-4 sm:py-5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex flex-col gap-3 py-3.5 sm:gap-4 sm:py-5 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-start gap-3 sm:gap-4">
               <Image
                 src="/co2-logo-transparent.png"
@@ -495,7 +495,7 @@ export default function WorkoutGeneratorPage() {
                 priority
               />
               <div className="min-w-0 pt-1">
-                <div className="mb-1.5">
+                <div className="mb-1">
                   <h1 className="font-display text-[1.55rem] font-semibold leading-none tracking-[-0.055em] text-foreground sm:text-[1.75rem]">
                     <span className="text-primary">CO2</span> Workout Generator
                   </h1>
@@ -508,13 +508,13 @@ export default function WorkoutGeneratorPage() {
             </div>
 
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:justify-end">
-              <div className="meta-pill meta-pill-accent inline-flex items-center gap-2 px-3 py-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase">
+              <div className="meta-pill meta-pill-accent inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[0.66rem] font-semibold tracking-[0.08em] uppercase sm:gap-2 sm:px-3 sm:text-[0.72rem]">
                 <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
                 {trackerConnectionMode === "google" ? "Google Tracker Created" : "Tracker: Manual Connection"}
               </div>
 
               {hasGoogleSession ? (
-                <div className="meta-pill inline-flex items-center gap-2 px-3 py-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase">
+                <div className="meta-pill inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[0.66rem] font-semibold tracking-[0.08em] uppercase sm:gap-2 sm:px-3 sm:text-[0.72rem]">
                   <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
                   Google connected
                 </div>
@@ -522,7 +522,7 @@ export default function WorkoutGeneratorPage() {
 
               <button
                 onClick={() => setIsManagingTracker(true)}
-                className="action-pill inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
+                className="action-pill inline-flex items-center rounded-full px-3.5 py-1.75 text-sm font-medium text-foreground transition-colors hover:text-primary sm:px-4 sm:py-2"
               >
                 Manage Tracker
               </button>
@@ -530,7 +530,7 @@ export default function WorkoutGeneratorPage() {
               {hasGoogleSession ? (
                 <button
                   onClick={() => void signOut({ callbackUrl: "/" })}
-                  className="action-pill inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
+                  className="action-pill inline-flex items-center rounded-full px-3.5 py-1.75 text-sm font-medium text-foreground transition-colors hover:text-primary sm:px-4 sm:py-2"
                 >
                   Sign Out Google
                 </button>
@@ -540,10 +540,10 @@ export default function WorkoutGeneratorPage() {
         </div>
       </header>
 
-      <main className="app-main container mx-auto px-4 py-8 md:py-10">
-        <div className="grid gap-8 lg:grid-cols-[320px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)_380px]">
+      <main className="app-main container mx-auto px-4 py-6 md:py-10">
+        <div className="grid gap-5 sm:gap-6 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[340px_minmax(0,1fr)_380px]">
           <aside className="lg:sticky lg:top-8 lg:self-start lg:max-h-[calc(100vh-4rem)] lg:pr-2">
-            <div className="coach-scroll space-y-5 lg:max-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:overscroll-contain">
+            <div className="coach-scroll space-y-4 lg:max-h-[calc(100vh-4rem)] lg:space-y-5 lg:overflow-y-auto lg:overscroll-contain">
               <TodayCheckInCard
                 savedCheckIn={savedCheckIn}
                 onSave={handleSaveCheckIn}
@@ -561,12 +561,12 @@ export default function WorkoutGeneratorPage() {
           </aside>
 
           <section className="min-w-0">
-            <div className="brand-panel mb-6 rounded-2xl border border-border/50 px-5 py-4 shadow-sm md:mb-8">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="brand-panel mb-5 rounded-2xl border border-border/50 px-4 py-3.5 shadow-sm sm:px-5 sm:py-4 md:mb-8">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="min-w-0">
                   <p className="text-lg font-semibold text-foreground">Workout Builder</p>
                   <p className="text-sm text-muted-foreground">
-                    Adjust your settings, then generate a fresh session.
+                    Adjust your settings, then generate your next session.
                   </p>
                 </div>
 
