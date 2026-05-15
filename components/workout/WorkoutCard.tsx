@@ -53,19 +53,25 @@ export function WorkoutCard({
   return (
     <div className="space-y-4">
       {/* Header card */}
-      <Card className="brand-panel border-border/50 shadow-sm">
+      <Card className="engine-panel border-border/50 shadow-sm">
         <CardHeader className="pb-3">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <CardTitle className="text-xl">{workout.session_name}</CardTitle>
-            <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="brand-chip-active gap-1.5">
-                <Target className="h-3 w-3" />
-                {workout.focus}
-              </Badge>
-              <Badge variant="outline" className="gap-1.5">
-                <Clock className="h-3 w-3" />
-                {workout.estimated_duration}
-              </Badge>
+          <div className="engine-header-band rounded-[1.35rem] p-4 sm:p-4.5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div className="min-w-0">
+                <p className="section-kicker mb-2 text-[0.68rem] font-semibold">Generated Session</p>
+                <CardTitle className="text-[1.35rem] sm:text-[1.45rem]">{workout.session_name}</CardTitle>
+                <p className="mt-1 text-sm text-muted-foreground">{workout.focus}</p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+                <Badge variant="secondary" className="brand-chip-active gap-1.5">
+                  <Target className="h-3 w-3" />
+                  {workout.focus}
+                </Badge>
+                <Badge variant="outline" className="gap-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_12px_18px_-22px_rgba(15,23,42,0.14)]">
+                  <Clock className="h-3 w-3" />
+                  {workout.estimated_duration}
+                </Badge>
+              </div>
             </div>
           </div>
         </CardHeader>
@@ -75,16 +81,17 @@ export function WorkoutCard({
             onOpenChange={setIsMobileSummaryOpen}
             className="md:hidden"
           >
-            <div className="rounded-xl border border-border/50 bg-muted/20 p-4">
+            <div className="engine-metric rounded-xl p-4">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-foreground">Readiness & Progression</p>
-                  <p className="mt-1 text-sm text-muted-foreground">{summarySubtitle}</p>
+                  <p className="section-kicker mb-1 text-[0.68rem] font-semibold">Readiness & Progression</p>
+                  <p className="text-sm font-semibold text-foreground">{summarySubtitle}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">Current engine recommendation and weekly adjustment state.</p>
                 </div>
                 <CollapsibleTrigger asChild>
                   <button
                     type="button"
-                    className="action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:text-primary"
+                    className="premium-interactive action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:text-primary"
                     aria-label={isMobileSummaryOpen ? "Collapse readiness and progression details" : "Expand readiness and progression details"}
                   >
                     {isMobileSummaryOpen ? "Collapse" : "Expand"}
@@ -106,7 +113,7 @@ export function WorkoutCard({
 
       {/* Exercise list */}
       <div className="space-y-3">
-        <h3 className="font-semibold text-foreground px-1">Exercises</h3>
+        <h3 className="section-kicker section-kicker-line px-1 text-[0.8rem] font-semibold">Exercises</h3>
         {mainExercises.map((exercise, index) => (
           <ExerciseCard
             key={exercise.exercise_id}
@@ -122,7 +129,7 @@ export function WorkoutCard({
       {/* Abs finisher section */}
       {absExercises.length > 0 && (
         <div className="space-y-3">
-          <h3 className="font-semibold text-foreground px-1">Abs Finisher</h3>
+          <h3 className="section-kicker section-kicker-line px-1 text-[0.8rem] font-semibold">Abs Finisher</h3>
           {absExercises.map((exercise, index) => (
             <ExerciseCard
               key={exercise.exercise_id}

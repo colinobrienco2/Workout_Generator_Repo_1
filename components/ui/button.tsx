@@ -5,16 +5,16 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl border text-sm font-medium transition-[color,background-color,border-color,box-shadow,transform] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/40 focus-visible:ring-[4px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "premium-interactive inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl border text-sm font-medium transition-[color,background-color,border-color,box-shadow,transform] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/40 focus-visible:ring-[4px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
         default:
-          'border-primary/80 bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_16px_24px_-18px_rgba(58,119,255,0.6),0_10px_16px_-14px_rgba(15,23,42,0.22)] hover:-translate-y-px hover:bg-primary/92 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_20px_28px_-18px_rgba(58,119,255,0.62),0_14px_20px_-16px_rgba(15,23,42,0.24)] active:translate-y-0 active:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_18px_-16px_rgba(58,119,255,0.45)]',
+          'border-primary/85 bg-[linear-gradient(135deg,color-mix(in_oklab,var(--primary)_90%,white)_0%,var(--primary)_58%,color-mix(in_oklab,var(--primary)_82%,black)_100%)] text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_18px_26px_-18px_rgba(37,99,235,0.6),0_12px_20px_-16px_rgba(15,23,42,0.24)] hover:-translate-y-[1.5px] hover:brightness-[1.03] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_22px_32px_-18px_rgba(37,99,235,0.62),0_16px_22px_-16px_rgba(15,23,42,0.26)] active:scale-[0.995] active:brightness-[0.99] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_14px_-14px_rgba(37,99,235,0.4)]',
         destructive:
           'border-destructive/80 bg-destructive text-white hover:-translate-y-px hover:bg-destructive/92 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
         outline:
-          'control-surface border-border/80 bg-background text-foreground hover:-translate-y-px hover:border-primary/25 hover:bg-white hover:text-foreground hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.88),0_18px_24px_-22px_rgba(15,23,42,0.3)] active:translate-y-0 dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
+          'control-surface border-border/80 bg-background text-foreground hover:-translate-y-px hover:border-primary/25 hover:bg-white hover:text-foreground hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.88),0_18px_24px_-22px_rgba(15,23,42,0.3)] active:scale-[0.995] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_10px_14px_-18px_rgba(15,23,42,0.2)] dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
         secondary:
           'border-border/70 bg-secondary/95 text-secondary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] hover:-translate-y-px hover:bg-secondary hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_16px_24px_-22px_rgba(15,23,42,0.26)] active:translate-y-0',
         ghost:

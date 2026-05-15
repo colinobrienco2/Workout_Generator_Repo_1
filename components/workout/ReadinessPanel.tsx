@@ -27,7 +27,7 @@ export function ReadinessPanel({ readiness }: ReadinessPanelProps) {
 
   return (
     <div
-      className={`rounded-[1.1rem] border p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] ${
+      className={`engine-metric rounded-[1.1rem] border p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] ${
         bandColors[key] ?? bandColors.moderate
       }`}
     >

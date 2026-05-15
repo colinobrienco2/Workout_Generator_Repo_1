@@ -134,7 +134,7 @@ export function WorkoutSettingsForm({
         </Select>
       </div>
 
-      <div className="surface-subtle flex items-center justify-between rounded-xl border border-border/60 p-3.5">
+      <div className="left-panel-note flex items-center justify-between rounded-xl p-3.5">
         <Label htmlFor="include-abs" className="cursor-pointer text-foreground">
           Include Abs Finisher
         </Label>
@@ -150,7 +150,7 @@ export function WorkoutSettingsForm({
   )
 
   return (
-    <Card className="brand-panel border-border/50 shadow-sm">
+    <Card className="support-panel brand-panel border-border/50 shadow-sm">
       <Collapsible open={isMobileOpen} onOpenChange={setIsMobileOpen} className="lg:hidden">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between gap-3">
@@ -166,7 +166,7 @@ export function WorkoutSettingsForm({
             <CollapsibleTrigger asChild>
               <button
                 type="button"
-                className="action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:text-primary"
+                className="premium-interactive action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:text-primary"
                 aria-label={isMobileOpen ? "Collapse workout settings" : "Expand workout settings"}
               >
                 {isMobileOpen ? "Collapse" : "Expand"}

@@ -10,9 +10,9 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          'border-primary/15 bg-primary/92 text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] [a&]:hover:bg-primary/88',
+          'border-primary/18 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--primary)_88%,white)_0%,var(--primary)_100%)] text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_12px_18px_-18px_rgba(37,99,235,0.45)] [a&]:hover:brightness-[1.02]',
         secondary:
-          'border-primary/12 bg-primary/[0.08] text-primary/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [a&]:hover:bg-primary/[0.12]',
+          'border-primary/14 bg-[linear-gradient(180deg,rgba(96,165,250,0.17)_0%,rgba(37,99,235,0.09)_100%)] text-primary/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_10px_18px_-20px_rgba(37,99,235,0.28)] [a&]:hover:bg-primary/[0.14]',
         destructive:
           'border-destructive/20 bg-destructive/90 text-white [a&]:hover:bg-destructive/86 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
         outline:
