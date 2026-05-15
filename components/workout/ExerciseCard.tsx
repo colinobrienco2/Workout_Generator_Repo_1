@@ -63,14 +63,14 @@ export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSe
 
   return (
     <Card
-      className={`brand-panel overflow-hidden border-border/50 shadow-sm transition-[border-color,box-shadow,background-color] ${
+      className={`exercise-panel overflow-hidden border-border/50 shadow-sm transition-[border-color,box-shadow,background-color] ${
         exercise.is_abs_finisher ? "border-l-4 border-l-primary/80" : ""
       } ${
         isSelectable ? "cursor-pointer" : ""
       } ${
         isSelected
-          ? "border-primary/50 bg-primary/[0.035] ring-2 ring-primary/20 shadow-md"
-          : "hover:border-primary/20 hover:shadow-md/40"
+          ? "border-primary/44 bg-primary/[0.028] ring-2 ring-primary/16 shadow-[0_20px_30px_-28px_rgba(37,99,235,0.28)]"
+          : "hover:border-primary/20 hover:shadow-[0_20px_30px_-30px_rgba(37,99,235,0.22)]"
       }`}
       onClick={handleCardClick}
       onKeyDown={handleCardKeyDown}
@@ -83,7 +83,7 @@ export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSe
         <div className="p-4 sm:p-5">
           <div className="flex items-start justify-between gap-4">
             <div className="flex min-w-0 flex-1 gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-[linear-gradient(180deg,rgba(58,119,255,0.15)_0%,rgba(58,119,255,0.09)_100%)] text-sm font-semibold text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_12px_20px_-18px_rgba(58,119,255,0.55)]">
+              <div className="exercise-index-badge flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold tracking-[-0.02em]">
                 {index}
               </div>
 
@@ -108,11 +108,13 @@ export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSe
               </div>
             </div>
 
-            <div className="detail-panel shrink-0 rounded-xl px-3 py-2 text-right">
-              <div className="text-lg font-bold text-foreground">
+            <div className="exercise-stat-badge detail-panel shrink-0 rounded-xl px-3 py-2 text-right">
+              <div className="text-lg font-bold tracking-[-0.03em] text-primary/90">
                 {exercise.sets} x {exercise.reps}
               </div>
-              <p className="text-xs text-muted-foreground">{exercise.rest} rest</p>
+              <p className="text-xs text-muted-foreground">
+                <span className="font-medium text-primary/82">{exercise.rest}</span> rest
+              </p>
             </div>
           </div>
 
@@ -127,16 +129,16 @@ export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSe
             </Badge>
           </div>
 
-          <div className="detail-panel mt-3 rounded-xl p-3">
+          <div className="exercise-quote-panel detail-panel mt-3 rounded-xl p-3">
             <p className="text-sm italic leading-relaxed text-muted-foreground">&ldquo;{exercise.cue}&rdquo;</p>
           </div>
 
-          <div className="mt-3 flex items-start gap-2 rounded-xl border border-border/60 bg-white/60 px-3 py-2.5">
-            <span className="text-xs font-semibold uppercase tracking-[0.08em] text-foreground">Progression</span>
+          <div className="exercise-progression-panel mt-3 flex items-start gap-2 rounded-xl border px-3 py-2.5">
+            <span className="section-kicker section-kicker-line text-xs font-semibold">Progression</span>
             <p className="min-w-0 text-xs leading-relaxed text-muted-foreground">{exercise.progression}</p>
           </div>
 
-          <div className="detail-panel mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl p-2.5">
+          <div className="exercise-action-row detail-panel mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl p-2.5">
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -169,7 +171,7 @@ export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSe
                   target="_blank"
                   rel="noreferrer"
                   onClick={stopSelectionPropagation}
-                  className="inline-flex items-center rounded-full border border-primary/20 bg-[linear-gradient(180deg,rgba(58,119,255,0.1)_0%,rgba(58,119,255,0.06)_100%)] px-3 py-1 text-xs font-semibold text-primary transition-[background-color,border-color,box-shadow,color,transform] hover:-translate-y-px hover:border-primary/28 hover:bg-primary/[0.12] hover:text-primary/95 hover:shadow-[0_14px_22px_-20px_rgba(58,119,255,0.5)] active:translate-y-0"
+                  className="inline-flex items-center rounded-full border border-primary/24 bg-[linear-gradient(180deg,rgba(111,182,255,0.18)_0%,rgba(59,130,246,0.1)_42%,rgba(37,99,235,0.1)_100%)] px-3 py-1 text-xs font-semibold text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_10px_16px_-18px_rgba(37,99,235,0.24)] transition-[background-color,border-color,box-shadow,color,transform] hover:-translate-y-px hover:border-primary/30 hover:bg-[linear-gradient(180deg,rgba(111,182,255,0.22)_0%,rgba(59,130,246,0.14)_42%,rgba(37,99,235,0.12)_100%)] hover:text-primary/95 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_14px_22px_-18px_rgba(37,99,235,0.3)] active:translate-y-0"
                 >
                   See Demo
                 </a>
@@ -193,7 +195,7 @@ export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSe
                 event.stopPropagation()
                 onSwap(exercise.exercise_id)
               }}
-              className="gap-1.5"
+              className="gap-1.5 border-primary/10 bg-white/86 shadow-[inset_0_1px_0_rgba(255,255,255,0.88),0_12px_18px_-20px_rgba(15,23,42,0.18)] hover:border-primary/20 hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(244,248,255,0.9)_100%)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_20px_-20px_rgba(37,99,235,0.18)]"
               disabled={!exercise.allowed_swap_ids?.length}
             >
               <RefreshCw className="h-3.5 w-3.5" />
@@ -225,9 +227,9 @@ export function ExerciseCard({ exercise, index, onSwap, isSelected = false, onSe
             <CollapsibleTrigger asChild>
               <button
                 onClick={stopSelectionPropagation}
-                className="flex w-full items-center justify-between border-t border-border/50 bg-muted/20 px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/[0.05] hover:text-foreground"
+                className="flex w-full items-center justify-between border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.54)_0%,rgba(243,247,255,0.42)_100%)] px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/[0.05] hover:text-foreground"
               >
-                <span>Tips & Notes</span>
+                <span className="section-kicker section-kicker-line text-[0.72rem] font-semibold">Tips & Notes</span>
                 <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
               </button>
             </CollapsibleTrigger>

@@ -377,6 +377,103 @@
       0 12px 28px -32px rgb(15 23 42 / 0.26);
   }
 
+  .exercise-panel {
+    position: relative;
+    overflow: hidden;
+    border-color: rgb(37 99 235 / 0.16);
+    background:
+      linear-gradient(180deg, rgb(247 250 255 / 0.92) 0%, rgb(255 255 255 / 0.98) 12%, rgb(251 248 242 / 0.98) 100%);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.9) inset,
+      0 20px 34px -30px rgb(15 23 42 / 0.26),
+      0 14px 28px -34px rgb(37 99 235 / 0.18),
+      0 0 0 1px rgb(96 165 250 / 0.06);
+  }
+
+  .exercise-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    border-radius: 999px;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgb(58 119 255 / 0) 0%, rgb(37 99 235 / 0.54) 14%, rgb(96 165 250 / 0.32) 50%, rgb(37 99 235 / 0.22) 84%, rgb(58 119 255 / 0) 100%);
+  }
+
+  .exercise-index-badge {
+    border: 1px solid rgb(37 99 235 / 0.3);
+    background:
+      linear-gradient(180deg, rgb(118 188 255 / 0.48) 0%, rgb(59 130 246 / 0.22) 52%, rgb(29 78 216 / 0.14) 100%);
+    color: color-mix(in oklab, var(--foreground) 18%, var(--primary) 82%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.72),
+      0 12px 18px -18px rgb(37 99 235 / 0.24),
+      0 0 0 1px rgb(37 99 235 / 0.08);
+  }
+
+  .exercise-stat-badge {
+    border-color: rgb(37 99 235 / 0.16);
+    background:
+      linear-gradient(180deg, rgb(251 253 255 / 0.96) 0%, rgb(241 247 255 / 0.92) 56%, rgb(248 244 238 / 0.96) 100%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.86),
+      0 12px 22px -26px rgb(37 99 235 / 0.2);
+  }
+
+  .exercise-quote-panel {
+    border-color: rgb(31 41 55 / 0.07);
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.68) 0%, rgb(246 242 234 / 0.84) 100%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.8),
+      0 10px 18px -24px rgb(15 23 42 / 0.16);
+  }
+
+  .exercise-progression-panel {
+    border-color: rgb(37 99 235 / 0.1);
+    background:
+      linear-gradient(180deg, rgb(250 252 255 / 0.84) 0%, rgb(245 248 253 / 0.74) 100%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.82),
+      0 10px 18px -24px rgb(37 99 235 / 0.12);
+  }
+
+  .exercise-action-row {
+    border-color: rgb(37 99 235 / 0.12);
+    background:
+      linear-gradient(180deg, rgb(250 252 255 / 0.88) 0%, rgb(241 246 253 / 0.78) 48%, rgb(245 242 236 / 0.92) 100%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.86),
+      0 12px 20px -28px rgb(15 23 42 / 0.16);
+  }
+
+  .section-kicker {
+    color: color-mix(in oklab, var(--foreground) 52%, var(--primary) 48%);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .section-kicker-line {
+    position: relative;
+    padding-left: 0.85rem;
+  }
+
+  .section-kicker-line::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 0.7rem;
+    width: 2px;
+    border-radius: 999px;
+    transform: translateY(-50%);
+    background:
+      linear-gradient(180deg, rgb(96 165 250 / 0.78) 0%, rgb(37 99 235 / 0.52) 100%);
+  }
+
   .premium-hero {
     position: relative;
     overflow: hidden;

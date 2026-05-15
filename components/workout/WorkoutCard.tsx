@@ -106,7 +106,7 @@ export function WorkoutCard({
 
       {/* Exercise list */}
       <div className="space-y-3">
-        <h3 className="font-semibold text-foreground px-1">Exercises</h3>
+        <h3 className="section-kicker section-kicker-line px-1 text-[0.8rem] font-semibold">Exercises</h3>
         {mainExercises.map((exercise, index) => (
           <ExerciseCard
             key={exercise.exercise_id}
@@ -122,7 +122,7 @@ export function WorkoutCard({
       {/* Abs finisher section */}
       {absExercises.length > 0 && (
         <div className="space-y-3">
-          <h3 className="font-semibold text-foreground px-1">Abs Finisher</h3>
+          <h3 className="section-kicker section-kicker-line px-1 text-[0.8rem] font-semibold">Abs Finisher</h3>
           {absExercises.map((exercise, index) => (
             <ExerciseCard
               key={exercise.exercise_id}
