@@ -497,6 +497,9 @@ export default function WorkoutGeneratorPage() {
                 priority
               />
               <div className="min-w-0 pt-1">
+                <div className="mb-1.5 inline-flex items-center rounded-full border border-primary/12 bg-[linear-gradient(180deg,rgba(96,165,250,0.14)_0%,rgba(37,99,235,0.08)_100%)] px-2.5 py-1 text-[0.62rem] font-semibold tracking-[0.14em] text-primary uppercase shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_12px_20px_-24px_rgba(37,99,235,0.35)]">
+                  Premium training system
+                </div>
                 <div className="mb-1">
                   <h1 className="font-display text-[1.55rem] font-semibold leading-none tracking-[-0.055em] text-foreground sm:text-[1.75rem]">
                     <span className="text-primary">CO2</span> Workout Generator
@@ -563,9 +566,9 @@ export default function WorkoutGeneratorPage() {
           </aside>
 
           <section className="min-w-0">
-            <div className="brand-panel mb-5 rounded-2xl border border-border/50 px-4 py-3.5 shadow-sm sm:px-5 sm:py-4 md:mb-8">
+            <div className="premium-hero mb-5 rounded-2xl px-4 py-3.5 sm:px-5 sm:py-4 md:mb-8">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div className="min-w-0">
+                <div className="relative z-10 min-w-0">
                   <p className="text-lg font-semibold text-foreground">Workout Builder</p>
                   <p className="text-sm text-muted-foreground">
                     Adjust your settings, then generate your next session.
@@ -573,7 +576,7 @@ export default function WorkoutGeneratorPage() {
                 </div>
 
                 <Button
-                  className="w-full shrink-0 px-6 focus-visible:ring-primary/24 sm:w-auto hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.26),0_22px_30px_-18px_rgba(58,119,255,0.72),0_16px_24px_-18px_rgba(15,23,42,0.26)] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_12px_18px_-16px_rgba(58,119,255,0.5)]"
+                  className="relative z-10 w-full shrink-0 px-6 focus-visible:ring-primary/24 sm:w-auto"
                   onClick={handleGenerate}
                   disabled={state === "loading"}
                 >

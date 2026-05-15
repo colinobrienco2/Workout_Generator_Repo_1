@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'border-primary/80 bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_16px_24px_-18px_rgba(58,119,255,0.6),0_10px_16px_-14px_rgba(15,23,42,0.22)] hover:-translate-y-px hover:bg-primary/92 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_20px_28px_-18px_rgba(58,119,255,0.62),0_14px_20px_-16px_rgba(15,23,42,0.24)] active:translate-y-0 active:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_18px_-16px_rgba(58,119,255,0.45)]',
+          'border-primary/85 bg-[linear-gradient(135deg,color-mix(in_oklab,var(--primary)_90%,white)_0%,var(--primary)_58%,color-mix(in_oklab,var(--primary)_82%,black)_100%)] text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_18px_26px_-18px_rgba(37,99,235,0.6),0_12px_20px_-16px_rgba(15,23,42,0.24)] hover:-translate-y-px hover:brightness-[1.03] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_22px_32px_-18px_rgba(37,99,235,0.62),0_16px_22px_-16px_rgba(15,23,42,0.26)] active:translate-y-0 active:brightness-[0.99] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_12px_18px_-16px_rgba(37,99,235,0.46)]',
         destructive:
           'border-destructive/80 bg-destructive text-white hover:-translate-y-px hover:bg-destructive/92 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
         outline:

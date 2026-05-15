@@ -376,7 +376,7 @@ export function CoachPanel({
                 </div>
               </div>
 
-              <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(246,242,234,0.62)_100%)]">
+              <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.46)_0%,rgba(240,246,255,0.6)_28%,rgba(246,242,234,0.68)_100%)]">
                 <div className="px-4 pt-3.5 pb-2">
                   <p className="mb-2 text-xs font-medium text-muted-foreground">Categories</p>
                   <div className="flex flex-wrap gap-1.5">
@@ -388,7 +388,7 @@ export function CoachPanel({
                         onClick={() => setSelectedCategoryId(category.category_id)}
                         className={`gap-1.5 text-[11px] ${
                           selectedCategoryId === category.category_id
-                            ? "brand-chip-active px-3.5 focus-visible:ring-primary/22"
+                            ? "brand-chip-active px-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.52),0_12px_20px_-22px_rgba(37,99,235,0.34)] focus-visible:ring-primary/22"
                             : "border-border/65 bg-white/72 px-3.5 text-muted-foreground hover:border-primary/18 hover:bg-white/92 hover:text-foreground focus-visible:ring-primary/16"
                         }`}
                       >
@@ -412,7 +412,7 @@ export function CoachPanel({
                         <button
                           key={prompt.question_id}
                           onClick={() => handlePromptClick(prompt)}
-                          className="action-pill px-3.5 py-1.5 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,transform,color] hover:-translate-y-px hover:border-primary/18 hover:bg-primary/[0.06] hover:text-foreground focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/14 active:translate-y-0 active:border-primary/16 active:bg-primary/[0.08]"
+                          className="action-pill px-3.5 py-1.5 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,transform,color] hover:-translate-y-px hover:border-primary/20 hover:bg-[linear-gradient(180deg,rgba(96,165,250,0.12)_0%,rgba(37,99,235,0.07)_100%)] hover:text-foreground hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_14px_22px_-22px_rgba(37,99,235,0.26)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/14 active:translate-y-0 active:border-primary/18 active:bg-primary/[0.08]"
                         >
                           {prompt.label}
                         </button>
@@ -484,7 +484,7 @@ export function CoachPanel({
             </div>
           </div>
 
-          <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(246,242,234,0.62)_100%)] xl:flex-1">
+          <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.46)_0%,rgba(240,246,255,0.6)_28%,rgba(246,242,234,0.68)_100%)] xl:flex-1">
             <div className="px-4 pt-4 pb-2.5 lg:px-4.5 lg:pt-3 lg:pb-2">
               <p className="mb-2 text-xs font-medium text-muted-foreground">Categories</p>
               <div className="flex flex-wrap gap-1.5">
@@ -496,7 +496,7 @@ export function CoachPanel({
                     onClick={() => setSelectedCategoryId(category.category_id)}
                     className={`gap-1.5 text-[11px] ${
                       selectedCategoryId === category.category_id
-                        ? "brand-chip-active px-3.5 focus-visible:ring-primary/22"
+                        ? "brand-chip-active px-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.52),0_12px_20px_-22px_rgba(37,99,235,0.34)] focus-visible:ring-primary/22"
                         : "border-border/65 bg-white/72 px-3.5 text-muted-foreground hover:border-primary/18 hover:bg-white/92 hover:text-foreground focus-visible:ring-primary/16"
                     }`}
                   >
@@ -520,7 +520,7 @@ export function CoachPanel({
                     <button
                       key={prompt.question_id}
                       onClick={() => handlePromptClick(prompt)}
-                      className="action-pill px-3.5 py-1.5 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,transform,color] hover:-translate-y-px hover:border-primary/18 hover:bg-primary/[0.06] hover:text-foreground focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/14 active:translate-y-0 active:border-primary/16 active:bg-primary/[0.08]"
+                      className="action-pill px-3.5 py-1.5 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,transform,color] hover:-translate-y-px hover:border-primary/20 hover:bg-[linear-gradient(180deg,rgba(96,165,250,0.12)_0%,rgba(37,99,235,0.07)_100%)] hover:text-foreground hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_14px_22px_-22px_rgba(37,99,235,0.26)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/14 active:translate-y-0 active:border-primary/18 active:bg-primary/[0.08]"
                     >
                       {prompt.label}
                     </button>

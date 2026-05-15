@@ -75,7 +75,7 @@ export function WorkoutCard({
             onOpenChange={setIsMobileSummaryOpen}
             className="md:hidden"
           >
-            <div className="rounded-xl border border-border/50 bg-muted/20 p-4">
+            <div className="surface-subtle rounded-xl border border-border/50 p-4">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-foreground">Readiness & Progression</p>
