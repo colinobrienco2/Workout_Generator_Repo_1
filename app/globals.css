@@ -367,6 +367,22 @@
       0 10px 22px -28px rgb(37 99 235 / 0.12);
   }
 
+  .premium-interactive {
+    transition:
+      transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 180ms ease,
+      background-color 180ms ease,
+      color 180ms ease,
+      opacity 180ms ease;
+    will-change: transform;
+  }
+
+  .premium-interactive:active {
+    transform: translateY(0);
+    transition-duration: 110ms;
+  }
+
   .detail-panel {
     border-radius: 1rem;
     border: 1px solid rgb(31 41 55 / 0.075);
@@ -448,6 +464,65 @@
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.86),
       0 12px 20px -28px rgb(15 23 42 / 0.16);
+  }
+
+  .coach-panel-shell {
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.97) 0%, rgb(250 246 239 / 0.98) 100%);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.9) inset,
+      0 20px 36px -30px rgb(15 23 42 / 0.28),
+      0 16px 28px -34px rgb(37 99 235 / 0.14);
+  }
+
+  .coach-thread-surface {
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.78) 0%, rgb(247 243 236 / 0.9) 100%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.82),
+      0 12px 24px -30px rgb(15 23 42 / 0.16);
+  }
+
+  .coach-controls-surface {
+    background:
+      linear-gradient(180deg, rgb(251 253 255 / 0.84) 0%, rgb(243 247 253 / 0.82) 45%, rgb(247 243 236 / 0.94) 100%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.84),
+      0 14px 24px -32px rgb(15 23 42 / 0.16);
+  }
+
+  .coach-request-surface {
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.82) 0%, rgb(246 249 255 / 0.74) 42%, rgb(247 243 236 / 0.92) 100%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.84),
+      0 14px 24px -30px rgb(15 23 42 / 0.18);
+  }
+
+  .coach-category-chip {
+    border: 1px solid rgb(31 41 55 / 0.09);
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.9) 0%, rgb(246 242 234 / 0.92) 100%);
+    color: rgb(88 101 122 / 0.95);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.86),
+      0 10px 18px -22px rgb(15 23 42 / 0.14);
+  }
+
+  .coach-category-chip-active {
+    border-color: rgb(37 99 235 / 0.2);
+    background:
+      linear-gradient(180deg, rgb(240 247 255 / 0.96) 0%, rgb(228 239 255 / 0.88) 100%);
+    color: color-mix(in oklab, var(--foreground) 20%, var(--primary) 80%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.74),
+      0 12px 20px -22px rgb(37 99 235 / 0.24);
+  }
+
+  .coach-kicker {
+    color: color-mix(in oklab, var(--foreground) 56%, var(--primary) 44%);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
   .section-kicker {

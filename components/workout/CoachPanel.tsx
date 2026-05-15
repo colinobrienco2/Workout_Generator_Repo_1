@@ -307,7 +307,7 @@ export function CoachPanel({
   }
 
   return (
-    <Card className="brand-panel w-full max-w-sm overflow-hidden border-border/50 pt-0 pb-0 shadow-sm xl:flex xl:h-[calc(100vh-4rem)] xl:flex-col xl:gap-0">
+    <Card className="coach-panel-shell brand-panel w-full max-w-sm overflow-hidden border-border/50 pt-0 pb-0 shadow-sm xl:flex xl:h-[calc(100vh-4rem)] xl:flex-col xl:gap-0">
       <Collapsible open={isMobileOpen} onOpenChange={setIsMobileOpen} className="xl:hidden">
         <CardHeader className="border-b border-border/50 px-4 py-3.5">
           <div className="flex items-start justify-between gap-3">
@@ -323,7 +323,7 @@ export function CoachPanel({
             <CollapsibleTrigger asChild>
               <button
                 type="button"
-                className="action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:text-primary"
+                className="premium-interactive action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:text-primary"
                 aria-label={isMobileOpen ? "Collapse coach panel" : "Expand coach panel"}
               >
                 {isMobileOpen ? "Collapse" : "Expand"}
@@ -335,7 +335,7 @@ export function CoachPanel({
         <CollapsibleContent>
           <div className="flex h-[560px] flex-col overflow-hidden sm:h-[640px]">
             <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
-              <div className="coach-scroll min-h-0 flex-[1.05] overflow-y-auto overscroll-contain px-3 py-3">
+              <div className="coach-scroll coach-thread-surface min-h-0 flex-[1.05] overflow-y-auto overscroll-contain px-3 py-3">
                 <div className="space-y-3">
                   {messages.length === 1 ? (
                     <div className="detail-panel rounded-[1.25rem] border border-border/60 px-4 py-3">
@@ -363,7 +363,7 @@ export function CoachPanel({
                             : "detail-panel max-w-[95%] rounded-bl-md border-white/50 px-3.5 py-2 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.78),0_12px_22px_-24px_rgba(15,23,42,0.28)]"
                         }`}
                       >
-                        <p className="break-words whitespace-pre-line text-[13px] leading-[1.45]">{message.content}</p>
+                        <p className={`break-words whitespace-pre-line ${message.role === "user" ? "text-[13px] leading-[1.45]" : "text-[13px] leading-[1.52] text-foreground/92"}`}>{message.content}</p>
                       </div>
                       {message.role === "user" && (
                         <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-foreground/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.66)]">
@@ -376,9 +376,9 @@ export function CoachPanel({
                 </div>
               </div>
 
-              <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.46)_0%,rgba(240,246,255,0.6)_28%,rgba(246,242,234,0.68)_100%)]">
+              <div className="coach-scroll coach-controls-surface min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50">
                 <div className="px-4 pt-3.5 pb-2">
-                  <p className="mb-2 text-xs font-medium text-muted-foreground">Categories</p>
+                  <p className="coach-kicker mb-2 text-[0.68rem] font-semibold">Categories</p>
                   <div className="flex flex-wrap gap-1.5">
                     {categories.map((category) => (
                       <Button
@@ -386,10 +386,10 @@ export function CoachPanel({
                         variant={selectedCategoryId === category.category_id ? "default" : "outline"}
                         size="sm"
                         onClick={() => setSelectedCategoryId(category.category_id)}
-                        className={`gap-1.5 text-[11px] ${
+                        className={`premium-interactive gap-1.5 text-[11px] ${
                           selectedCategoryId === category.category_id
-                            ? "brand-chip-active px-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.52),0_12px_20px_-22px_rgba(37,99,235,0.34)] focus-visible:ring-primary/22"
-                            : "border-border/65 bg-white/72 px-3.5 text-muted-foreground hover:border-primary/18 hover:bg-white/92 hover:text-foreground focus-visible:ring-primary/16"
+                            ? "coach-category-chip-active px-3.5 hover:-translate-y-px focus-visible:ring-primary/22"
+                            : "coach-category-chip px-3.5 hover:-translate-y-px hover:border-primary/14 hover:text-foreground focus-visible:ring-primary/16"
                         }`}
                       >
                         {categoryIcons[category.category_id] ?? <Wrench className="h-3.5 w-3.5" />}
@@ -400,9 +400,9 @@ export function CoachPanel({
                 </div>
 
                 <div className="px-4 pb-4">
-                  <div className="detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
+                  <div className="coach-request-surface detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
                     <div className="mb-2.5 flex items-center justify-between gap-2">
-                      <div className="text-xs font-medium text-foreground">Choose a coach request...</div>
+                      <div className="text-xs font-semibold text-foreground">Choose a coach request...</div>
                       <div className="text-[0.68rem] tracking-[0.08em] text-muted-foreground uppercase">
                         Guided only
                       </div>
@@ -412,7 +412,7 @@ export function CoachPanel({
                         <button
                           key={prompt.question_id}
                           onClick={() => handlePromptClick(prompt)}
-                          className="action-pill px-3.5 py-1.5 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,transform,color] hover:-translate-y-px hover:border-primary/20 hover:bg-[linear-gradient(180deg,rgba(96,165,250,0.12)_0%,rgba(37,99,235,0.07)_100%)] hover:text-foreground hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_14px_22px_-22px_rgba(37,99,235,0.26)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/14 active:translate-y-0 active:border-primary/18 active:bg-primary/[0.08]"
+                          className="premium-interactive action-pill px-3.5 py-1.5 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,transform,color] hover:-translate-y-px hover:border-primary/20 hover:bg-[linear-gradient(180deg,rgba(96,165,250,0.12)_0%,rgba(37,99,235,0.07)_100%)] hover:text-foreground hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_14px_22px_-22px_rgba(37,99,235,0.26)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/14 active:scale-[0.995] active:translate-y-0 active:border-primary/18 active:bg-primary/[0.08]"
                         >
                           {prompt.label}
                         </button>
@@ -440,14 +440,14 @@ export function CoachPanel({
         </CardHeader>
 
         <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
-          <div className="coach-scroll min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-3 xl:flex-none xl:basis-[28%] xl:min-h-[215px] xl:max-h-[295px]">
+          <div className="coach-scroll coach-thread-surface min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-3 xl:flex-none xl:basis-[28%] xl:min-h-[215px] xl:max-h-[295px]">
             <div className="space-y-3">
               {messages.length === 1 ? (
                 <div className="detail-panel rounded-[1.25rem] border border-border/60 px-4.5 py-3.5">
-                  <p className="text-xs font-semibold tracking-[0.08em] text-muted-foreground uppercase">
+                  <p className="coach-kicker text-[0.68rem] font-semibold">
                     Guided Help
                   </p>
-                  <p className="mt-1.5 text-sm leading-relaxed text-foreground">
+                  <p className="mt-1.5 text-sm leading-relaxed text-foreground/92">
                     {weeklyStatus
                       ? "Pick a coaching topic to get a guided explanation based on your current week."
                       : "Generate a workout first to load your weekly context and guided coaching details."}
@@ -471,7 +471,7 @@ export function CoachPanel({
                         : "detail-panel max-w-[95%] rounded-bl-md border-white/50 px-3.5 py-2 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.78),0_12px_22px_-24px_rgba(15,23,42,0.28)]"
                     }`}
                   >
-                    <p className="break-words whitespace-pre-line text-[13px] leading-[1.45]">{message.content}</p>
+                    <p className={`break-words whitespace-pre-line ${message.role === "user" ? "text-[13px] leading-[1.45]" : "text-[13px] leading-[1.52] text-foreground/92"}`}>{message.content}</p>
                   </div>
                   {message.role === "user" && (
                     <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-foreground/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.66)]">
@@ -484,9 +484,9 @@ export function CoachPanel({
             </div>
           </div>
 
-          <div className="coach-scroll min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.46)_0%,rgba(240,246,255,0.6)_28%,rgba(246,242,234,0.68)_100%)] xl:flex-1">
+          <div className="coach-scroll coach-controls-surface min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 xl:flex-1">
             <div className="px-4 pt-4 pb-2.5 lg:px-4.5 lg:pt-3 lg:pb-2">
-              <p className="mb-2 text-xs font-medium text-muted-foreground">Categories</p>
+              <p className="coach-kicker mb-2 text-[0.68rem] font-semibold">Categories</p>
               <div className="flex flex-wrap gap-1.5">
                 {categories.map((category) => (
                   <Button
@@ -494,10 +494,10 @@ export function CoachPanel({
                     variant={selectedCategoryId === category.category_id ? "default" : "outline"}
                     size="sm"
                     onClick={() => setSelectedCategoryId(category.category_id)}
-                    className={`gap-1.5 text-[11px] ${
+                    className={`premium-interactive gap-1.5 text-[11px] ${
                       selectedCategoryId === category.category_id
-                        ? "brand-chip-active px-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.52),0_12px_20px_-22px_rgba(37,99,235,0.34)] focus-visible:ring-primary/22"
-                        : "border-border/65 bg-white/72 px-3.5 text-muted-foreground hover:border-primary/18 hover:bg-white/92 hover:text-foreground focus-visible:ring-primary/16"
+                        ? "coach-category-chip-active px-3.5 hover:-translate-y-px focus-visible:ring-primary/22"
+                        : "coach-category-chip px-3.5 hover:-translate-y-px hover:border-primary/14 hover:text-foreground focus-visible:ring-primary/16"
                     }`}
                   >
                     {categoryIcons[category.category_id] ?? <Wrench className="h-3.5 w-3.5" />}
@@ -508,9 +508,9 @@ export function CoachPanel({
             </div>
 
             <div className="px-4 pb-4 lg:px-4.5 lg:pb-4.5">
-              <div className="detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
+              <div className="coach-request-surface detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
                 <div className="mb-2.5 flex items-center justify-between gap-2">
-                  <div className="text-xs font-medium text-foreground">Choose a coach request...</div>
+                  <div className="text-xs font-semibold text-foreground">Choose a coach request...</div>
                   <div className="text-[0.68rem] tracking-[0.08em] text-muted-foreground uppercase">
                     Guided only
                   </div>
@@ -520,7 +520,7 @@ export function CoachPanel({
                     <button
                       key={prompt.question_id}
                       onClick={() => handlePromptClick(prompt)}
-                      className="action-pill px-3.5 py-1.5 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,transform,color] hover:-translate-y-px hover:border-primary/20 hover:bg-[linear-gradient(180deg,rgba(96,165,250,0.12)_0%,rgba(37,99,235,0.07)_100%)] hover:text-foreground hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_14px_22px_-22px_rgba(37,99,235,0.26)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/14 active:translate-y-0 active:border-primary/18 active:bg-primary/[0.08]"
+                      className="premium-interactive action-pill px-3.5 py-1.5 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,transform,color] hover:-translate-y-px hover:border-primary/20 hover:bg-[linear-gradient(180deg,rgba(96,165,250,0.12)_0%,rgba(37,99,235,0.07)_100%)] hover:text-foreground hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_14px_22px_-22px_rgba(37,99,235,0.26)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/14 active:scale-[0.995] active:translate-y-0 active:border-primary/18 active:bg-primary/[0.08]"
                     >
                       {prompt.label}
                     </button>
