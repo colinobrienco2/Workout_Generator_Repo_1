@@ -46,8 +46,8 @@ export function WorkoutSettingsForm({
   )
 
   const settingsFields = (
-    <div className="space-y-5">
-      <div className="space-y-2">
+    <div className="space-y-4 sm:space-y-4.5">
+      <div className="space-y-1.5">
         <Label htmlFor="primary-muscle">Primary Muscle</Label>
         <Select
           value={settings.primaryMuscle}
@@ -75,7 +75,7 @@ export function WorkoutSettingsForm({
         </Select>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         <Label htmlFor="secondary-muscle">Secondary Muscle</Label>
         <Select
           value={settings.secondaryMuscle}
@@ -96,7 +96,7 @@ export function WorkoutSettingsForm({
         </Select>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         <Label htmlFor="session-length">Session Length</Label>
         <Select
           value={settings.sessionLength}
@@ -115,7 +115,7 @@ export function WorkoutSettingsForm({
         </Select>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         <Label htmlFor="equipment">Equipment</Label>
         <Select
           value={settings.equipment}
@@ -134,7 +134,7 @@ export function WorkoutSettingsForm({
         </Select>
       </div>
 
-      <div className="left-panel-note flex items-center justify-between rounded-xl p-3.5">
+      <div className="left-panel-note flex items-center justify-between rounded-xl p-3">
         <Label htmlFor="include-abs" className="cursor-pointer text-foreground">
           Include Abs Finisher
         </Label>
@@ -152,21 +152,21 @@ export function WorkoutSettingsForm({
   return (
     <Card className="support-panel brand-panel border-border/50 shadow-sm">
       <Collapsible open={isMobileOpen} onOpenChange={setIsMobileOpen} className="lg:hidden">
-        <CardHeader className="pb-3">
+        <CardHeader className="pb-2.5">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <CardTitle className="flex items-center gap-2 text-lg">
                 <Dumbbell className="h-5 w-5 text-primary" />
                 Workout Settings
               </CardTitle>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-0.5 text-sm text-muted-foreground">
                 {focusLabel} • {durationLabel}
               </p>
             </div>
             <CollapsibleTrigger asChild>
               <button
                 type="button"
-                className="premium-interactive action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:text-primary"
+                className="premium-interactive action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.25 text-xs font-medium text-foreground transition-colors hover:text-primary"
                 aria-label={isMobileOpen ? "Collapse workout settings" : "Expand workout settings"}
               >
                 {isMobileOpen ? "Collapse" : "Expand"}
@@ -176,20 +176,20 @@ export function WorkoutSettingsForm({
           </div>
         </CardHeader>
         <CollapsibleContent>
-          <CardContent className="pt-0 pb-5">
+          <CardContent className="pt-0 pb-4.5">
             {settingsFields}
           </CardContent>
         </CollapsibleContent>
       </Collapsible>
 
       <div className="hidden lg:block">
-        <CardHeader className="pb-4">
+        <CardHeader className="pb-3.5">
           <CardTitle className="flex items-center gap-2 text-lg">
             <Dumbbell className="h-5 w-5 text-primary" />
             Workout Settings
           </CardTitle>
         </CardHeader>
-        <CardContent>{settingsFields}</CardContent>
+        <CardContent className="pt-0">{settingsFields}</CardContent>
       </div>
     </Card>
   )

@@ -486,40 +486,40 @@ export default function WorkoutGeneratorPage() {
     <div className="app-shell min-h-screen bg-background">
       <header className="app-header border-b border-border/50">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col gap-3 py-3.5 sm:gap-4 sm:py-5 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex items-start gap-3 sm:gap-4">
+          <div className="flex flex-col gap-2.5 py-3 sm:gap-3 sm:py-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex items-start gap-3 sm:gap-3.5">
               <Image
                 src="/co2-logo-transparent.png"
                 alt="CO2 logo"
                 width={1024}
                 height={1024}
-                className="h-16 w-auto shrink-0 sm:h-[4.5rem]"
+                className="h-14 w-auto shrink-0 sm:h-[4.15rem]"
                 priority
               />
-              <div className="min-w-0 pt-1">
-                <div className="mb-1.5 inline-flex items-center rounded-full border border-primary/12 bg-[linear-gradient(180deg,rgba(96,165,250,0.14)_0%,rgba(37,99,235,0.08)_100%)] px-2.5 py-1 text-[0.62rem] font-semibold tracking-[0.14em] text-primary uppercase shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_12px_20px_-24px_rgba(37,99,235,0.35)]">
+              <div className="min-w-0 pt-0.5 sm:pt-0.75">
+                <div className="mb-1 inline-flex items-center rounded-full border border-primary/12 bg-[linear-gradient(180deg,rgba(96,165,250,0.14)_0%,rgba(37,99,235,0.08)_100%)] px-2.5 py-0.75 text-[0.58rem] font-semibold tracking-[0.13em] text-primary uppercase shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_12px_20px_-24px_rgba(37,99,235,0.35)] sm:text-[0.62rem]">
                   Premium training system
                 </div>
-                <div className="mb-1">
-                  <h1 className="font-display text-[1.55rem] font-semibold leading-none tracking-[-0.055em] text-foreground sm:text-[1.75rem]">
+                <div className="mb-0.5">
+                  <h1 className="font-display text-[1.45rem] font-semibold leading-none tracking-[-0.055em] text-foreground sm:text-[1.68rem]">
                     <span className="text-primary">CO2</span> Workout Generator
                   </h1>
                 </div>
-                <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-[0.95rem]">
+                <p className="max-w-2xl text-[0.92rem] leading-[1.45] text-muted-foreground sm:text-[0.94rem]">
                   Smarter strength workouts guided by your recovery, progression, and training
                   consistency.
                 </p>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:justify-end">
-              <div className="meta-pill meta-pill-accent inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[0.66rem] font-semibold tracking-[0.08em] uppercase sm:gap-2 sm:px-3 sm:text-[0.72rem]">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 lg:justify-end">
+              <div className="meta-pill meta-pill-accent inline-flex items-center gap-1.5 px-2.5 py-1.25 text-[0.64rem] font-semibold tracking-[0.08em] uppercase sm:gap-2 sm:px-3 sm:text-[0.7rem]">
                 <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
                 {trackerConnectionMode === "google" ? "Google Tracker Created" : "Tracker: Manual Connection"}
               </div>
 
               {hasGoogleSession ? (
-                <div className="meta-pill inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[0.66rem] font-semibold tracking-[0.08em] uppercase sm:gap-2 sm:px-3 sm:text-[0.72rem]">
+                <div className="meta-pill inline-flex items-center gap-1.5 px-2.5 py-1.25 text-[0.64rem] font-semibold tracking-[0.08em] uppercase sm:gap-2 sm:px-3 sm:text-[0.7rem]">
                   <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
                   Google connected
                 </div>
@@ -527,7 +527,7 @@ export default function WorkoutGeneratorPage() {
 
               <button
                 onClick={() => setIsManagingTracker(true)}
-                className="action-pill inline-flex items-center rounded-full px-3.5 py-1.75 text-sm font-medium text-foreground transition-colors hover:text-primary sm:px-4 sm:py-2"
+                className="action-pill inline-flex items-center rounded-full px-3.5 py-1.5 text-sm font-medium text-foreground transition-colors hover:text-primary sm:px-4 sm:py-1.75"
               >
                 Manage Tracker
               </button>
@@ -535,7 +535,7 @@ export default function WorkoutGeneratorPage() {
               {hasGoogleSession ? (
                 <button
                   onClick={() => void signOut({ callbackUrl: "/" })}
-                  className="action-pill inline-flex items-center rounded-full px-3.5 py-1.75 text-sm font-medium text-foreground transition-colors hover:text-primary sm:px-4 sm:py-2"
+                  className="action-pill inline-flex items-center rounded-full px-3.5 py-1.5 text-sm font-medium text-foreground transition-colors hover:text-primary sm:px-4 sm:py-1.75"
                 >
                   Sign Out Google
                 </button>
