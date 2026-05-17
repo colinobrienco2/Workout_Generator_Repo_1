@@ -309,21 +309,21 @@ export function CoachPanel({
   return (
     <Card className="coach-panel-shell brand-panel w-full max-w-sm overflow-hidden border-border/50 pt-0 pb-0 shadow-sm xl:flex xl:h-[calc(100vh-4rem)] xl:flex-col xl:gap-0">
       <Collapsible open={isMobileOpen} onOpenChange={setIsMobileOpen} className="xl:hidden">
-        <CardHeader className="border-b border-border/50 px-4 py-3.5">
+        <CardHeader className="border-b border-border/50 px-4 py-3">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <CardTitle className="flex items-center gap-2 text-base">
                 <Bot className="h-4.5 w-4.5 text-primary" />
                 Coach Panel
               </CardTitle>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-0.5 text-sm text-muted-foreground">
                 Guided coaching help when you want extra context.
               </p>
             </div>
             <CollapsibleTrigger asChild>
               <button
                 type="button"
-                className="premium-interactive action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:text-primary"
+                className="premium-interactive action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.25 text-xs font-medium text-foreground transition-colors hover:text-primary"
                 aria-label={isMobileOpen ? "Collapse coach panel" : "Expand coach panel"}
               >
                 {isMobileOpen ? "Collapse" : "Expand"}
@@ -333,12 +333,12 @@ export function CoachPanel({
           </div>
         </CardHeader>
         <CollapsibleContent>
-          <div className="flex h-[560px] flex-col overflow-hidden sm:h-[640px]">
+          <div className="flex h-[540px] flex-col overflow-hidden sm:h-[620px]">
             <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
-              <div className="coach-scroll coach-thread-surface min-h-0 flex-[1.05] overflow-y-auto overscroll-contain px-3 py-3">
-                <div className="space-y-3">
+              <div className="coach-scroll coach-thread-surface min-h-0 flex-[1.05] overflow-y-auto overscroll-contain px-3 py-2.5">
+                <div className="space-y-2.5">
                   {messages.length === 1 ? (
-                    <div className="detail-panel rounded-[1.25rem] border border-border/60 px-4 py-3">
+                    <div className="detail-panel rounded-[1.25rem] border border-border/60 px-4 py-2.5">
                       <p className="mt-0 text-sm leading-relaxed text-foreground">
                         {weeklyStatus
                           ? "Pick a coaching topic to get a guided explanation based on your current week."
@@ -377,7 +377,7 @@ export function CoachPanel({
               </div>
 
               <div className="coach-scroll coach-controls-surface min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50">
-                <div className="px-4 pt-3.5 pb-2">
+                <div className="px-4 pt-3 pb-1.5">
                   <p className="coach-kicker mb-2 text-[0.68rem] font-semibold">Categories</p>
                   <div className="flex flex-wrap gap-1.5">
                     {categories.map((category) => (
@@ -399,15 +399,15 @@ export function CoachPanel({
                   </div>
                 </div>
 
-                <div className="px-4 pb-4">
-                  <div className="coach-request-surface detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
-                    <div className="mb-2.5 flex items-center justify-between gap-2">
+                <div className="px-4 pb-3.5">
+                  <div className="coach-request-surface detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
+                    <div className="mb-2 flex items-center justify-between gap-2">
                       <div className="text-xs font-semibold text-foreground">Choose a coach request...</div>
                       <div className="text-[0.68rem] tracking-[0.08em] text-muted-foreground uppercase">
                         Guided only
                       </div>
                     </div>
-                    <div className="flex flex-wrap gap-2 pb-0.5">
+                    <div className="flex flex-wrap gap-1.5 pb-0.5">
                       {selectedCategory?.questions.map((prompt) => (
                         <button
                           key={prompt.question_id}
@@ -427,7 +427,7 @@ export function CoachPanel({
       </Collapsible>
 
       <div className="hidden xl:flex xl:h-[calc(100vh-4rem)] xl:flex-col">
-        <CardHeader className="shrink-0 border-b border-border/50 px-5 py-4.5">
+        <CardHeader className="shrink-0 border-b border-border/50 px-5 py-4">
           <div className="flex items-center justify-between gap-3">
             <CardTitle className="flex items-center gap-2 text-lg">
               <Bot className="h-5 w-5 text-primary" />
@@ -441,7 +441,7 @@ export function CoachPanel({
 
         <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
           <div className="coach-scroll coach-thread-surface min-h-0 flex-[1.15] overflow-y-auto overscroll-contain px-3 py-3 xl:flex-none xl:basis-[28%] xl:min-h-[215px] xl:max-h-[295px]">
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {messages.length === 1 ? (
                 <div className="detail-panel rounded-[1.25rem] border border-border/60 px-4.5 py-3.5">
                   <p className="coach-kicker text-[0.68rem] font-semibold">
@@ -485,7 +485,7 @@ export function CoachPanel({
           </div>
 
           <div className="coach-scroll coach-controls-surface min-h-0 flex-[0.95] overflow-y-auto overscroll-contain border-t border-border/50 xl:flex-1">
-            <div className="px-4 pt-4 pb-2.5 lg:px-4.5 lg:pt-3 lg:pb-2">
+            <div className="px-4 pt-3.5 pb-2 lg:px-4.5 lg:pt-3 lg:pb-2">
               <p className="coach-kicker mb-2 text-[0.68rem] font-semibold">Categories</p>
               <div className="flex flex-wrap gap-1.5">
                 {categories.map((category) => (
@@ -507,15 +507,15 @@ export function CoachPanel({
               </div>
             </div>
 
-            <div className="px-4 pb-4 lg:px-4.5 lg:pb-4.5">
-              <div className="coach-request-surface detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
-                <div className="mb-2.5 flex items-center justify-between gap-2">
+            <div className="px-4 pb-4 lg:px-4.5 lg:pb-4">
+              <div className="coach-request-surface detail-panel overflow-hidden rounded-[1.35rem] border border-border/60 px-3.5 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_28px_-28px_rgba(15,23,42,0.26)]">
+                <div className="mb-2 flex items-center justify-between gap-2">
                   <div className="text-xs font-semibold text-foreground">Choose a coach request...</div>
                   <div className="text-[0.68rem] tracking-[0.08em] text-muted-foreground uppercase">
                     Guided only
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2 pb-0.5">
+                <div className="flex flex-wrap gap-1.5 pb-0.5">
                   {selectedCategory?.questions.map((prompt) => (
                     <button
                       key={prompt.question_id}
