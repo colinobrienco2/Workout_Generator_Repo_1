@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Image from "next/image"
 import { signOut, useSession } from "next-auth/react"
 import ConnectSheet from "@/components/connect-sheet"
@@ -186,10 +186,30 @@ export default function WorkoutGeneratorPage() {
   const [weeklyStatus, setWeeklyStatus] = useState<WeeklyStatus | null>(null)
   const [lastGeneratedSettings, setLastGeneratedSettings] = useState<WorkoutSettings | null>(null)
   const [selectedExerciseId, setSelectedExerciseId] = useState<string | null>(null)
+  const [showMobileGenerateCta, setShowMobileGenerateCta] = useState(false)
+  const builderSectionRef = useRef<HTMLDivElement | null>(null)
   const generationVariantRef = useRef(0)
   const selectedExercise =
     workout?.exercises.find((exercise) => exercise.exercise_id === selectedExerciseId) ?? null
   const hasGoogleSession = sessionStatus === "authenticated" && Boolean(session?.user?.email)
+  const settingsSummary = useMemo(() => {
+    const muscleLabels: Record<WorkoutSettings["primaryMuscle"], string> = {
+      chest: "Chest",
+      back: "Back",
+      legs: "Legs",
+      shoulders: "Shoulders",
+      biceps: "Biceps",
+      triceps: "Triceps",
+    }
+
+    const durationLabels: Record<WorkoutSettings["sessionLength"], string> = {
+      short: "35-45 min",
+      medium: "50-60 min",
+      long: "70-80 min",
+    }
+
+    return `${muscleLabels[settings.primaryMuscle]} + ${muscleLabels[settings.secondaryMuscle]} • ${durationLabels[settings.sessionLength]}`
+  }, [settings])
 
   useEffect(() => {
     const storedUrl = getStoredApiUrl()
@@ -231,6 +251,27 @@ export default function WorkoutGeneratorPage() {
       isMounted = false
     }
   }, [sessionStatus])
+
+  useEffect(() => {
+    const builderSection = builderSectionRef.current
+    if (!builderSection) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowMobileGenerateCta(!entry.isIntersecting)
+      },
+      {
+        threshold: 0.2,
+        rootMargin: "0px 0px -72px 0px",
+      }
+    )
+
+    observer.observe(builderSection)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
 
   const handleConnect = useCallback(() => {
     const storedUrl = getStoredApiUrl()
@@ -545,7 +586,7 @@ export default function WorkoutGeneratorPage() {
         </div>
       </header>
 
-      <main className="app-main container mx-auto px-4 py-6 md:py-10">
+      <main className="app-main container mx-auto px-4 py-6 pb-28 md:py-10 md:pb-10">
         <div className="grid gap-5 sm:gap-6 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[340px_minmax(0,1fr)_380px]">
           <aside className="lg:sticky lg:top-8 lg:self-start lg:max-h-[calc(100vh-4rem)] lg:pr-2">
             <div className="coach-scroll space-y-4 lg:max-h-[calc(100vh-4rem)] lg:space-y-5 lg:overflow-y-auto lg:overscroll-contain">
@@ -566,7 +607,7 @@ export default function WorkoutGeneratorPage() {
           </aside>
 
           <section className="min-w-0">
-            <div className="premium-hero mb-5 rounded-2xl px-4 py-3.5 sm:px-5 sm:py-4 md:mb-8">
+            <div ref={builderSectionRef} className="premium-hero mb-5 rounded-2xl px-4 py-3.5 sm:px-5 sm:py-4 md:mb-8">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="relative z-10 min-w-0">
                   <p className="text-lg font-semibold text-foreground">Workout Builder</p>
@@ -619,6 +660,36 @@ export default function WorkoutGeneratorPage() {
           </aside>
         </div>
       </main>
+
+      <div
+        className={`fixed inset-x-0 bottom-0 z-40 px-4 pb-3 transition-all duration-200 md:hidden ${
+          showMobileGenerateCta ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
+        }`}
+        style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 0.75rem)" }}
+      >
+        <div className="surface-card mx-auto flex max-w-md items-center gap-3 rounded-2xl border border-border/60 px-3 py-3 shadow-[0_18px_34px_-26px_rgba(15,23,42,0.34)]">
+          <div className="min-w-0 flex-1">
+            <p className="text-[0.68rem] font-semibold tracking-[0.1em] text-primary uppercase">
+              Ready to Generate
+            </p>
+            <p className="truncate text-sm text-foreground">{settingsSummary}</p>
+          </div>
+          <Button
+            className="shrink-0 px-4 focus-visible:ring-primary/24"
+            onClick={handleGenerate}
+            disabled={state === "loading"}
+          >
+            {state === "loading" ? (
+              <>
+                <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                Generating...
+              </>
+            ) : (
+              "Generate Workout"
+            )}
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }

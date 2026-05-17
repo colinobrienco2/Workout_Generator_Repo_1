@@ -1,9 +1,10 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { CalendarCheck2, Edit3, MoonStar, NotebookPen, Plus, Sparkles, Weight } from "lucide-react"
+import { CalendarCheck2, ChevronDown, Edit3, MoonStar, NotebookPen, Plus, Sparkles, Weight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import {
   Dialog,
   DialogContent,
@@ -79,6 +80,7 @@ export function TodayCheckInCard({
   openRequestKey = 0,
 }: TodayCheckInCardProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [isMobileExpanded, setIsMobileExpanded] = useState(!savedCheckIn)
   const [formValues, setFormValues] = useState<CheckInValues>(defaultCheckInValues)
 
   const summaryRows = useMemo(() => {
@@ -104,6 +106,10 @@ export function TodayCheckInCard({
     return rows
   }, [savedCheckIn])
 
+  const mobileSummary = savedCheckIn
+    ? `Sleep ${savedCheckIn.sleep}/5 • Energy ${savedCheckIn.energy}/5 • Stress ${savedCheckIn.stress}/5`
+    : "No check-in logged today"
+
   const openForCreate = () => {
     setFormValues(savedCheckIn ?? defaultCheckInValues)
     setIsOpen(true)
@@ -124,103 +130,143 @@ export function TodayCheckInCard({
     }
   }
 
+  const cardContent = (
+    <CardContent className="space-y-3 pt-0">
+      {savedCheckIn ? (
+        <>
+          <div className="grid grid-cols-2 gap-2 max-sm:hidden">
+            {summaryRows.map((row) => (
+              <MetricRow key={row.label} label={row.label} value={row.value} />
+            ))}
+          </div>
+
+          <div className="left-panel-note rounded-xl px-3 py-2.5 sm:hidden">
+            <p className="text-sm font-medium text-foreground">
+              Sleep {savedCheckIn.sleep}/5 • Energy {savedCheckIn.energy}/5 • Stress {savedCheckIn.stress}/5
+            </p>
+            <p className="mt-0.5 text-sm text-muted-foreground">
+              Workout completed: {savedCheckIn.workoutCompleted === "yes" ? "Yes" : "No"}
+            </p>
+          </div>
+
+          {savedCheckIn.notes ? (
+            <div className="left-panel-note rounded-xl p-2.5">
+              <div className="mb-1 flex items-center gap-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                <NotebookPen className="h-3 w-3" />
+                Notes
+              </div>
+              <p className="line-clamp-3 text-sm text-foreground">{savedCheckIn.notes}</p>
+            </div>
+          ) : null}
+
+          <div className="flex items-center justify-between gap-3 rounded-xl border border-primary/12 bg-primary/[0.05] px-3 py-2 text-sm max-sm:hidden">
+            <span className="text-muted-foreground">
+              Workout:{" "}
+              <span className="font-semibold text-foreground">
+                {savedCheckIn.workoutCompleted === "yes" ? "Yes" : "No"}
+              </span>
+            </span>
+            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-primary">
+              {isGoogleTracker ? (synced ? "Synced" : "Not synced") : "Not synced"}
+            </span>
+          </div>
+
+          <Button type="button" variant="outline" size="sm" className="h-9 w-full border-primary/10" onClick={openForCreate}>
+            <Edit3 className="mr-2 h-3.5 w-3.5" />
+            Update Check-In
+          </Button>
+        </>
+      ) : (
+        <div className="space-y-3">
+          <div className="left-panel-note rounded-xl p-3">
+            <p className="text-sm font-medium text-foreground">No check-in logged today.</p>
+            <p className="mt-0.5 text-sm text-muted-foreground">
+              Log a quick update to capture today&apos;s readiness.
+            </p>
+          </div>
+
+          <div className="grid gap-2 sm:grid-cols-3 max-sm:hidden">
+            <div className="detail-panel flex items-center gap-2 px-2.5 py-2 text-sm text-muted-foreground">
+              <MoonStar className="h-3.5 w-3.5 text-primary" />
+              Sleep
+            </div>
+            <div className="detail-panel flex items-center gap-2 px-2.5 py-2 text-sm text-muted-foreground">
+              <Sparkles className="h-3.5 w-3.5 text-primary" />
+              Energy
+            </div>
+            <div className="detail-panel flex items-center gap-2 px-2.5 py-2 text-sm text-muted-foreground">
+              <Weight className="h-3.5 w-3.5 text-primary" />
+              Weight
+            </div>
+          </div>
+
+          <Button type="button" size="sm" className="h-9 w-full" onClick={openForCreate}>
+            <Plus className="mr-2 h-3.5 w-3.5" />
+            Log Metrics
+          </Button>
+        </div>
+      )}
+    </CardContent>
+  )
+
   return (
     <>
       <Card className="support-panel brand-panel border-border/50 shadow-sm">
-        <CardHeader className="pb-2 sm:pb-2">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <div className="meta-pill meta-pill-accent inline-flex items-center gap-1.5 px-2.5 py-1 text-[0.65rem] font-semibold tracking-[0.08em] uppercase">
-                <CalendarCheck2 className="h-3 w-3" />
-                Today&apos;s Check-In
+        <Collapsible open={isMobileExpanded} onOpenChange={setIsMobileExpanded} className="sm:hidden">
+          <CardHeader className="pb-2">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <div className="meta-pill meta-pill-accent inline-flex items-center gap-1.5 px-2.5 py-1 text-[0.65rem] font-semibold tracking-[0.08em] uppercase">
+                  <CalendarCheck2 className="h-3 w-3" />
+                  Today&apos;s Check-In
+                </div>
+                <CardTitle className="mt-2 flex items-center gap-1.5 text-base">
+                  <Sparkles className="h-4 w-4 text-primary" />
+                  Readiness snapshot
+                </CardTitle>
+                <p className="mt-1 text-sm text-muted-foreground">{mobileSummary}</p>
               </div>
-              <CardTitle className="mt-2 flex items-center gap-1.5 text-base">
-                <Sparkles className="h-4 w-4 text-primary" />
-                Readiness snapshot
-              </CardTitle>
+              <div className="flex shrink-0 flex-col items-end gap-2">
+                <div className="meta-pill inline-flex items-center rounded-full px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                  {isGoogleTracker ? (synced ? "Synced" : "Ready to sync") : "Local only"}
+                </div>
+                <CollapsibleTrigger asChild>
+                  <button
+                    type="button"
+                    className="premium-interactive action-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.25 text-xs font-medium text-foreground transition-colors hover:text-primary"
+                    aria-label={isMobileExpanded ? "Collapse readiness snapshot" : "Expand readiness snapshot"}
+                  >
+                    {isMobileExpanded ? "Collapse" : "Expand"}
+                    <ChevronDown className={`h-4 w-4 transition-transform ${isMobileExpanded ? "rotate-180" : ""}`} />
+                  </button>
+                </CollapsibleTrigger>
+              </div>
             </div>
-            <div className="meta-pill inline-flex items-center rounded-full px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-              {isGoogleTracker ? (synced ? "Synced" : "Ready to sync") : "Local only"}
+          </CardHeader>
+          <CollapsibleContent>{cardContent}</CollapsibleContent>
+        </Collapsible>
+
+        <div className="hidden sm:block">
+          <CardHeader className="pb-2 sm:pb-2">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <div className="meta-pill meta-pill-accent inline-flex items-center gap-1.5 px-2.5 py-1 text-[0.65rem] font-semibold tracking-[0.08em] uppercase">
+                  <CalendarCheck2 className="h-3 w-3" />
+                  Today&apos;s Check-In
+                </div>
+                <CardTitle className="mt-2 flex items-center gap-1.5 text-base">
+                  <Sparkles className="h-4 w-4 text-primary" />
+                  Readiness snapshot
+                </CardTitle>
+              </div>
+              <div className="meta-pill inline-flex items-center rounded-full px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                {isGoogleTracker ? (synced ? "Synced" : "Ready to sync") : "Local only"}
+              </div>
             </div>
-          </div>
-        </CardHeader>
+          </CardHeader>
 
-        <CardContent className="space-y-3 pt-0">
-          {savedCheckIn ? (
-            <>
-              <div className="grid grid-cols-2 gap-2 max-sm:hidden">
-                {summaryRows.map((row) => (
-                  <MetricRow key={row.label} label={row.label} value={row.value} />
-                ))}
-              </div>
-
-              <div className="left-panel-note rounded-xl px-3 py-2.5 sm:hidden">
-                <p className="text-sm font-medium text-foreground">
-                  Sleep {savedCheckIn.sleep}/5 • Energy {savedCheckIn.energy}/5 • Stress {savedCheckIn.stress}/5
-                </p>
-                <p className="mt-0.5 text-sm text-muted-foreground">
-                  Workout completed: {savedCheckIn.workoutCompleted === "yes" ? "Yes" : "No"}
-                </p>
-              </div>
-
-              {savedCheckIn.notes ? (
-                <div className="left-panel-note rounded-xl p-2.5">
-                  <div className="mb-1 flex items-center gap-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                    <NotebookPen className="h-3 w-3" />
-                    Notes
-                  </div>
-                  <p className="line-clamp-3 text-sm text-foreground">{savedCheckIn.notes}</p>
-                </div>
-              ) : null}
-
-              <div className="flex items-center justify-between gap-3 rounded-xl border border-primary/12 bg-primary/[0.05] px-3 py-2 text-sm max-sm:hidden">
-                <span className="text-muted-foreground">
-                  Workout:{" "}
-                  <span className="font-semibold text-foreground">
-                    {savedCheckIn.workoutCompleted === "yes" ? "Yes" : "No"}
-                  </span>
-                </span>
-                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-primary">
-                  {isGoogleTracker ? (synced ? "Synced" : "Not synced") : "Not synced"}
-                </span>
-              </div>
-
-              <Button type="button" variant="outline" size="sm" className="h-9 w-full border-primary/10" onClick={openForCreate}>
-                <Edit3 className="mr-2 h-3.5 w-3.5" />
-                Update Check-In
-              </Button>
-            </>
-          ) : (
-            <div className="space-y-3">
-              <div className="left-panel-note rounded-xl p-3">
-                <p className="text-sm font-medium text-foreground">No check-in logged today.</p>
-                <p className="mt-0.5 text-sm text-muted-foreground">
-                  Log a quick update to capture today&apos;s readiness.
-                </p>
-              </div>
-
-              <div className="grid gap-2 sm:grid-cols-3 max-sm:hidden">
-                <div className="detail-panel flex items-center gap-2 px-2.5 py-2 text-sm text-muted-foreground">
-                  <MoonStar className="h-3.5 w-3.5 text-primary" />
-                  Sleep
-                </div>
-                <div className="detail-panel flex items-center gap-2 px-2.5 py-2 text-sm text-muted-foreground">
-                  <Sparkles className="h-3.5 w-3.5 text-primary" />
-                  Energy
-                </div>
-                <div className="detail-panel flex items-center gap-2 px-2.5 py-2 text-sm text-muted-foreground">
-                  <Weight className="h-3.5 w-3.5 text-primary" />
-                  Weight
-                </div>
-              </div>
-
-              <Button type="button" size="sm" className="h-9 w-full" onClick={openForCreate}>
-                <Plus className="mr-2 h-3.5 w-3.5" />
-                Log Metrics
-              </Button>
-            </div>
-          )}
-        </CardContent>
+          {cardContent}
+        </div>
       </Card>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
