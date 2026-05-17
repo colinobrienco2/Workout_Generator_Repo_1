@@ -524,6 +524,7 @@ export default function WorkoutGeneratorPage() {
   }
 
   return (
+    <>
     <div className="app-shell min-h-screen bg-background">
       <header className="app-header border-b border-border/50">
         <div className="container mx-auto px-4">
@@ -661,8 +662,9 @@ export default function WorkoutGeneratorPage() {
         </div>
       </main>
 
+    </div>
       <div
-        className={`fixed inset-x-0 bottom-0 z-40 px-4 pb-3 transition-all duration-200 md:hidden ${
+        className={`fixed left-0 right-0 bottom-0 z-[80] px-4 pb-3 transition-all duration-200 md:hidden ${
           showMobileGenerateCta ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
         }`}
         style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 0.75rem)" }}
@@ -690,6 +692,6 @@ export default function WorkoutGeneratorPage() {
           </Button>
         </div>
       </div>
-    </div>
+    </>
   )
 }
