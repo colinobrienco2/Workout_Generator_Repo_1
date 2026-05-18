@@ -187,7 +187,7 @@ export default function WorkoutGeneratorPage() {
   const [lastGeneratedSettings, setLastGeneratedSettings] = useState<WorkoutSettings | null>(null)
   const [selectedExerciseId, setSelectedExerciseId] = useState<string | null>(null)
   const [showMobileGenerateCta, setShowMobileGenerateCta] = useState(false)
-  const builderSectionRef = useRef<HTMLDivElement | null>(null)
+  const builderCtaSectionRef = useRef<HTMLDivElement | null>(null)
   const generationVariantRef = useRef(0)
   const selectedExercise =
     workout?.exercises.find((exercise) => exercise.exercise_id === selectedExerciseId) ?? null
@@ -253,20 +253,19 @@ export default function WorkoutGeneratorPage() {
   }, [sessionStatus])
 
   useEffect(() => {
-    const builderSection = builderSectionRef.current
-    if (!builderSection) return
+    const builderCtaSection = builderCtaSectionRef.current
+    if (!builderCtaSection) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setShowMobileGenerateCta(!entry.isIntersecting)
+        setShowMobileGenerateCta(entry.isIntersecting === false)
       },
       {
-        threshold: 0.2,
-        rootMargin: "0px 0px -72px 0px",
+        threshold: 0,
       }
     )
 
-    observer.observe(builderSection)
+    observer.observe(builderCtaSection)
 
     return () => {
       observer.disconnect()
@@ -608,7 +607,7 @@ export default function WorkoutGeneratorPage() {
           </aside>
 
           <section className="min-w-0">
-            <div ref={builderSectionRef} className="premium-hero mb-5 rounded-2xl px-4 py-3.5 sm:px-5 sm:py-4 md:mb-8">
+            <div ref={builderCtaSectionRef} className="premium-hero mb-5 rounded-2xl px-4 py-3.5 sm:px-5 sm:py-4 md:mb-8">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="relative z-10 min-w-0">
                   <p className="text-lg font-semibold text-foreground">Workout Builder</p>
