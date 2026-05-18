@@ -186,8 +186,6 @@ export default function WorkoutGeneratorPage() {
   const [weeklyStatus, setWeeklyStatus] = useState<WeeklyStatus | null>(null)
   const [lastGeneratedSettings, setLastGeneratedSettings] = useState<WorkoutSettings | null>(null)
   const [selectedExerciseId, setSelectedExerciseId] = useState<string | null>(null)
-  const [showMobileGenerateCta, setShowMobileGenerateCta] = useState(false)
-  const builderCtaSectionRef = useRef<HTMLDivElement | null>(null)
   const generationVariantRef = useRef(0)
   const selectedExercise =
     workout?.exercises.find((exercise) => exercise.exercise_id === selectedExerciseId) ?? null
@@ -251,26 +249,6 @@ export default function WorkoutGeneratorPage() {
       isMounted = false
     }
   }, [sessionStatus])
-
-  useEffect(() => {
-    const builderCtaSection = builderCtaSectionRef.current
-    if (!builderCtaSection) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setShowMobileGenerateCta(entry.isIntersecting === false)
-      },
-      {
-        threshold: 0,
-      }
-    )
-
-    observer.observe(builderCtaSection)
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
 
   const handleConnect = useCallback(() => {
     const storedUrl = getStoredApiUrl()
@@ -607,7 +585,33 @@ export default function WorkoutGeneratorPage() {
           </aside>
 
           <section className="min-w-0">
-            <div ref={builderCtaSectionRef} className="premium-hero mb-5 rounded-2xl px-4 py-3.5 sm:px-5 sm:py-4 md:mb-8">
+            <div className="sticky top-2 z-40 mb-4 md:hidden">
+              <div className="surface-card flex items-center gap-3 rounded-2xl border border-border/60 bg-background/95 px-3 py-3 shadow-[0_18px_34px_-26px_rgba(15,23,42,0.34)] backdrop-blur">
+                <div className="min-w-0 flex-1">
+                  <p className="text-[0.68rem] font-semibold tracking-[0.1em] text-primary uppercase">
+                    Workout Builder
+                  </p>
+                  <p className="truncate text-sm text-foreground">{settingsSummary}</p>
+                </div>
+
+                <Button
+                  className="shrink-0 px-4 focus-visible:ring-primary/24"
+                  onClick={handleGenerate}
+                  disabled={state === "loading"}
+                >
+                  {state === "loading" ? (
+                    <>
+                      <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                      Generating...
+                    </>
+                  ) : (
+                    "Generate Workout"
+                  )}
+                </Button>
+              </div>
+            </div>
+
+            <div className="premium-hero mb-5 hidden rounded-2xl px-4 py-3.5 sm:px-5 sm:py-4 md:mb-8 md:block">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="relative z-10 min-w-0">
                   <p className="text-lg font-semibold text-foreground">Workout Builder</p>
@@ -662,35 +666,6 @@ export default function WorkoutGeneratorPage() {
       </main>
 
     </div>
-      <div
-        className={`fixed left-0 right-0 bottom-0 z-[80] px-4 pb-3 transition-all duration-200 md:hidden ${
-          showMobileGenerateCta ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
-        }`}
-        style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 0.75rem)" }}
-      >
-        <div className="surface-card mx-auto flex max-w-md items-center gap-3 rounded-2xl border border-border/60 px-3 py-3 shadow-[0_18px_34px_-26px_rgba(15,23,42,0.34)]">
-          <div className="min-w-0 flex-1">
-            <p className="text-[0.68rem] font-semibold tracking-[0.1em] text-primary uppercase">
-              Ready to Generate
-            </p>
-            <p className="truncate text-sm text-foreground">{settingsSummary}</p>
-          </div>
-          <Button
-            className="shrink-0 px-4 focus-visible:ring-primary/24"
-            onClick={handleGenerate}
-            disabled={state === "loading"}
-          >
-            {state === "loading" ? (
-              <>
-                <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
-                Generating...
-              </>
-            ) : (
-              "Generate Workout"
-            )}
-          </Button>
-        </div>
-      </div>
     </>
   )
 }
