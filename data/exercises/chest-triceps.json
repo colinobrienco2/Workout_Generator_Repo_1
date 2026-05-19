@@ -462,6 +462,7 @@
     ],
     "slot_tags": [
       "accessory",
+      "secondary_compound",
       "chest_slot"
     ],
     "movement_type": "horizontal_press",
@@ -537,6 +538,7 @@
     ],
     "slot_tags": [
       "accessory",
+      "primary_compound",
       "chest_slot"
     ],
     "movement_type": "incline_press",
@@ -556,6 +558,7 @@
       "avoid_when_low_readiness": true,
       "avoid_on_deload": false,
       "preferred_session_lengths": [
+        "short",
         "medium",
         "long"
       ]
@@ -668,6 +671,7 @@
       "avoid_when_low_readiness": false,
       "avoid_on_deload": false,
       "preferred_session_lengths": [
+        "short",
         "medium",
         "long"
       ]
@@ -685,6 +689,7 @@
     ],
     "slot_tags": [
       "accessory",
+      "isolation",
       "triceps_slot"
     ],
     "movement_type": "triceps_extension",
@@ -743,6 +748,7 @@
       "avoid_when_low_readiness": true,
       "avoid_on_deload": true,
       "preferred_session_lengths": [
+        "short",
         "medium",
         "long"
       ]
@@ -1050,6 +1056,7 @@
     ],
     "slot_tags": [
       "accessory",
+      "isolation",
       "triceps_slot"
     ],
     "movement_type": "dip",

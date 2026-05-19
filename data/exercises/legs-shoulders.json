@@ -99,6 +99,7 @@
     ],
     "constraints": {
       "allowed_equipment_modes": [
+        "bodyweight",
         "full_gym",
         "hotel_gym",
         "dumbbell_only"

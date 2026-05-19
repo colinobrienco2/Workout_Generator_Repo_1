@@ -15,7 +15,7 @@ const ALL_EXERCISES = [
 const equipmentModeMap: Record<Equipment, string[]> = {
   "full-gym": ["full_gym"],
   "dumbbell-only": ["dumbbell_only", "hotel_gym"],
-  bodyweight: ["bodyweight", "hotel_gym", "dumbbell_only"],
+  bodyweight: ["bodyweight"],
 }
 
 export function getExerciseSwapOptions(

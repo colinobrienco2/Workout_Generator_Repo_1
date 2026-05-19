@@ -55,7 +55,7 @@ const allExercises = [
 const equipmentModeMap: Record<Equipment, string[]> = {
   "full-gym": ["full_gym"],
   "dumbbell-only": ["dumbbell_only", "hotel_gym"],
-  bodyweight: ["bodyweight", "hotel_gym", "dumbbell_only"],
+  bodyweight: ["bodyweight"],
 }
 
 const durationLabels: Record<SessionLength, string> = {
@@ -108,6 +108,10 @@ function getSlotTemplateForMuscles(
 
 function getFocusLabel(primaryMuscle: MuscleGroup, secondaryMuscle: MuscleGroup): string {
   return `${titleCase(primaryMuscle)} + ${titleCase(secondaryMuscle)}`
+}
+
+function getSlotLabel(slotId: string): string {
+  return titleCase(slotId.replace(/_/g, " "))
 }
 
 function matchesSlot(exercise: ExerciseLibraryItem, slotId: string): boolean {
@@ -268,6 +272,32 @@ function chooseExercise(
   return candidates[variantIndex % candidates.length]
 }
 
+function getMissingSlotIds(
+  library: ExerciseLibraryItem[],
+  slotIds: string[],
+  weeklyStatus: WeeklyStatus,
+  equipmentMode: Equipment,
+  sessionLength: SessionLength,
+): string[] {
+  const allowedModes = equipmentModeMap[equipmentMode]
+
+  return slotIds.filter((slotId) => {
+    return !library
+      .filter((exercise) => matchesSlot(exercise, slotId))
+      .filter((exercise) => {
+        const modes = exercise.constraints?.allowed_equipment_modes ?? []
+        return modes.length === 0 || modes.some((mode) => allowedModes.includes(mode))
+      })
+      .filter((exercise) => {
+        const preferred = exercise.constraints?.preferred_session_lengths ?? []
+        return preferred.length === 0 || preferred.includes(sessionLength)
+      })
+      .filter((exercise) => !(weeklyStatus.readiness_status === "Low" && exercise.constraints?.avoid_when_low_readiness))
+      .filter((exercise) => !(weeklyStatus.deload_flag && exercise.constraints?.avoid_on_deload))
+      .length
+  })
+}
+
 export function buildWorkoutFromStatus(
   weeklyStatus: WeeklyStatus,
   options: {
@@ -287,6 +317,24 @@ export function buildWorkoutFromStatus(
   const variantIndex = options.variantIndex ?? 0
   const focusLabel = getFocusLabel(primaryMuscle, secondaryMuscle)
 
+  if (options.equipment === "bodyweight") {
+    const missingSlotIds = getMissingSlotIds(
+      library,
+      slotIds,
+      weeklyStatus,
+      options.equipment,
+      options.sessionLength,
+    )
+
+    if (missingSlotIds.length > 0) {
+      throw new Error(
+        `Bodyweight-only mode does not have enough exercise coverage for ${focusLabel} (${durationLabels[options.sessionLength]}). Missing slots: ${missingSlotIds.map(getSlotLabel).join(", ")}.`,
+      )
+    }
+  }
+
+  const missingSelectedSlotIds: string[] = []
+
   const exercises = slotIds
     .map<RenderedExercise | null>((slotId, slotIndex) => {
       const selected = chooseExercise(
@@ -298,7 +346,10 @@ export function buildWorkoutFromStatus(
         options.sessionLength,
         variantIndex + slotIndex,
       )
-      if (!selected) return null
+      if (!selected) {
+        missingSelectedSlotIds.push(slotId)
+        return null
+      }
       usedIds.add(selected.exercise_id)
       const prescription = getPrescription(slotId, weeklyStatus.volume_mode, weeklyStatus.deload_flag)
       return {
@@ -326,6 +377,12 @@ export function buildWorkoutFromStatus(
       } satisfies RenderedExercise
     })
     .filter((exercise): exercise is RenderedExercise => Boolean(exercise))
+
+  if (options.equipment === "bodyweight" && missingSelectedSlotIds.length > 0) {
+    throw new Error(
+      `Bodyweight-only mode could not fill every required slot for ${focusLabel} (${durationLabels[options.sessionLength]}). Missing slots: ${missingSelectedSlotIds.map(getSlotLabel).join(", ")}.`,
+    )
+  }
 
   if (options.includeAbs) {
     const allowedModes = equipmentModeMap[options.equipment]
